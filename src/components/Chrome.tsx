@@ -1,13 +1,16 @@
 import { Link } from '@tanstack/react-router'
+import { ThemeToggle } from '~/components/ThemeToggle'
+import type { ThemeId } from '~/lib/themes'
 
-export function SiteHeader() {
+export function SiteHeader({ theme }: { theme: ThemeId }) {
   return (
-    <header className="wrap">
-      <nav className="nav">
+    <header className="site-header">
+      <div className="wrap site-header-inner">
         <Link to="/" className="wordmark">
-          Om Naidu
+          <span className="wordmark-text">omnaidu</span>
+          <span className="wordmark-mark" aria-hidden />
         </Link>
-        <div className="nav-links">
+        <nav className="nav-links" aria-label="Primary">
           <Link to="/blog" activeProps={{ 'data-status': 'active' }}>
             Writing
           </Link>
@@ -21,11 +24,9 @@ export function SiteHeader() {
           <Link to="/about" activeProps={{ 'data-status': 'active' }}>
             About
           </Link>
-          <Link to="/themes" activeProps={{ 'data-status': 'active' }}>
-            Themes
-          </Link>
-        </div>
-      </nav>
+        </nav>
+        <ThemeToggle active={theme} />
+      </div>
     </header>
   )
 }
@@ -33,14 +34,10 @@ export function SiteHeader() {
 export function SiteFooter() {
   return (
     <footer className="wrap footer">
-      <span>Engineering lab · Goa</span>
+      <span>Goa</span>
       <span>
         <a className="link-ember" href="/rss.xml">
           RSS
-        </a>
-        {' · '}
-        <a className="link-ember" href="/mcp">
-          MCP
         </a>
         {' · '}
         <a className="link-ember" href="https://github.com/omnaiduu">

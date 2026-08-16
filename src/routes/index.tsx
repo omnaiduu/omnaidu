@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { motion } from 'motion/react'
+import { motion, useReducedMotion } from 'motion/react'
 import { DemoPlayer } from '~/components/DemoPlayer'
 import { PostList } from '~/components/PostList'
 import { fetchPosts } from '~/lib/queries'
@@ -24,62 +24,67 @@ export const Route = createFileRoute('/')({
 function Home() {
   const { posts } = Route.useLoaderData()
   const latest = posts[0]
-  const rest = posts.slice(0, 4)
+  const reduceMotion = useReducedMotion()
+
+  const fade = reduceMotion
+    ? { initial: false, animate: { opacity: 1, y: 0 } }
+    : {
+        initial: { opacity: 0, y: 12 },
+        animate: { opacity: 1, y: 0 },
+      }
 
   return (
     <div>
       <section className="wrap hero">
         <motion.p
           className="hero-kicker"
-          initial={false}
-          animate={{ opacity: 1, y: 0 }}
+          {...fade}
           transition={{ duration: 0.4 }}
         >
           Engineering lab
         </motion.p>
         <motion.h1
-          initial={false}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.05 }}
+          {...fade}
+          transition={{ duration: 0.5, delay: reduceMotion ? 0 : 0.05 }}
         >
           Om Naidu
         </motion.h1>
         <motion.p
           className="hero-line"
-          initial={false}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.12 }}
+          {...fade}
+          transition={{ duration: 0.5, delay: reduceMotion ? 0 : 0.12 }}
         >
-          Hard systems. Verified. Written down. A quiet lab blog — not a creator channel.
+          Hard systems. Verified. Written down.
         </motion.p>
         <motion.div
           className="hero-actions"
-          initial={false}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.18 }}
+          {...fade}
+          transition={{ duration: 0.5, delay: reduceMotion ? 0 : 0.18 }}
         >
-          <Link to="/blog/$slug" params={{ slug: latest?.slug ?? 'bankbot-turn-loop' }} className="btn btn-primary">
+          <Link
+            to="/blog/$slug"
+            params={{ slug: latest?.slug ?? 'bankbot-turn-loop' }}
+            className="btn btn-primary"
+          >
             Read latest →
           </Link>
           <Link to="/blog" search={{ tag: 'projects' }} className="btn btn-ghost">
             Projects
           </Link>
         </motion.div>
-        <motion.div
-          initial={false}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.22 }}
-        >
-          <DemoPlayer
-            src="/media/demo.mp4"
-            poster="/media/demo-poster.svg"
-            caption="Short demo embed — 6s H.264, faststart, no HLS. Same asset for X/LinkedIn."
-          />
-        </motion.div>
       </section>
+
+      <section className="wrap section section-tight">
+        <DemoPlayer
+          src="/media/demo.mp4"
+          poster="/media/demo-poster.svg"
+          caption="Short demo embed — 6s H.264, faststart, no HLS. Same asset for X/LinkedIn."
+        />
+      </section>
+
       <section className="wrap section">
-        <p className="section-label">Latest</p>
-        <PostList posts={rest} />
+        <p className="section-label">Writing</p>
+        <PostList posts={posts} />
       </section>
     </div>
   )

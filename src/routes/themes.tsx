@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { applyTheme } from '~/components/ThemeDock'
+import { applyTheme } from '~/components/ThemeToggle'
 import { THEME_SWATCH, THEMES } from '~/lib/themes'
 import { seo } from '~/utils/seo'
 
@@ -7,7 +7,7 @@ export const Route = createFileRoute('/themes')({
   head: () => ({
     meta: seo({
       title: 'Themes — Om Naidu',
-      description: 'Four live design directions. Pick one. The dock at the bottom works on every page.',
+      description: 'Light or dark. Same site, two canvases.',
       url: '/themes',
     }),
   }),
@@ -17,15 +17,11 @@ export const Route = createFileRoute('/themes')({
 function ThemesPage() {
   return (
     <section className="wrap article">
-      <p className="section-label">Choose a look</p>
-      <h1 className="article-title">Four themes. Same site.</h1>
-      <p className="theme-choose-note">
-        How to choose: click around Home, Writing, and a post — then pick the theme that feels right.
-        The dock at the bottom follows you on every page.
-      </p>
+      <p className="section-label">Appearance</p>
+      <h1 className="article-title">Light or dark.</h1>
       <p style={{ color: 'var(--muted)', maxWidth: '54ch', marginBottom: 28 }}>
-        Parchment is the Cursor-like cream lab. Ink is the night version. Paper leans journal.
-        Terminal leans systems notebook.
+        Parchment is the warm cream lab. Ink is the night reading version. Pick one — the toggle in the
+        header works on every page.
       </p>
       <div className="theme-preview-grid">
         {THEMES.map((theme) => (
@@ -39,9 +35,9 @@ function ThemesPage() {
               window.dispatchEvent(new CustomEvent('om-theme', { detail: theme.id }))
             }}
           >
-            {theme.recommended ? <span className="theme-preview-badge">Recommended</span> : null}
+            {theme.recommended ? <span className="theme-preview-badge">Default</span> : null}
             <div className="theme-preview-frame" data-theme={theme.id}>
-              <span className="theme-preview-wordmark">Om Naidu</span>
+              <span className="theme-preview-wordmark">omnaidu</span>
               <p className="theme-preview-kicker">Engineering lab</p>
               <h2 className="theme-preview-headline">Hard systems.</h2>
               <span className="theme-preview-line" aria-hidden />

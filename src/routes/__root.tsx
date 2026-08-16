@@ -10,21 +10,19 @@ import * as React from 'react'
 import { DefaultCatchBoundary } from '~/components/DefaultCatchBoundary'
 import { NotFound } from '~/components/NotFound'
 import { SiteFooter, SiteHeader } from '~/components/Chrome'
-import { ThemeDock } from '~/components/ThemeDock'
-import { DEFAULT_THEME, THEME_COOKIE, isThemeId, type ThemeId } from '~/lib/themes'
+import { DEFAULT_THEME, THEME_COOKIE, normalizeThemeId, type ThemeId } from '~/lib/themes'
 import { seo } from '~/utils/seo'
 import appCss from '~/styles/app.css?url'
 
 function themeFromCookie(cookie: string | undefined) {
   const match = cookie?.match(new RegExp(`(?:^|;\\s*)${THEME_COOKIE}=([^;]+)`))
-  const value = match?.[1]
-  return isThemeId(value) ? value : DEFAULT_THEME
+  return normalizeThemeId(match?.[1])
 }
 
 export const Route = createRootRoute({
   loader: ({ location }) => {
     const fromQuery = new URLSearchParams(location.searchStr ?? '').get('theme')
-    if (isThemeId(fromQuery)) return { theme: fromQuery as ThemeId }
+    if (fromQuery) return { theme: normalizeThemeId(fromQuery) }
     if (typeof document !== 'undefined') {
       return { theme: themeFromCookie(document.cookie) }
     }
@@ -46,7 +44,7 @@ export const Route = createRootRoute({
     ],
     scripts: [
       {
-        children: `(() => { const m = document.cookie.match(/om-theme=([^;]+)/); const t = m && /^(parchment|ink|paper|terminal)$/.test(m[1]) ? m[1] : 'parchment'; document.documentElement.dataset.theme = t; })()`,
+        children: `(() => { const m = document.cookie.match(/om-theme=([^;]+)/); const raw = m && m[1]; const t = raw === 'ink' ? 'ink' : raw === 'paper' ? 'parchment' : raw === 'terminal' ? 'ink' : 'parchment'; document.documentElement.dataset.theme = t; })()`,
       },
     ],
   }),
@@ -63,8 +61,8 @@ function RootComponent() {
 
   React.useEffect(() => {
     const onTheme = (event: Event) => {
-      const next = (event as CustomEvent<ThemeId>).detail
-      if (isThemeId(next)) setTheme(next)
+      const next = normalizeThemeId((event as CustomEvent<string>).detail)
+      setTheme(next)
     }
     window.addEventListener('om-theme', onTheme)
     return () => window.removeEventListener('om-theme', onTheme)
@@ -76,12 +74,11 @@ function RootComponent() {
 
   return (
     <div className="site-shell">
-      <SiteHeader />
+      <SiteHeader theme={theme} />
       <main className="site-main">
         <Outlet />
       </main>
       <SiteFooter />
-      <ThemeDock active={theme} />
     </div>
   )
 }

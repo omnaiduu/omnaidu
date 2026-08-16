@@ -1,15 +1,14 @@
 import { createFileRoute, Link, notFound } from '@tanstack/react-router'
 import { DemoPlayer } from '~/components/DemoPlayer'
-import { Proof } from '~/components/Proof'
+import { PostBody } from '~/components/PostBody'
 import { fetchPost } from '~/lib/queries'
-import { renderMarkdown } from '~/lib/markdown'
 import { seo } from '~/utils/seo'
 
 export const Route = createFileRoute('/blog/$slug')({
   loader: async ({ params, location }) => {
     const data = await fetchPost({ data: { slug: params.slug, url: location.href } })
     if (!data) throw notFound()
-    return { ...data, html: renderMarkdown(data.post.body.replace(/^# .+\n+/, '')) }
+    return data
   },
   head: ({ loaderData, params }) => {
     const post = loaderData?.post
@@ -34,7 +33,7 @@ function formatDate(value: string) {
 }
 
 function BlogPost() {
-  const { post, related, html } = Route.useLoaderData()
+  const { post, related } = Route.useLoaderData()
 
   return (
     <article className="article">
@@ -55,8 +54,7 @@ function BlogPost() {
         </div>
       ) : null}
       <div className="narrow">
-        <div className="prose" dangerouslySetInnerHTML={{ __html: html }} />
-        <Proof post={post} />
+        <PostBody markdown={post.body} />
         {related.length > 0 ? (
           <div style={{ marginTop: 48 }}>
             <p className="section-label">Related</p>

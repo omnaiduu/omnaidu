@@ -19,11 +19,17 @@ export const SEED_POSTS: PublishInput[] = [
     readingMinutes: 8,
     body: `# A code-owned bank turn loop in Rust
 
+:::callout{tone="note"}
 This is a **demo post** so you can judge layout, type, proof blocks, and the short demo player.
+:::
 
 ## Problem
 
 Agent frameworks want to own the loop. For money movement that is the wrong shape. A turn in a bank bot is a state machine: authenticate, parse intent, call a typed tool, render a reply. The LLM should classify. It should not invent a transfer.
+
+:::pullquote{cite="lab note"}
+The turn loop is code. The model only does NLU.
+:::
 
 ## Options
 
@@ -33,13 +39,15 @@ Agent frameworks want to own the loop. For money movement that is the wrong shap
 
 ## Why this
 
-Option 2. The FE contract is OpenAPI. The turn loop is code. agentkit is a library for other work — it is not this backend.
+Option 2. The FE contract is OpenAPI. agentkit is a library for other work — it is not this backend.
 
 ## What shipped
 
-- Rust turn loop with explicit intents
-- OpenAPI types shared with a React GenUI client
-- Sandbox transfer path with fixtures
+:::steps
+1. Rust turn loop with explicit intents
+2. OpenAPI types shared with a React GenUI client
+3. Sandbox transfer path with fixtures
+:::
 
 \`\`\`rust
 match intent {
@@ -49,9 +57,28 @@ match intent {
 }
 \`\`\`
 
+:::demo{src="/media/demo.mp4" poster="/media/demo-poster.svg"}
+Short sandbox run — same asset embedded on feeds.
+:::
+
+:::figure{src="/media/demo-poster.svg" alt="Sandbox frame still"}
+Poster frame pulled from the demo asset.
+:::
+
 ## How verified
 
-Happy path, bad JSON, missing auth, and a real sandbox run. Tests are the referee. The demo is the receipt.
+| Case | Result |
+| --- | --- |
+| Happy path | green |
+| Bad JSON | typed error |
+| Missing auth | reject |
+| Sandbox run | demo matches fixture |
+
+:::proof{tests="142 passing" repo="https://github.com/omnaiduu/bankbot-rs"}
+{"benches":[{"name":"turn p99","value":"12ms"},{"name":"binary","value":"4.1MB"}]}
+:::
+
+Tests are the referee. The demo is the receipt.
 `,
   },
   {
@@ -87,6 +114,10 @@ Struct tags → tool schema. Nested objects and arrays work. Bad types fail loud
 | Array of objects | schema matches fixture |
 | Unsupported type | compile-time / runtime fail |
 
+:::proof{tests="87 passing" repo="https://github.com/omnaiduu/agentkit"}
+{"benches":[{"name":"schema gen","value":"0.4ms"}]}
+:::
+
 This post is tagged **projects**. Same writing surface as research — no separate projects site.
 `,
   },
@@ -110,9 +141,11 @@ New model: I understand **behavior** deeply → AI writes → I trust it because
 
 ## What I still own
 
+:::steps
 1. Behavior — what should happen
 2. Boundaries — what is not allowed
 3. Proof — tests, fixtures, a real run
+:::
 
 ## Format for every public post
 
@@ -147,19 +180,21 @@ A 15 minute talking remake of this page.
 
 ## Traffic model
 
+:::steps
 1. Feed discovery
 2. Click home
 3. SEO on the post
 4. Not YouTube search for a lecture
+:::
 
 Tagged **writing**. Still a post. Still proof-shaped.
 `,
   },
   {
     slug: 'edge-cache-d1-mcp',
-    title: 'Posts live in D1. Agents publish over MCP. Cache sits in front.',
+    title: 'Posts live in D1. Agents publish privately. Cache sits in front.',
     abstract:
-      'Git is the app. D1 is the content. Cloudflare Cache is the read path. This demo is that architecture, not a CMS with logins.',
+      'Git is the app. D1 is the content. Cloudflare Cache is the read path. Agents publish through a private MCP surface — not a CMS with logins.',
     tag: 'systems',
     publishedAt: '2026-08-16',
     demoUrl: '/media/demo.mp4',
@@ -171,7 +206,11 @@ Tagged **writing**. Still a post. Still proof-shaped.
       { name: 'store', value: 'D1' },
     ]),
     readingMinutes: 7,
-    body: `# Posts live in D1. Agents publish over MCP. Cache sits in front.
+    body: `# Posts live in D1. Agents publish privately. Cache sits in front.
+
+:::callout{tone="idea"}
+Git is the app. D1 is the content. Cloudflare Cache is the read path — not a CMS with logins.
+:::
 
 ## Read path
 
@@ -179,20 +218,24 @@ Worker → Cache API (\`posts:list\`, \`posts:slug\`) → D1 on miss → store J
 
 ## Write path
 
-No admin UI. An agent calls MCP tools:
+No admin UI. Agents publish through a private MCP surface — authenticated tool calls, not something visitors need to know about.
 
-- \`list_posts\`
-- \`get_post\`
-- \`publish_post\`
-- \`unpublish_post\`
+:::steps
+1. Agent calls \`list_posts\`, \`get_post\`, \`publish_post\`, or \`unpublish_post\`
+2. Worker validates auth header
+3. D1 write + cache purge
+4. Media lands in R2 when needed
+:::
 
-Auth is a shared secret header. Media goes to R2. Short demos are H.264 MP4 with \`faststart\`, not HLS.
+Short demos are H.264 MP4 with \`faststart\`, not HLS.
+
+:::proof{tests="seed + cache purge on write" repo="https://github.com/omnaiduu/mywebsite"}
+{"benches":[{"name":"list cache","value":"Cache API"},{"name":"store","value":"D1"}]}
+:::
 
 ## Why not git-as-CMS
 
-Agents should publish without opening a PR for every paragraph. The site code still lives in git. The words live in D1 so a publish is one tool call.
-
-Hit \`/mcp\` for the protocol surface. Hit \`/og/edge-cache-d1-mcp\` for the generated share image.
+Agents should publish without opening a PR for every paragraph. The site code lives in git. The words live in D1 so a publish is one tool call.
 `,
   },
 ]
