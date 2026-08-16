@@ -40,10 +40,12 @@ export async function cachedJson<T>(
   }
 }
 
+const LIST_KEYS = ['list:all', 'list:projects', 'list:research', 'list:systems', 'list:writing']
+
 export async function purgePostCaches(request: Request, slug?: string) {
   try {
     const cache = caches.default
-    await cache.delete(cacheKey(request, 'list:all'))
+    await Promise.all(LIST_KEYS.map((key) => cache.delete(cacheKey(request, key))))
     if (slug) {
       await cache.delete(cacheKey(request, `post:${slug}`))
     }

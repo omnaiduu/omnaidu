@@ -101,16 +101,21 @@ export async function listPosts(tag?: PostTag | 'all'): Promise<Post[]> {
   return (results ?? []).map(rowToPost)
 }
 
-export async function getPost(slug: string): Promise<Post | null> {
+export async function getPost(slug: string, opts?: { includeDrafts?: boolean }): Promise<Post | null> {
   await ensureSeeded()
+  const includeDrafts = opts?.includeDrafts === true
   if (!hasDb()) {
-    return memoryPosts.find((post) => post.slug === slug && post.status === 'published') ?? null
+    return (
+      memoryPosts.find(
+        (post) => post.slug === slug && (includeDrafts || post.status === 'published'),
+      ) ?? null
+    )
   }
-  const row = await env.DB.prepare(
-    `SELECT * FROM posts WHERE slug = ? AND status = 'published'`,
-  )
-    .bind(slug)
-    .first<PostRow>()
+  const row = includeDrafts
+    ? await env.DB.prepare(`SELECT * FROM posts WHERE slug = ?`).bind(slug).first<PostRow>()
+    : await env.DB.prepare(`SELECT * FROM posts WHERE slug = ? AND status = 'published'`)
+        .bind(slug)
+        .first<PostRow>()
   return row ? rowToPost(row) : null
 }
 
@@ -179,7 +184,7 @@ async function upsertPost(input: PublishInput) {
 export async function publishPost(input: PublishInput): Promise<Post> {
   await ensureSeeded()
   await upsertPost(input)
-  const post = await getPost(input.slug)
+  const post = await getPost(input.slug, { includeDrafts: true })
   if (!post && input.status === 'draft') {
     return fromSeed(input, 0)
   }

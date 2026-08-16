@@ -24,7 +24,10 @@ ${urls
   .join('\n')}
 </urlset>`
         return new Response(xml, {
-          headers: { 'content-type': 'application/xml; charset=utf-8' },
+          headers: {
+            'content-type': 'application/xml; charset=utf-8',
+            'cache-control': 'public, max-age=300',
+          },
         })
       },
     },

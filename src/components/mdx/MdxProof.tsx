@@ -1,3 +1,6 @@
+import * as React from 'react'
+import { nodeText } from '~/lib/node-text'
+
 type Bench = { name: string; value: string }
 
 export function MdxProof({
@@ -10,15 +13,13 @@ export function MdxProof({
   children?: React.ReactNode
 }) {
   let benches: Bench[] = []
-  if (children) {
-    const raw = String(children).trim()
-    if (raw.startsWith('{')) {
-      try {
-        const parsed = JSON.parse(raw) as { benches?: Bench[] }
-        benches = parsed.benches ?? []
-      } catch {
-        /* ignore malformed JSON */
-      }
+  const raw = nodeText(children).trim()
+  if (raw.startsWith('{')) {
+    try {
+      const parsed = JSON.parse(raw) as { benches?: Bench[] }
+      benches = parsed.benches ?? []
+    } catch {
+      /* ignore malformed JSON */
     }
   }
 

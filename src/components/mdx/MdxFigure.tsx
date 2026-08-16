@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react'
+
 export function MdxFigure({
   src,
   alt,
@@ -5,7 +7,7 @@ export function MdxFigure({
 }: {
   src?: string
   alt?: string
-  children?: React.ReactNode
+  children?: ReactNode
 }) {
   if (!src) return null
   return (

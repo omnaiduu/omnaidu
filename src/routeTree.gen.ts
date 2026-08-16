@@ -18,6 +18,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ThemesRouteImport } from './routes/themes'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as FilesSplatRouteImport } from './routes/files.$'
 import { Route as OgSlugRouteImport } from './routes/og.$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -65,6 +66,11 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => BlogRoute,
 } as any)
+const FilesSplatRoute = FilesSplatRouteImport.update({
+  id: '/files/$',
+  path: '/files/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OgSlugRoute = OgSlugRouteImport.update({
   id: '/og/$slug',
   path: '/og/$slug',
@@ -80,6 +86,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/themes': typeof ThemesRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/files/$': typeof FilesSplatRoute
   '/og/$slug': typeof OgSlugRoute
   '/blog/': typeof BlogIndexRoute
 }
@@ -91,6 +98,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/themes': typeof ThemesRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/files/$': typeof FilesSplatRoute
   '/og/$slug': typeof OgSlugRoute
   '/blog': typeof BlogIndexRoute
 }
@@ -104,6 +112,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/themes': typeof ThemesRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/files/$': typeof FilesSplatRoute
   '/og/$slug': typeof OgSlugRoute
   '/blog/': typeof BlogIndexRoute
 }
@@ -118,6 +127,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/themes'
     | '/blog/$slug'
+    | '/files/$'
     | '/og/$slug'
     | '/blog/'
   fileRoutesByTo: FileRoutesByTo
@@ -129,6 +139,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/themes'
     | '/blog/$slug'
+    | '/files/$'
     | '/og/$slug'
     | '/blog'
   id:
@@ -141,6 +152,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/themes'
     | '/blog/$slug'
+    | '/files/$'
     | '/og/$slug'
     | '/blog/'
   fileRoutesById: FileRoutesById
@@ -153,6 +165,7 @@ export interface RootRouteChildren {
   RssDotxmlRoute: typeof RssDotxmlRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ThemesRoute: typeof ThemesRoute
+  FilesSplatRoute: typeof FilesSplatRoute
   OgSlugRoute: typeof OgSlugRoute
 }
 
@@ -221,6 +234,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof BlogRoute
     }
+    '/files/$': {
+      id: '/files/$'
+      path: '/files/$'
+      fullPath: '/files/$'
+      preLoaderRoute: typeof FilesSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/og/$slug': {
       id: '/og/$slug'
       path: '/og/$slug'
@@ -251,6 +271,7 @@ const rootRouteChildren: RootRouteChildren = {
   RssDotxmlRoute: RssDotxmlRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ThemesRoute: ThemesRoute,
+  FilesSplatRoute: FilesSplatRoute,
   OgSlugRoute: OgSlugRoute,
 }
 export const routeTree = rootRouteImport

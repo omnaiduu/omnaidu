@@ -1,4 +1,6 @@
+import * as React from 'react'
 import { DemoPlayer } from '~/components/DemoPlayer'
+import { nodeText } from '~/lib/node-text'
 
 export function MdxDemo({
   src,
@@ -10,6 +12,6 @@ export function MdxDemo({
   children?: React.ReactNode
 }) {
   if (!src) return null
-  const caption = typeof children === 'string' ? children : undefined
+  const caption = nodeText(children).trim() || undefined
   return <DemoPlayer src={src} poster={poster} caption={caption} />
 }

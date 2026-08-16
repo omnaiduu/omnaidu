@@ -1,9 +1,11 @@
+import type { ReactNode } from 'react'
+
 export function MdxPullquote({
   cite,
   children,
 }: {
   cite?: string
-  children?: React.ReactNode
+  children?: ReactNode
 }) {
   return (
     <blockquote className="mdx-pullquote">

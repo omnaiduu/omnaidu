@@ -31,7 +31,10 @@ ${items}
 </channel>
 </rss>`
         return new Response(xml, {
-          headers: { 'content-type': 'application/rss+xml; charset=utf-8' },
+          headers: {
+            'content-type': 'application/rss+xml; charset=utf-8',
+            'cache-control': 'public, max-age=120',
+          },
         })
       },
     },

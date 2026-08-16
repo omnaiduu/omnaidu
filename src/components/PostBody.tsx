@@ -1,4 +1,5 @@
 import * as React from 'react'
+import type { Components } from 'react-markdown'
 import ReactMarkdown from 'react-markdown'
 import remarkDirective from 'remark-directive'
 import remarkGfm from 'remark-gfm'
@@ -125,7 +126,7 @@ export function PostBody({ markdown }: { markdown: string }) {
             return <h3 id={id}>{children}</h3>
           },
           ol: ({ children }) => <ol>{children}</ol>,
-        }}
+        } as Components}
       >
         {body}
       </ReactMarkdown>

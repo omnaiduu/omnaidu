@@ -11,12 +11,18 @@ export function SiteHeader({ theme }: { theme: ThemeId }) {
           <span className="wordmark-mark" aria-hidden />
         </Link>
         <nav className="nav-links" aria-label="Primary">
-          <Link to="/blog" activeProps={{ 'data-status': 'active' }}>
+          <Link
+            to="/blog"
+            search={{ tag: 'all' }}
+            activeOptions={{ exact: true, includeSearch: true }}
+            activeProps={{ 'data-status': 'active' }}
+          >
             Writing
           </Link>
           <Link
             to="/blog"
             search={{ tag: 'projects' }}
+            activeOptions={{ exact: true, includeSearch: true }}
             activeProps={{ 'data-status': 'active' }}
           >
             Projects
