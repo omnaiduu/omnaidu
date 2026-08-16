@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { EmptyList } from '~/components/EmptyIndex'
 import { PostList } from '~/components/PostList'
 import { TagFilters } from '~/components/TagFilters'
 import { fetchPosts } from '~/lib/queries'
@@ -35,16 +36,23 @@ function BlogIndex() {
   const tag = Route.useSearch().tag ?? 'all'
 
   return (
-    <section className="wrap section" style={{ paddingTop: 48 }}>
-      <p className="section-label">Writing</p>
-      <h1 className="article-title" style={{ fontSize: 'clamp(36px, 6vw, 56px)' }}>
-        Writing
-      </h1>
-      <p style={{ color: 'var(--muted)', maxWidth: '46ch', marginBottom: 28 }}>
+    <section className="wrap writing-index">
+      <p className="home-kicker">Index</p>
+      <h1 className="article-title writing-title">Writing</h1>
+      <p className="writing-lede">
         Projects, research, systems, and notes. One list. Filter by category.
       </p>
       <TagFilters active={tag} />
-      <PostList posts={posts} />
+      <PostList
+        posts={posts}
+        stagger
+        empty={
+          <EmptyList
+            title={tag === 'all' ? 'Nothing published yet' : `No ${tag} yet`}
+            body="When a post has a receipt, it lands in this list."
+          />
+        }
+      />
     </section>
   )
 }

@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound } from '@tanstack/react-router'
 import { CiteButton } from '~/components/CiteButton'
 import { PostHero } from '~/components/PostHero'
+import { PostList } from '~/components/PostList'
 import { PostToc } from '~/components/PostToc'
 import { fetchPostPage } from '~/lib/queries'
 import { ogImagePath, SITE_URL } from '~/lib/site'
@@ -61,6 +62,10 @@ function BlogPost() {
     <article className="article" data-tag={post.tag}>
       <div className="narrow">
         <p className="post-meta">
+          <Link className="link-ember" to="/blog">
+            Writing
+          </Link>
+          {' · '}
           {formatDate(post.publishedAt)} · {post.tag} · {post.readingMinutes} min
         </p>
         <h1 className="article-title">{post.title}</h1>
@@ -77,15 +82,9 @@ function BlogPost() {
       <div className="narrow">
         {Body}
         {related.length > 0 ? (
-          <div style={{ marginTop: 48 }}>
+          <div className="related-block">
             <p className="section-label">Related</p>
-            {related.map((item) => (
-              <p key={item.slug} style={{ marginBottom: 10 }}>
-                <Link className="link-ember" to="/blog/$slug" params={{ slug: item.slug }}>
-                  {item.title} →
-                </Link>
-              </p>
-            ))}
+            <PostList posts={related} />
           </div>
         ) : null}
       </div>

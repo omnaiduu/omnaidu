@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { Wordmark } from '~/components/Wordmark'
-import { GITHUB_URL, SITE_EMAIL_HREF } from '~/lib/site'
+import { GITHUB_URL, SITE_EMAIL, SITE_EMAIL_HREF } from '~/lib/site'
 
 export function SiteHeader() {
   return (
@@ -22,6 +22,9 @@ export function SiteHeader() {
             About
           </Link>
         </nav>
+        <a className="site-header-mail" href={SITE_EMAIL_HREF}>
+          {SITE_EMAIL}
+        </a>
       </div>
     </header>
   )
@@ -30,7 +33,7 @@ export function SiteHeader() {
 export function SiteFooter() {
   return (
     <footer className="wrap footer">
-      <span>Goa</span>
+      <span>Goa · omnaidu.com</span>
       <span>
         <a className="link-ember" href={GITHUB_URL}>
           GitHub
