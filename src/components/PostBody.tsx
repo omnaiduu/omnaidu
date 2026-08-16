@@ -6,9 +6,12 @@ import remarkGfm from 'remark-gfm'
 import type { Root } from 'mdast'
 import { visit } from 'unist-util-visit'
 import { Callout } from '~/components/mdx/Callout'
+import { Kbd } from '~/components/mdx/Kbd'
 import { MdxApiSpec } from '~/components/mdx/MdxApiSpec'
 import { MdxArch } from '~/components/mdx/MdxArch'
 import { MdxChart } from '~/components/mdx/MdxChart'
+import { MdxCompare } from '~/components/mdx/MdxCompare'
+import { MdxDemo } from '~/components/mdx/MdxDemo'
 import { MdxDetails } from '~/components/mdx/MdxDetails'
 import { MdxDiff } from '~/components/mdx/MdxDiff'
 import { MdxFileTree } from '~/components/mdx/MdxFileTree'
@@ -59,7 +62,7 @@ function languageLabel(className?: string) {
   return match?.[1] ?? null
 }
 
-function CodeBlock({ children, className }: { children?: React.ReactNode; className?: string }) {
+export function CodeBlock({ children, className }: { children?: React.ReactNode; className?: string }) {
   const [copied, setCopied] = React.useState(false)
   const text = getText(children).replace(/\n$/, '')
   const lang = languageLabel(className)
@@ -80,17 +83,15 @@ function CodeBlock({ children, className }: { children?: React.ReactNode; classN
 
   return (
     <div className="code-block">
-      {lang ? (
-        <div className="code-block-header">
-          <span className="code-lang">{lang}</span>
-        </div>
-      ) : null}
+      <div className="code-block-header">
+        <span className="code-lang">{lang ?? 'code'}</span>
+        <button type="button" className="code-copy" onClick={copy} aria-label="Copy code">
+          {copied ? 'Copied' : 'Copy'}
+        </button>
+      </div>
       <pre className={className}>
         <code>{children}</code>
       </pre>
-      <button type="button" className="code-copy" onClick={copy} aria-label="Copy code">
-        {copied ? 'Copied' : 'Copy'}
-      </button>
     </div>
   )
 }
@@ -121,12 +122,14 @@ export function PostBody({ markdown }: { markdown: string }) {
           arch: MdxArch,
           callout: Callout,
           chart: MdxChart,
+          compare: MdxCompare,
           demo: MdxDemo,
           details: MdxDetails,
           diff: MdxDiff,
           figure: MdxFigure,
           filetree: MdxFileTree,
           graph: MdxGraph,
+          kbd: Kbd,
           proof: MdxProof,
           pullquote: MdxPullquote,
           steps: MdxSteps,

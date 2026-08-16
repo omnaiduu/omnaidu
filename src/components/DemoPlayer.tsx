@@ -4,10 +4,12 @@ export function DemoPlayer({
   src,
   poster,
   caption,
+  captions,
 }: {
   src: string
   poster?: string | null
   caption?: string
+  captions?: string | null
 }) {
   const videoRef = React.useRef<HTMLVideoElement>(null)
   const [armed, setArmed] = React.useState(false)
@@ -72,7 +74,11 @@ export function DemoPlayer({
           onPlay={() => setPlaying(true)}
           onPause={() => setPlaying(false)}
           onEnded={() => setPlaying(false)}
-        />
+        >
+          {armed && captions ? (
+            <track kind="captions" srcLang="en" label="Captions" src={captions} default />
+          ) : null}
+        </video>
         {!playing ? (
           <button
             type="button"

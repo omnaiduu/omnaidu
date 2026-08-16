@@ -32,8 +32,9 @@ function LabOverview() {
     <section className="lab-page">
       <h1 className="lab-title">Overview</h1>
       <p className="lab-lead">
-        This is a picker for homepage looks and post components — not the public information architecture.
-        Pick a direction here; production ships separately.
+        This is a picker — not public IA. Homepage A (index first, the writing list) is live.
+        The rest are options: a 2D desk, a featured demo, a split manifesto, plus every post
+        block, OG card, and the short-clip player.
       </p>
       <div className="lab-card-grid">
         {CARDS.map((card) => (

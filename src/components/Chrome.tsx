@@ -27,9 +27,6 @@ export function SiteHeader({ theme }: { theme: ThemeId }) {
           <Link to="/lab" activeProps={{ 'data-status': 'active' }}>
             Lab
           </Link>
-          <Link to="/lab" activeProps={{ 'data-status': 'active' }}>
-            Lab
-          </Link>
         </nav>
         <ThemeToggle active={theme} />
       </div>

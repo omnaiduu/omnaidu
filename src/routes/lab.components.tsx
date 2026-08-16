@@ -19,6 +19,7 @@ import { MdxSteps } from '~/components/mdx/MdxSteps'
 import { NetworkGraph, SAMPLE_GRAPH } from '~/components/mdx/NetworkGraph'
 import { Terminal, SAMPLE_TERMINAL_LINES } from '~/components/mdx/Terminal'
 import { Timeline, SAMPLE_TIMELINE } from '~/components/mdx/Timeline'
+import { CodeBlock } from '~/components/PostBody'
 import { seo } from '~/utils/seo'
 
 export const Route = createFileRoute('/lab/components')({
@@ -50,18 +51,20 @@ const LINE_POINTS = [
 ]
 
 function LabBlock({
+  id,
   title,
   when,
   directive,
   children,
 }: {
+  id: string
   title: string
   when: string
   directive?: string
   children: ReactNode
 }) {
   return (
-    <section className="lab-block">
+    <section className="lab-block" id={id}>
       <h2>{title}</h2>
       <p className="lab-block-when">{when}</p>
       {children}
@@ -74,28 +77,73 @@ function LabBlock({
   )
 }
 
+const TOC = [
+  ['callout', 'Callout'],
+  ['quote', 'Pullquote'],
+  ['steps', 'Steps'],
+  ['proof', 'Proof'],
+  ['figure', 'Figure'],
+  ['demo', 'Demo'],
+  ['table', 'Table'],
+  ['code', 'Code'],
+  ['bar', 'Bar chart'],
+  ['line', 'Line chart'],
+  ['diff', 'Diff'],
+  ['terminal', 'Terminal'],
+  ['tree', 'File tree'],
+  ['arch', 'Architecture'],
+  ['timeline', 'Timeline'],
+  ['graph', 'Graph'],
+  ['kbd', 'Keyboard'],
+  ['details', 'Details'],
+  ['api', 'API spec'],
+  ['notes', 'Footnotes'],
+  ['compare', 'Compare'],
+] as const
+
 function LabComponents() {
   return (
     <section className="lab-page lab-components">
       <h1 className="lab-title">Components</h1>
       <p className="lab-lead">
         Real blocks — not screenshots. Each section shows when to use it and the directive an agent would
-        write.
+        write in a post.
       </p>
+      <nav className="lab-toc" aria-label="Component list">
+        {TOC.map(([id, label]) => (
+          <a key={id} href={`#${id}`}>
+            {label}
+          </a>
+        ))}
+      </nav>
 
       <LabBlock
+        id="callout"
         title="Callout"
-        when="Inline note, warning, or idea without breaking flow."
-        directive={`:::callout{tone="warn"}\nAgent loops must not own money movement.\n:::`}
+        when="Inline note, warning, idea, result, or danger without breaking flow."
+        directive={`:::callout{tone="warn" title="Queue lag"}\nReaders miss this in a wall of text.\n:::`}
       >
         <div className="lab-callout-row">
-          <Callout tone="note">Default note tone for context.</Callout>
-          <Callout tone="warn">Warn when a constraint is easy to miss.</Callout>
-          <Callout tone="idea">Idea tone for hypotheses.</Callout>
+          <Callout tone="note" title="Note">
+            Default aside. Use for definitions or caveats.
+          </Callout>
+          <Callout tone="warn" title="Queue lag">
+            Readers miss this in a wall of text.
+          </Callout>
+          <Callout tone="idea" title="Hypothesis">
+            Cache the list, not the markdown AST.
+          </Callout>
+          <Callout tone="result" title="Result">
+            p95 dropped 40ms after the cache.
+          </Callout>
+          <Callout tone="danger" title="Do not">
+            Do not put secrets in posts.
+          </Callout>
         </div>
       </LabBlock>
 
       <LabBlock
+        id="quote"
         title="Pullquote"
         when="Pull a single sentence out of the narrative."
         directive={`:::pullquote{cite="lab note"}\nThe turn loop is code.\n:::`}
@@ -104,6 +152,7 @@ function LabComponents() {
       </LabBlock>
 
       <LabBlock
+        id="steps"
         title="Steps"
         when="Ordered rollout or how-to without a numbered prose list."
         directive={`:::steps\n1. Scaffold turn loop\n2. Wire OpenAPI tools\n3. Ship sandbox demo\n:::`}
@@ -118,6 +167,7 @@ function LabComponents() {
       </LabBlock>
 
       <LabBlock
+        id="proof"
         title="Proof"
         when="Receipt block: tests, benches, repo link."
         directive={`:::proof{tests="142 passing" repo="https://github.com/omnaiduu/bankbot-rs"}\n{"benches":[{"name":"turn p99","value":"12ms"}]}\n:::`}
@@ -128,6 +178,7 @@ function LabComponents() {
       </LabBlock>
 
       <LabBlock
+        id="figure"
         title="Figure"
         when="Image with caption — poster stills, diagrams."
         directive={`:::figure{src="/media/demo-poster.svg" alt="Sandbox frame"}\nCaption text.\n:::`}
@@ -138,18 +189,25 @@ function LabComponents() {
       </LabBlock>
 
       <LabBlock
+        id="demo"
         title="DemoPlayer"
         when="Short H.264 clip with required poster — same file for site and feeds."
-        directive={`:::demo{src="/media/demo.mp4" poster="/media/demo-poster.svg"}\nCaption under the player.\n:::`}
+        directive={`:::demo{src="/media/demo.mp4" poster="/media/demo-poster.svg" captions="/media/demo.vtt"}\nCaption under the player.\n:::`}
       >
         <DemoPlayer
           src="/media/demo.mp4"
           poster="/media/demo-poster.svg"
-          caption="6s sandbox run — poster required, preload none until play."
+          captions="/media/demo.vtt"
+          caption="6s sandbox run — poster required, nothing loads until play."
         />
       </LabBlock>
 
-      <LabBlock title="GFM table" when="Verification matrix or option comparison.">
+      <LabBlock
+        id="table"
+        title="GFM table"
+        when="Verification matrix or option comparison."
+        directive={`| Case | Result |\n| --- | --- |\n| Happy path | green |`}
+      >
         <div className="table-wrap">
           <table>
             <thead>
@@ -177,28 +235,22 @@ function LabComponents() {
       </LabBlock>
 
       <LabBlock
+        id="code"
         title="Code block"
         when="Fenced code with language label and copy button."
-        directive={`\`\`\`rust\nmatch intent { /* … */ }\n\`\`\``}
+        directive={'```rust\nmatch intent {\n    Intent::Balance => tools.balances(session).await?,\n}\n```'}
       >
-        <div className="code-block">
-          <div className="code-block-header">
-            <span className="code-lang">rust</span>
-          </div>
-          <pre className="language-rust">
-            <code>{`match intent {
+        <CodeBlock className="language-rust">
+          {`match intent {
     Intent::Balance => tools.balances(session).await?,
     Intent::Transfer(spec) => tools.transfer(session, spec).await?,
     Intent::Unknown => Reply::clarify("I can check balances or send a transfer."),
-}`}</code>
-          </pre>
-          <button type="button" className="code-copy" aria-label="Copy code">
-            Copy
-          </button>
-        </div>
+}`}
+        </CodeBlock>
       </LabBlock>
 
       <LabBlock
+        id="bar"
         title="BarChart"
         when="Compare a few benchmark numbers inline."
         directive={`:::chart{kind="bar"}\n[{"label":"p99","value":12,"unit":"ms"}]\n:::`}
@@ -207,6 +259,7 @@ function LabComponents() {
       </LabBlock>
 
       <LabBlock
+        id="line"
         title="LineChart"
         when="Latency or metric trend across turns."
         directive={`:::chart{kind="line"}\n[{"label":"t1","value":18}]\n:::`}
@@ -215,14 +268,16 @@ function LabComponents() {
       </LabBlock>
 
       <LabBlock
+        id="diff"
         title="Diff"
         when="Show a small code change — split or unified."
-        directive={`:::diff\n{"unified":[{"line":"…","type":"add"}]}\n:::`}
+        directive={`:::diff\n-    Intent::Balance => tools.balance().await?,\n+    Intent::Balance => tools.balances(session).await?,\n:::`}
       >
         <Diff unified={SAMPLE_DIFF_UNIFIED} />
       </LabBlock>
 
       <LabBlock
+        id="terminal"
         title="Terminal"
         when="Command output or build log excerpt."
         directive={`:::terminal{prompt="om@lab"}\n["cargo test","test result: ok"]\n:::`}
@@ -231,6 +286,7 @@ function LabComponents() {
       </LabBlock>
 
       <LabBlock
+        id="tree"
         title="FileTree"
         when="Orient the reader in a repo without a screenshot."
         directive={`:::filetree\n{"name":"bankbot-rs","children":[{"name":"src"}]}\n:::`}
@@ -239,6 +295,7 @@ function LabComponents() {
       </LabBlock>
 
       <LabBlock
+        id="arch"
         title="ArchDiagram"
         when="Simple left-to-right system flow."
         directive={`:::arch\n[{"id":"client","label":"Client"}]\n:::`}
@@ -247,6 +304,7 @@ function LabComponents() {
       </LabBlock>
 
       <LabBlock
+        id="timeline"
         title="Timeline"
         when="Ship log or milestone sequence."
         directive={`:::timeline\n[{"date":"Aug 8","title":"Scaffold"}]\n:::`}
@@ -255,6 +313,7 @@ function LabComponents() {
       </LabBlock>
 
       <LabBlock
+        id="graph"
         title="NetworkGraph"
         when="Static node/edge sketch — not interactive."
         directive={`:::graph\n{"nodes":[],"edges":[]}\n:::`}
@@ -262,13 +321,14 @@ function LabComponents() {
         <NetworkGraph nodes={SAMPLE_GRAPH.nodes} edges={SAMPLE_GRAPH.edges} />
       </LabBlock>
 
-      <LabBlock title="Kbd" when="Keyboard shortcuts in prose.">
+      <LabBlock id="kbd" title="Kbd" when="Keyboard shortcuts in prose.">
         <p>
           Press <KbdCombo keys={['⌘', 'K']} /> to open the command palette, or <Kbd>Esc</Kbd> to dismiss.
         </p>
       </LabBlock>
 
       <LabBlock
+        id="details"
         title="Details"
         when="Collapse long logs or stack traces."
         directive={`:::details{summary="Full stderr"}\nLong log body…\n:::`}
@@ -279,6 +339,7 @@ function LabComponents() {
       </LabBlock>
 
       <LabBlock
+        id="api"
         title="ApiSpec"
         when="Document one HTTP endpoint inline."
         directive={`:::apispec{method="POST" path="/v1/transfer" status="201"}\nCreates a sandbox transfer.\n:::`}
@@ -291,7 +352,7 @@ function LabComponents() {
         />
       </LabBlock>
 
-      <LabBlock title="Footnotes" when="Citations without breaking reading flow.">
+      <LabBlock id="notes" title="Footnotes" when="Citations without breaking reading flow.">
         <Footnotes notes={[{ id: 'fn-rust', text: 'Turn loop ships as a Rust binary with OpenAPI types.' }]}>
           <p>
             The backend is code-owned
@@ -300,12 +361,17 @@ function LabComponents() {
         </Footnotes>
       </LabBlock>
 
-      <LabBlock title="Compare" when="Before/after stills side by side.">
+      <LabBlock
+        id="compare"
+        title="Compare"
+        when="Before/after stills side by side."
+        directive={`:::compare{before="/og/bankbot-turn-loop" after="/og/bankbot-turn-loop?style=ink" beforeCaption="Parchment" afterCaption="Ink"}\n:::`}
+      >
         <Compare
-          before={{ src: '/media/demo-poster.svg', alt: 'Before' }}
-          after={{ src: '/media/demo-poster.svg', alt: 'After' }}
-          beforeCaption="Before"
-          afterCaption="After"
+          before={{ src: '/og/bankbot-turn-loop', alt: 'Parchment OG' }}
+          after={{ src: '/og/bankbot-turn-loop?style=ink', alt: 'Ink OG' }}
+          beforeCaption="Parchment"
+          afterCaption="Ink"
         />
       </LabBlock>
     </section>

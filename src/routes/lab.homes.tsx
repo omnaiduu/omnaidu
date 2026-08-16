@@ -34,8 +34,11 @@ function LabHomes() {
         You already liked the list. A is that list with almost no chrome. B–D add a desk, a featured post, or a split manifesto.
       </p>
 
-      <article className="home-concept">
-        <p className="home-concept-label">A · Index first · live now</p>
+      <article className="home-concept" id="concept-a">
+        <p className="home-concept-label">
+          <strong>A · Index first</strong>
+          <span className="home-concept-badge">Live · recommended</span>
+        </p>
         <p className="home-concept-why">
           Closest to Cursor’s blog. The homepage is the index. No giant name, no video above the fold. Identity is one quiet line.
         </p>
@@ -49,8 +52,10 @@ function LabHomes() {
         </div>
       </article>
 
-      <article className="home-concept">
-        <p className="home-concept-label">B · Desk 2D</p>
+      <article className="home-concept" id="concept-b">
+        <p className="home-concept-label">
+          <strong>B · Desk 2D</strong>
+        </p>
         <p className="home-concept-why">
           A looping laptop on a desk — not a stock 3D hero. Code ticks on the screen. The list still does the work.
         </p>
@@ -77,8 +82,10 @@ function LabHomes() {
         </div>
       </article>
 
-      <article className="home-concept">
-        <p className="home-concept-label">C · Featured + list</p>
+      <article className="home-concept" id="concept-c">
+        <p className="home-concept-label">
+          <strong>C · Featured + list</strong>
+        </p>
         <p className="home-concept-why">
           Latest receipt gets a large slot and a short demo. Everything else stays the list. Good if demos are the hook.
         </p>
@@ -109,14 +116,16 @@ function LabHomes() {
         </div>
       </article>
 
-      <article className="home-concept">
-        <p className="home-concept-label">D · Split manifesto</p>
+      <article className="home-concept" id="concept-d">
+        <p className="home-concept-label">
+          <strong>D · Split manifesto</strong>
+        </p>
         <p className="home-concept-why">
           Name and stance stay put on the left. The list is the page. Works on a wide desktop; stacks on a phone.
         </p>
         <div className="home-concept-frame">
-          <div className="split-home">
-            <aside className="split-home-aside">
+          <div className="home-split">
+            <aside className="home-split-rail">
               <p className="hero-kicker">Goa</p>
               <h2 className="article-title" style={{ fontSize: 36, marginTop: 8 }}>
                 Om Naidu

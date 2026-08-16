@@ -1,18 +1,25 @@
 import type { ReactNode } from 'react'
 
-type Tone = 'note' | 'warn' | 'idea'
+const TONES = new Set(['note', 'warn', 'idea', 'result', 'danger'])
 
 export function Callout({
-  tone = 'note',
+  tone,
+  kind,
+  title,
   children,
 }: {
-  tone?: Tone | string
+  tone?: string
+  kind?: string
+  title?: string
   children?: ReactNode
 }) {
-  const t = tone === 'warn' || tone === 'idea' ? tone : 'note'
+  const raw = (tone || kind || 'note').toLowerCase()
+  const t = TONES.has(raw) ? raw : 'note'
+
   return (
     <aside className="mdx-callout" data-tone={t}>
-      {children}
+      {title ? <strong className="mdx-callout-title">{title}</strong> : null}
+      <div className="mdx-callout-body">{children}</div>
     </aside>
   )
 }

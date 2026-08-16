@@ -10,17 +10,32 @@ export const Route = createFileRoute('/lab/og')({
   component: LabOg,
   head: () => ({
     meta: seo({
-      title: 'OG — Lab',
-      description: 'Open Graph image gallery for post slugs.',
+      title: 'OG images — Lab',
+      description: '1200×630 SVG share cards. Parchment, ink, and type.',
       url: '/lab/og',
     }),
   }),
 })
 
 const STYLES = [
-  { id: 'default', label: 'Parchment', query: '' },
-  { id: 'ink', label: 'Ink', query: '?style=ink' },
-  { id: 'type', label: 'Type', query: '?style=type' },
+  {
+    id: 'parchment',
+    label: 'Parchment',
+    query: '',
+    why: 'Default. Cream card, ember footer. Matches the live site.',
+  },
+  {
+    id: 'ink',
+    label: 'Ink',
+    query: '?style=ink',
+    why: 'Dark card for night posts.',
+  },
+  {
+    id: 'type',
+    label: 'Type',
+    query: '?style=type',
+    why: 'Giant title, no abstract. For short names that can shout.',
+  },
 ] as const
 
 function LabOg() {
@@ -30,9 +45,10 @@ function LabOg() {
     <section className="lab-page">
       <h1 className="lab-title">OG images</h1>
       <p className="lab-lead">
-        Each card is an SVG at <strong>1200×630</strong> — the standard <code>og:image</code> aspect. Routes
-        live at <code>/og/[slug]</code>. Three visual styles: parchment (default), ink, and type — query
-        param wiring lands in parallel.
+        Each card is SVG at <strong>1200×630</strong>, cached one hour, served from{' '}
+        <code>/og/[slug]</code>. Parchment is the default <code>og:image</code>. Ink and type are
+        query styles so you can pick per post later. Crawlers that refuse SVG still need a PNG
+        pipeline — this gallery is how the cards look on the site.
       </p>
 
       <div className="og-gallery">
@@ -53,7 +69,11 @@ function LabOg() {
                   </a>
                   <figcaption>
                     <span className="og-style-label">{style.label}</span>
-                    <code>/og/{post.slug}{style.query || ''}</code>
+                    <span>{style.why}</span>
+                    <code>
+                      /og/{post.slug}
+                      {style.query}
+                    </code>
                   </figcaption>
                 </figure>
               ))}

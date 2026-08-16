@@ -8,6 +8,21 @@ type DiffPayload = {
   unified?: { line: string; type: 'add' | 'remove' | 'same' }[]
 }
 
+function parseUnifiedText(raw: string): DiffPayload {
+  const unified = raw
+    .split('\n')
+    .filter((line) => line.length > 0)
+    .map((line) => {
+      if (line.startsWith('+++') || line.startsWith('---') || line.startsWith('@@')) {
+        return { line, type: 'same' as const }
+      }
+      if (line.startsWith('+')) return { line: line.slice(1), type: 'add' as const }
+      if (line.startsWith('-')) return { line: line.slice(1), type: 'remove' as const }
+      return { line, type: 'same' as const }
+    })
+  return { unified }
+}
+
 export function MdxDiff({ children }: { children?: React.ReactNode }) {
   const parsed = React.useMemo(() => {
     const raw = nodeText(children).trim()
@@ -18,8 +33,7 @@ export function MdxDiff({ children }: { children?: React.ReactNode }) {
         return null
       }
     }
-    const lines = raw.split('\n').filter(Boolean)
-    return { unified: lines.map((line) => ({ line, type: 'same' as const })) }
+    return parseUnifiedText(raw)
   }, [children])
 
   if (!parsed) return null
