@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { PostList } from '~/components/PostList'
+import { EmberPulse } from '~/components/home/EmberPulse'
 import { fetchPosts } from '~/lib/queries'
 import { seo } from '~/utils/seo'
 
@@ -27,7 +28,7 @@ function Home() {
       <section className="wrap home-index">
         <p className="hero-kicker">
           Engineering lab · Goa
-          <span className="ember-pulse" aria-hidden />
+          <EmberPulse />
         </p>
         <p className="home-lede">Hard systems. Verified. Written down.</p>
         <p className="home-more">

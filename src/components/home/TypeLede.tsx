@@ -1,5 +1,4 @@
-import { useReducedMotion } from 'motion/react'
-import * as React from 'react'
+import { motion, useReducedMotion } from 'motion/react'
 
 export function TypeLede({
   text,
@@ -9,30 +8,29 @@ export function TypeLede({
   className?: string
 }) {
   const reduceMotion = useReducedMotion()
-  const [count, setCount] = React.useState(reduceMotion ? text.length : 0)
 
-  React.useEffect(() => {
-    if (reduceMotion) {
-      setCount(text.length)
-      return
-    }
-    setCount(0)
-    const id = window.setInterval(() => {
-      setCount((n) => {
-        if (n >= text.length) {
-          window.clearInterval(id)
-          return n
-        }
-        return n + 1
-      })
-    }, 36)
-    return () => window.clearInterval(id)
-  }, [text, reduceMotion])
+  if (reduceMotion) {
+    return <p className={className}>{text}</p>
+  }
 
   return (
     <p className={className}>
-      {text.slice(0, count)}
-      <span className="type-caret" aria-hidden />
+      {text.split('').map((char, i) => (
+        <motion.span
+          key={`${char}-${i}`}
+          initial={{ opacity: 0, y: 4 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: i * 0.028, duration: 0.18, ease: 'easeOut' }}
+        >
+          {char === ' ' ? '\u00a0' : char}
+        </motion.span>
+      ))}
+      <motion.span
+        className="type-caret"
+        aria-hidden
+        animate={{ opacity: [1, 0, 1] }}
+        transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+      />
     </p>
   )
 }

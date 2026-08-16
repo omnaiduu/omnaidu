@@ -1134,8 +1134,134 @@
   color: var(--muted);
 }
 
+.tilt-stage {
+  transform-style: preserve-3d;
+}
+
+.magnetic-hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 96px;
+}
+
+.magnetic-ember {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  border-radius: 50%;
+  background: var(--ember);
+  pointer-events: none;
+  box-shadow: 0 0 18px var(--ember);
+  z-index: 1;
+}
+
+.glyph-field {
+  position: relative;
+  min-height: 92px;
+}
+
+.glyph-chip {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ember);
+  pointer-events: none;
+}
+
+.glyph-field-copy {
+  position: relative;
+  z-index: 1;
+}
+
+.tag-rail {
+  overflow: hidden;
+  margin: 14px 0 4px;
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+
+.tag-rail-track {
+  display: flex;
+  gap: 28px;
+  width: max-content;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.curtain-line {
+  height: 1px;
+  margin: 16px 0 8px;
+  background: var(--ember);
+  transform-origin: left center;
+}
+
+.three-desk {
+  height: 280px;
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--bg-soft) 55%, #161410);
+  overflow: hidden;
+}
+
+.three-desk-compact,
+.three-desk-wait {
+  height: 132px;
+}
+
+.css-cube-stage {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 420px;
+}
+
+.css-cube {
+  width: 48px;
+  height: 48px;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.css-cube span {
+  position: absolute;
+  inset: 0;
+  border: 1px solid color-mix(in srgb, var(--ember) 70%, var(--hairline));
+  background: color-mix(in srgb, var(--bg-lift) 70%, var(--ember) 12%);
+}
+
+.css-cube span:nth-child(1) {
+  transform: rotateY(0deg) translateZ(24px);
+}
+.css-cube span:nth-child(2) {
+  transform: rotateY(90deg) translateZ(24px);
+}
+.css-cube span:nth-child(3) {
+  transform: rotateY(180deg) translateZ(24px);
+}
+.css-cube span:nth-child(4) {
+  transform: rotateY(-90deg) translateZ(24px);
+}
+.css-cube span:nth-child(5) {
+  transform: rotateX(90deg) translateZ(24px);
+}
+.css-cube span:nth-child(6) {
+  transform: rotateX(-90deg) translateZ(24px);
+}
+
 .home-concept {
   margin-bottom: 48px;
+}
+
+.home-array-meta > .home-array-stack {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ember);
 }
 
 .ember-pulse {
@@ -1147,7 +1273,6 @@
   border-radius: 1px;
   vertical-align: 1px;
   box-shadow: 0 0 8px color-mix(in srgb, var(--ember) 70%, transparent);
-  animation: computer-ember-pulse 2s ease-in-out infinite;
 }
 
 .type-caret {
@@ -1157,7 +1282,6 @@
   margin-left: 3px;
   background: var(--ember);
   vertical-align: -0.08em;
-  animation: computer-blink 1s step-end infinite;
 }
 
 .signal-hero {
@@ -1200,27 +1324,7 @@
   inset: 8px;
   border: 1px solid color-mix(in srgb, var(--ember) 50%, transparent);
   border-radius: 50%;
-  animation: signal-ping 2.8s ease-out infinite;
-}
-
-.signal-ring-delay {
-  animation-delay: 1.4s;
-}
-
-.signal-mark-static .signal-ring {
-  animation: none;
-  opacity: 0.35;
-}
-
-@keyframes signal-ping {
-  0% {
-    transform: scale(0.35);
-    opacity: 0.7;
-  }
-  100% {
-    transform: scale(1.55);
-    opacity: 0;
-  }
+  transform-origin: center;
 }
 
 .home-stagger .post-row {

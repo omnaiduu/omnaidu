@@ -8,7 +8,7 @@ const CARDS = [
   {
     to: '/lab/homes' as const,
     title: 'Homes',
-    copy: 'A small array of looks — quiet list, 2D desk, typewriter, radar, staggered rows.',
+    copy: 'Ten homepage looks — Motion springs, pointer tilt, glyphs, a Three.js desk.',
   },
   {
     to: '/lab/components' as const,
@@ -32,8 +32,8 @@ function LabOverview() {
     <section className="lab-page">
       <h1 className="lab-title">Overview</h1>
       <p className="lab-lead">
-        This is a picker — not public IA. The quiet writing list is live. Homes is a small
-        array of looks with light 2D motion. Components, OG, and the player stay next door.
+        This is a picker — not public IA. The quiet writing list is live. Homes is a grid of
+        looks using Motion, Tailwind, and one lazy Three.js scene.
       </p>
       <div className="lab-card-grid">
         {CARDS.map((card) => (
