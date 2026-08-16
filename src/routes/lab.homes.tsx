@@ -1,8 +1,11 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
+import * as React from 'react'
+import { createFileRoute } from '@tanstack/react-router'
 import { ComputerScene } from '~/components/ComputerScene'
-import { DemoPlayer } from '~/components/DemoPlayer'
 import { PostList } from '~/components/PostList'
+import { EmberPulse, SignalMark } from '~/components/home/SignalMark'
+import { TypeLede } from '~/components/home/TypeLede'
 import { fetchPosts } from '~/lib/queries'
+import type { Post } from '~/lib/types'
 import { seo } from '~/utils/seo'
 
 export const Route = createFileRoute('/lab/homes')({
@@ -13,131 +16,165 @@ export const Route = createFileRoute('/lab/homes')({
   head: () => ({
     meta: seo({
       title: 'Homepage ideas — Lab',
-      description: 'Four homepage concepts. Index-first is live. The rest are options.',
+      description: 'A small array of homepage looks. Same writing list. Light 2D motion.',
       url: '/lab/homes',
     }),
   }),
   component: LabHomes,
 })
 
+const LEDE = 'Hard systems. Verified. Written down.'
+
+type LookId = 'quiet' | 'desk' | 'type' | 'signal' | 'stagger'
+
+const LOOKS: { id: LookId; label: string; why: string; live?: boolean }[] = [
+  { id: 'quiet', label: 'Quiet', why: 'List first. One ember blink.', live: true },
+  { id: 'desk', label: 'Desk', why: '2D laptop. Code ticks.' },
+  { id: 'type', label: 'Type', why: 'Lede types itself, then stops.' },
+  { id: 'signal', label: 'Signal', why: 'Radar ping from Goa.' },
+  { id: 'stagger', label: 'Stagger', why: 'Rows rise in, one after another.' },
+]
+
+function QuietHero() {
+  return (
+    <>
+      <p className="hero-kicker">
+        Engineering lab · Goa
+        <EmberPulse />
+      </p>
+      <p className="home-lede">{LEDE}</p>
+    </>
+  )
+}
+
+function DeskHero() {
+  return (
+    <div className="desk-grid">
+      <div>
+        <p className="hero-kicker">Engineering lab</p>
+        <h2 className="article-title" style={{ fontSize: 'clamp(28px, 4vw, 44px)', marginTop: 8 }}>
+          Om Naidu
+        </h2>
+        <p className="home-lede">{LEDE}</p>
+      </div>
+      <ComputerScene />
+    </div>
+  )
+}
+
+function TypeHero() {
+  return (
+    <>
+      <p className="hero-kicker">Engineering lab · Goa</p>
+      <TypeLede text={LEDE} className="home-lede" />
+    </>
+  )
+}
+
+function SignalHero() {
+  return (
+    <div className="signal-hero">
+      <SignalMark />
+      <div>
+        <p className="hero-kicker">Engineering lab · Goa</p>
+        <p className="home-lede">{LEDE}</p>
+      </div>
+    </div>
+  )
+}
+
+function MiniStage({ id, posts }: { id: LookId; posts: Post[] }) {
+  const peek = posts.slice(0, 2)
+
+  return (
+    <div className="home-array-stage">
+      {id === 'quiet' ? <QuietHero /> : null}
+      {id === 'desk' ? (
+        <div className="home-array-desk">
+          <ComputerScene />
+        </div>
+      ) : null}
+      {id === 'type' ? <TypeHero /> : null}
+      {id === 'signal' ? (
+        <div className="signal-hero signal-hero-mini">
+          <SignalMark compact />
+          <p className="hero-kicker">Goa</p>
+        </div>
+      ) : null}
+      {id === 'stagger' ? (
+        <div className="home-stagger home-stagger-mini">
+          <p className="hero-kicker">Writing</p>
+          <PostList posts={peek} />
+        </div>
+      ) : null}
+    </div>
+  )
+}
+
+function FullLook({ id, posts }: { id: LookId; posts: Post[] }) {
+  return (
+    <div className="home-concept-frame">
+      {id === 'quiet' ? <QuietHero /> : null}
+      {id === 'desk' ? <DeskHero /> : null}
+      {id === 'type' ? <TypeHero /> : null}
+      {id === 'signal' ? <SignalHero /> : null}
+      {id === 'stagger' ? (
+        <p className="hero-kicker">
+          Engineering lab · Goa
+          <EmberPulse />
+        </p>
+      ) : null}
+      <p className="section-label" style={{ marginTop: 28 }}>
+        Writing
+      </p>
+      <div className={id === 'stagger' ? 'home-stagger' : undefined}>
+        <PostList posts={posts} />
+      </div>
+    </div>
+  )
+}
+
 function LabHomes() {
   const { posts } = Route.useLoaderData()
-  const featured = posts[0]
-  const rest = posts.slice(1)
+  const [look, setLook] = React.useState<LookId>('quiet')
+  const active = LOOKS.find((item) => item.id === look) ?? LOOKS[0]
 
   return (
     <div className="lab-homes">
-      <h1 className="article-title" style={{ fontSize: 'clamp(32px, 5vw, 48px)' }}>
-        Four homes. Same writing list.
-      </h1>
-      <p className="home-lede" style={{ marginBottom: 36 }}>
-        You already liked the list. A is that list with almost no chrome. B–D add a desk, a featured post, or a split manifesto.
+      <h1 className="lab-title">A small array of homes</h1>
+      <p className="lab-lead">
+        Same writing list in every look. Motion is CSS — a blink, a typewriter, a ping, a rise.
+        Click a tile. Quiet is live on the real homepage.
       </p>
 
-      <article className="home-concept" id="concept-a">
-        <p className="home-concept-label">
-          <strong>A · Index first</strong>
-          <span className="home-concept-badge">Live · recommended</span>
-        </p>
-        <p className="home-concept-why">
-          Closest to Cursor’s blog. The homepage is the index. No giant name, no video above the fold. Identity is one quiet line.
-        </p>
-        <div className="home-concept-frame">
-          <p className="hero-kicker">Engineering lab · Goa</p>
-          <p className="home-lede">Hard systems. Verified. Written down.</p>
-          <p className="section-label" style={{ marginTop: 28 }}>
-            Writing
-          </p>
-          <PostList posts={posts} />
-        </div>
-      </article>
+      <div className="home-array" role="list">
+        {LOOKS.map((item) => (
+          <button
+            key={item.id}
+            type="button"
+            className="home-array-card"
+            data-active={look === item.id}
+            onClick={() => setLook(item.id)}
+          >
+            <MiniStage id={item.id} posts={posts} />
+            <span className="home-array-meta">
+              <strong>
+                {item.label}
+                {item.live ? <span className="home-concept-badge">Live</span> : null}
+              </strong>
+              <span>{item.why}</span>
+            </span>
+          </button>
+        ))}
+      </div>
 
-      <article className="home-concept" id="concept-b">
+      <article className="home-concept" id={`look-${look}`}>
         <p className="home-concept-label">
-          <strong>B · Desk 2D</strong>
+          <strong>{active.label}</strong>
+          {active.live ? <span className="home-concept-badge">Live · recommended</span> : null}
         </p>
-        <p className="home-concept-why">
-          A looping laptop on a desk — not a stock 3D hero. Code ticks on the screen. The list still does the work.
-        </p>
-        <div className="home-concept-frame">
-          <div className="desk-grid">
-            <div>
-              <p className="hero-kicker">Engineering lab</p>
-              <h2 className="article-title" style={{ fontSize: 'clamp(28px, 4vw, 44px)', marginTop: 8 }}>
-                Om Naidu
-              </h2>
-              <p className="home-lede">Hard systems. Verified. Written down.</p>
-              <div className="hero-actions">
-                <Link to="/blog" className="btn btn-primary">
-                  Writing →
-                </Link>
-              </div>
-            </div>
-            <ComputerScene />
-          </div>
-          <p className="section-label" style={{ marginTop: 36 }}>
-            Writing
-          </p>
-          <PostList posts={posts} />
-        </div>
-      </article>
-
-      <article className="home-concept" id="concept-c">
-        <p className="home-concept-label">
-          <strong>C · Featured + list</strong>
-        </p>
-        <p className="home-concept-why">
-          Latest receipt gets a large slot and a short demo. Everything else stays the list. Good if demos are the hook.
-        </p>
-        <div className="home-concept-frame">
-          {featured ? (
-            <div className="featured-post">
-              <p className="post-meta">
-                {featured.tag} · {featured.readingMinutes} min
-              </p>
-              <h2 className="article-title" style={{ fontSize: 'clamp(28px, 4vw, 40px)' }}>
-                {featured.title}
-              </h2>
-              <p className="home-lede">{featured.abstract}</p>
-              <DemoPlayer
-                src="/media/demo.mp4"
-                poster="/media/demo-poster.svg"
-                caption="Same 6s H.264 clip. Poster first — the file does not load until play."
-              />
-              <Link className="link-ember" to="/blog/$slug" params={{ slug: featured.slug }}>
-                Read →
-              </Link>
-            </div>
-          ) : null}
-          <p className="section-label" style={{ marginTop: 36 }}>
-            More
-          </p>
-          <PostList posts={rest} />
-        </div>
-      </article>
-
-      <article className="home-concept" id="concept-d">
-        <p className="home-concept-label">
-          <strong>D · Split manifesto</strong>
-        </p>
-        <p className="home-concept-why">
-          Name and stance stay put on the left. The list is the page. Works on a wide desktop; stacks on a phone.
-        </p>
-        <div className="home-concept-frame">
-          <div className="home-split">
-            <aside className="home-split-rail">
-              <p className="hero-kicker">Goa</p>
-              <h2 className="article-title" style={{ fontSize: 36, marginTop: 8 }}>
-                Om Naidu
-              </h2>
-              <p className="home-lede">Hard systems. Verified. Written down.</p>
-            </aside>
-            <div>
-              <p className="section-label">Writing</p>
-              <PostList posts={posts} />
-            </div>
-          </div>
-        </div>
+        <p className="home-concept-why">{active.why} The list does not change.</p>
+        <FullLook key={look} id={look} posts={posts} />
       </article>
     </div>
   )

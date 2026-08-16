@@ -1046,8 +1046,215 @@
   color: var(--ember);
 }
 
+.home-array {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  margin: 0 0 40px;
+}
+
+.home-array-card {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding: 0;
+  border: 1px solid var(--hairline);
+  border-radius: calc(var(--radius) + 4px);
+  background: var(--bg-lift);
+  overflow: hidden;
+  cursor: pointer;
+  color: inherit;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.home-array-card:hover {
+  border-color: var(--ink);
+}
+
+.home-array-card[data-active='true'] {
+  border-color: var(--ember);
+  box-shadow: var(--shadow);
+}
+
+.home-array-stage {
+  height: 132px;
+  padding: 14px 14px 0;
+  overflow: hidden;
+  background: var(--bg);
+  pointer-events: none;
+}
+
+.home-array-stage .home-lede {
+  font-size: 15px;
+}
+
+.home-array-stage .post-row {
+  padding: 10px 0;
+  gap: 10px;
+  grid-template-columns: 1fr;
+}
+
+.home-array-stage .post-meta,
+.home-array-stage .post-tag,
+.home-array-stage .post-abstract {
+  display: none;
+}
+
+.home-array-stage .post-title {
+  font-size: 13px;
+}
+
+.home-array-desk {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 100%;
+  transform: scale(0.72);
+  transform-origin: center bottom;
+}
+
+.home-array-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 12px 12px;
+  border-top: 1px solid var(--hairline);
+}
+
+.home-array-meta strong {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.home-array-meta > span {
+  font-size: 12px;
+  color: var(--muted);
+}
+
 .home-concept {
   margin-bottom: 48px;
+}
+
+.ember-pulse {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-left: 8px;
+  background: var(--ember);
+  border-radius: 1px;
+  vertical-align: 1px;
+  box-shadow: 0 0 8px color-mix(in srgb, var(--ember) 70%, transparent);
+  animation: computer-ember-pulse 2s ease-in-out infinite;
+}
+
+.type-caret {
+  display: inline-block;
+  width: 2px;
+  height: 0.85em;
+  margin-left: 3px;
+  background: var(--ember);
+  vertical-align: -0.08em;
+  animation: computer-blink 1s step-end infinite;
+}
+
+.signal-hero {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.signal-hero-mini {
+  gap: 12px;
+  height: 100%;
+}
+
+.signal-mark {
+  position: relative;
+  width: 88px;
+  height: 88px;
+  flex-shrink: 0;
+}
+
+.signal-mark-compact {
+  width: 64px;
+  height: 64px;
+}
+
+.signal-dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+  background: var(--ember);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--ember);
+}
+
+.signal-ring {
+  position: absolute;
+  inset: 8px;
+  border: 1px solid color-mix(in srgb, var(--ember) 50%, transparent);
+  border-radius: 50%;
+  animation: signal-ping 2.8s ease-out infinite;
+}
+
+.signal-ring-delay {
+  animation-delay: 1.4s;
+}
+
+.signal-mark-static .signal-ring {
+  animation: none;
+  opacity: 0.35;
+}
+
+@keyframes signal-ping {
+  0% {
+    transform: scale(0.35);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.55);
+    opacity: 0;
+  }
+}
+
+.home-stagger .post-row {
+  animation: home-rise 0.55s ease both;
+}
+
+.home-stagger .post-row:nth-child(1) {
+  animation-delay: 0.04s;
+}
+.home-stagger .post-row:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.home-stagger .post-row:nth-child(3) {
+  animation-delay: 0.16s;
+}
+.home-stagger .post-row:nth-child(4) {
+  animation-delay: 0.22s;
+}
+.home-stagger .post-row:nth-child(5) {
+  animation-delay: 0.28s;
+}
+.home-stagger .post-row:nth-child(6) {
+  animation-delay: 0.34s;
+}
+
+@keyframes home-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .home-concept-label {
@@ -1862,7 +2069,11 @@
   .computer-scanline,
   .computer-cursor,
   .computer-ember-pixel,
-  .terminal-cursor {
+  .terminal-cursor,
+  .ember-pulse,
+  .type-caret,
+  .signal-ring,
+  .home-stagger .post-row {
     animation: none !important;
   }
 }

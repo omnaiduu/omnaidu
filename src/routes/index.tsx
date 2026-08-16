@@ -25,7 +25,10 @@ function Home() {
   return (
     <div>
       <section className="wrap home-index">
-        <p className="hero-kicker">Engineering lab · Goa</p>
+        <p className="hero-kicker">
+          Engineering lab · Goa
+          <span className="ember-pulse" aria-hidden />
+        </p>
         <p className="home-lede">Hard systems. Verified. Written down.</p>
         <p className="home-more">
           <Link className="link-ember" to="/lab">
