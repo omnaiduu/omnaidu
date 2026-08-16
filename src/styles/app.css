@@ -199,6 +199,11 @@
   letter-spacing: -0.04em;
   font-weight: 500;
   text-transform: lowercase;
+  display: inline-flex;
+}
+
+.letter {
+  display: inline-block;
 }
 
 .wordmark-mark {
@@ -1502,6 +1507,50 @@
   transform-style: preserve-3d;
 }
 
+.tilt-stage-compact .computer-scene {
+  max-height: 168px;
+}
+
+.tilt-stage-compact .computer-laptop {
+  width: min(100%, 196px);
+}
+
+.tilt-stage-compact .computer-screen {
+  min-height: 92px;
+  padding: 8px;
+}
+
+.tilt-stage-compact .computer-code {
+  font-size: 7px;
+}
+
+.tilt-stage-compact .computer-lid {
+  padding: 7px 7px 4px;
+  border-radius: 8px 8px 2px 2px;
+}
+
+.not-found {
+  display: grid;
+  grid-template-columns: 1fr minmax(220px, 340px);
+  gap: 40px;
+  align-items: center;
+  padding: 56px 0 96px;
+}
+
+.not-found-copy .article-title {
+  margin-top: 8px;
+}
+
+.about-desk {
+  max-width: 220px;
+  margin: 8px 0 28px;
+}
+
+.mdx-desk {
+  margin: 1.6em 0 2em;
+  max-width: 360px;
+}
+
 .magnetic-hero {
   position: relative;
   overflow: hidden;
@@ -2581,6 +2630,11 @@
   .post-row {
     grid-template-columns: 1fr;
     gap: 8px;
+  }
+
+  .not-found {
+    grid-template-columns: 1fr;
+    gap: 28px;
   }
 
   .site-header-inner {

@@ -21,6 +21,7 @@ import { MdxArch } from '~/components/mdx/MdxArch'
 import { MdxChart } from '~/components/mdx/MdxChart'
 import { MdxCompare } from '~/components/mdx/MdxCompare'
 import { MdxDemo } from '~/components/mdx/MdxDemo'
+import { MdxDesk } from '~/components/mdx/MdxDesk'
 import { MdxDetails } from '~/components/mdx/MdxDetails'
 import { MdxDiff } from '~/components/mdx/MdxDiff'
 import { MdxFileTree } from '~/components/mdx/MdxFileTree'
@@ -134,6 +135,7 @@ export function PostBody({ markdown }: { markdown: string }) {
           compare: MdxCompare,
           definition: MdxDefinition,
           demo: MdxDemo,
+          desk: MdxDesk,
           details: MdxDetails,
           diff: MdxDiff,
           figure: MdxFigure,

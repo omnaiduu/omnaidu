@@ -2,14 +2,14 @@ import { motion, useReducedMotion, useSpring } from 'motion/react'
 import * as React from 'react'
 import { ComputerScene } from '~/components/ComputerScene'
 
-export function TiltLaptop() {
+export function TiltLaptop({ compact = false }: { compact?: boolean }) {
   const reduceMotion = useReducedMotion()
   const rotateY = useSpring(0, { stiffness: 160, damping: 18 })
   const rotateX = useSpring(0, { stiffness: 160, damping: 18 })
 
   return (
     <motion.div
-      className="tilt-stage"
+      className={compact ? 'tilt-stage tilt-stage-compact' : 'tilt-stage'}
       style={{ rotateX, rotateY, transformPerspective: 900 }}
       onMouseMove={(event) => {
         if (reduceMotion) return

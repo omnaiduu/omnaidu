@@ -212,6 +212,9 @@ Tagged **writing**. Still a post. Still proof-shaped.
 Git is the app. D1 is the content. Cloudflare Cache is the read path — not a CMS with logins.
 :::
 
+:::desk
+:::
+
 ## Read path
 
 Worker → Cache API (\`posts:list\`, \`posts:slug\`) → D1 on miss → store JSON with a short TTL and purge on publish.

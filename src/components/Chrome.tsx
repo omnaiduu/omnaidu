@@ -1,15 +1,13 @@
 import { Link } from '@tanstack/react-router'
 import { ThemeToggle } from '~/components/ThemeToggle'
+import { Wordmark } from '~/components/Wordmark'
 import type { ThemeId } from '~/lib/themes'
 
 export function SiteHeader({ theme }: { theme: ThemeId }) {
   return (
     <header className="site-header">
       <div className="wrap site-header-inner">
-        <Link to="/" className="wordmark">
-          <span className="wordmark-text">omnaidu</span>
-          <span className="wordmark-mark" aria-hidden />
-        </Link>
+        <Wordmark />
         <nav className="nav-links" aria-label="Primary">
           <Link to="/blog" activeProps={{ 'data-status': 'active' }}>
             Writing

@@ -77,6 +77,14 @@ export async function ensureSeeded() {
     if (!have.has(post.slug)) await upsertPost(post)
   }
 
+  const sitePost = SEED_POSTS.find((post) => post.slug === 'edge-cache-d1-mcp')
+  if (sitePost) {
+    const row = await env.DB.prepare('SELECT body FROM posts WHERE slug = ?')
+      .bind(sitePost.slug)
+      .first<{ body: string }>()
+    if (row && !row.body.includes(':::desk')) await upsertPost(sitePost)
+  }
+
   seeded = true
 }
 

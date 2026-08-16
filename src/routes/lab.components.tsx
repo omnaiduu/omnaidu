@@ -23,6 +23,7 @@ import { Academic } from '~/components/mdx/Academic'
 import { MathPreview } from '~/components/mdx/MathPreview'
 import { PostHero } from '~/components/PostHero'
 import { Refs } from '~/components/mdx/Refs'
+import { TiltLaptop } from '~/components/home/MotionLooks'
 import { CodeBlock } from '~/components/PostBody'
 import { seo } from '~/utils/seo'
 
@@ -106,6 +107,7 @@ const TOC = [
   ['math', 'Math'],
   ['theorem', 'Theorem'],
   ['hero', 'Hero'],
+  ['desk', 'Desk'],
   ['refs', 'References'],
 ] as const
 
@@ -429,6 +431,16 @@ Caption
 Or set demoUrl / posterUrl on the post. Image-only: posterUrl, no demoUrl.`}
       >
         <PostHero src={null} poster="/media/attention-hero.svg" caption="Image hero — research figure, no video fetch." />
+      </LabBlock>
+
+      <LabBlock
+        id="desk"
+        title="Desk"
+        when="The 2D laptop. 404, About (small), or a post about this site. Not the homepage."
+        directive={`:::desk
+:::`}
+      >
+        <TiltLaptop compact />
       </LabBlock>
 
       <LabBlock

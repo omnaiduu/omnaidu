@@ -1,4 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
+import { AnimatedLetters } from '~/components/Wordmark'
+import { TiltLaptop } from '~/components/home/MotionLooks'
 import { seo } from '~/utils/seo'
 
 const SITE = 'https://omnaidu.com'
@@ -32,7 +34,12 @@ function About() {
   return (
     <section className="narrow article">
       <p className="post-meta">Goa</p>
-      <h1 className="article-title">Om Naidu</h1>
+      <h1 className="article-title">
+        <AnimatedLetters text="Om Naidu" delay={0.08} />
+      </h1>
+      <div className="about-desk" aria-hidden>
+        <TiltLaptop compact />
+      </div>
       <div className="prose">
         <p>
           I am a software engineer in Goa. I take on systems where the behavior has to be owned —
