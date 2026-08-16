@@ -1,0 +1,33 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "omnaidu",
+  "account_id": "ba7a5dfc2bdb1f57281f0b68f112a1f7",
+  "compatibility_date": "2026-08-14",
+  "compatibility_flags": ["nodejs_compat"],
+  "main": "@tanstack/react-start/server-entry",
+  "observability": {
+    "enabled": true,
+  },
+  "cache": {
+    "enabled": true,
+  },
+  "workers_dev": true,
+  "preview_urls": true,
+  "vars": {
+    "SITE_URL": "https://omnaidu.com",
+    "SITE_NAME": "Om Naidu",
+  },
+  "routes": [
+    { "pattern": "omnaidu.com/*", "zone_id": "17ec0ef624a7800a7a9a83481225f29c" },
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "omnaidu-lab",
+      "database_id": "d243c13e-4bb3-4a72-8830-095a01dd0c77",
+    },
+  ],
+  "r2_buckets": [
+    { "binding": "MEDIA", "bucket_name": "omnaidu" },
+  ],
+}

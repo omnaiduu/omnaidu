@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720" role="img" aria-label="Lab demo poster">
+  <rect width="1280" height="720" fill="#14120b"/>
+  <rect x="48" y="48" width="1184" height="624" rx="8" fill="#1c1a13" stroke="#2a271f"/>
+  <text x="80" y="120" fill="#7a7974" font-family="ui-monospace, monospace" font-size="18" letter-spacing="4">OMNAIDU.COM</text>
+  <text x="80" y="360" fill="#efece6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="64">verified demo</text>
+  <text x="80" y="430" fill="#f54e00" font-family="ui-sans-serif, system-ui, sans-serif" font-size="28">30-90s - no talking lecture</text>
+  <circle cx="1160" cy="100" r="10" fill="#f54e00"/>
+</svg>
