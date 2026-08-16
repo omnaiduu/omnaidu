@@ -6,11 +6,19 @@ import remarkGfm from 'remark-gfm'
 import type { Root } from 'mdast'
 import { visit } from 'unist-util-visit'
 import { Callout } from '~/components/mdx/Callout'
-import { MdxDemo } from '~/components/mdx/MdxDemo'
+import { MdxApiSpec } from '~/components/mdx/MdxApiSpec'
+import { MdxArch } from '~/components/mdx/MdxArch'
+import { MdxChart } from '~/components/mdx/MdxChart'
+import { MdxDetails } from '~/components/mdx/MdxDetails'
+import { MdxDiff } from '~/components/mdx/MdxDiff'
+import { MdxFileTree } from '~/components/mdx/MdxFileTree'
 import { MdxFigure } from '~/components/mdx/MdxFigure'
+import { MdxGraph } from '~/components/mdx/MdxGraph'
 import { MdxProof } from '~/components/mdx/MdxProof'
 import { MdxPullquote } from '~/components/mdx/MdxPullquote'
 import { MdxSteps } from '~/components/mdx/MdxSteps'
+import { MdxTerminal } from '~/components/mdx/MdxTerminal'
+import { MdxTimeline } from '~/components/mdx/MdxTimeline'
 
 function remarkDirectiveHast() {
   return (tree: Root) => {
@@ -45,9 +53,16 @@ function getText(children: React.ReactNode): string {
   return ''
 }
 
+function languageLabel(className?: string) {
+  if (!className) return null
+  const match = className.match(/language-([\w-]+)/)
+  return match?.[1] ?? null
+}
+
 function CodeBlock({ children, className }: { children?: React.ReactNode; className?: string }) {
   const [copied, setCopied] = React.useState(false)
   const text = getText(children).replace(/\n$/, '')
+  const lang = languageLabel(className)
 
   async function copy() {
     try {
@@ -65,6 +80,11 @@ function CodeBlock({ children, className }: { children?: React.ReactNode; classN
 
   return (
     <div className="code-block">
+      {lang ? (
+        <div className="code-block-header">
+          <span className="code-lang">{lang}</span>
+        </div>
+      ) : null}
       <pre className={className}>
         <code>{children}</code>
       </pre>
@@ -97,12 +117,21 @@ export function PostBody({ markdown }: { markdown: string }) {
       <ReactMarkdown
         remarkPlugins={[remarkGfm, remarkDirective, remarkDirectiveHast]}
         components={{
+          apispec: MdxApiSpec,
+          arch: MdxArch,
           callout: Callout,
+          chart: MdxChart,
           demo: MdxDemo,
+          details: MdxDetails,
+          diff: MdxDiff,
           figure: MdxFigure,
+          filetree: MdxFileTree,
+          graph: MdxGraph,
           proof: MdxProof,
           pullquote: MdxPullquote,
           steps: MdxSteps,
+          terminal: MdxTerminal,
+          timeline: MdxTimeline,
           a: ({ href, children }) => (
             <a className="link-ember" href={href} rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}>
               {children}

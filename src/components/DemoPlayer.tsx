@@ -10,20 +10,30 @@ export function DemoPlayer({
   caption?: string
 }) {
   const videoRef = React.useRef<HTMLVideoElement>(null)
+  const [armed, setArmed] = React.useState(false)
   const [playing, setPlaying] = React.useState(false)
 
-  function play() {
+  React.useEffect(() => {
+    if (!armed) return
     const video = videoRef.current
     if (!video) return
     video.muted = true
-    video.play().then(() => setPlaying(true)).catch(() => {})
+    void video.play().then(() => setPlaying(true)).catch(() => {})
+  }, [armed, src])
+
+  function play() {
+    setArmed(true)
   }
 
   function togglePlay() {
     const video = videoRef.current
+    if (!armed) {
+      play()
+      return
+    }
     if (!video) return
     if (video.paused) {
-      play()
+      video.play().then(() => setPlaying(true)).catch(() => {})
     } else {
       video.pause()
       setPlaying(false)
@@ -31,7 +41,7 @@ export function DemoPlayer({
   }
 
   function onKeyDown(event: React.KeyboardEvent) {
-    if (event.key === ' ' || event.key === 'Spacebar') {
+    if (event.key === ' ' || event.key === 'Spacebar' || event.key === 'Enter') {
       event.preventDefault()
       togglePlay()
     }
@@ -51,12 +61,14 @@ export function DemoPlayer({
       >
         <video
           ref={videoRef}
-          src={src}
+          src={armed ? src : undefined}
           poster={poster ?? undefined}
           playsInline
-          preload="metadata"
+          preload="none"
           controls={playing}
           muted
+          width={1280}
+          height={720}
           onPlay={() => setPlaying(true)}
           onPause={() => setPlaying(false)}
           onEnded={() => setPlaying(false)}
