@@ -24,3 +24,8 @@ declare module '*.wasm' {
   const value: WebAssembly.Module
   export default value
 }
+
+declare module '*.ttf?inline' {
+  const value: string
+  export default value
+}

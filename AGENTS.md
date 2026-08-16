@@ -14,7 +14,7 @@ GitHub: https://github.com/omnaiduu
 - **One blog. Four tags.** `projects` | `research` | `systems` | `writing`. Filter on `/blog`. Every post must pick exactly one of those — there is no other taxonomy.
 - **No Lab route.** Workshop pages are gone. Do not add `/lab`, `/themes`, or RSS.
 - **2D laptop** is allowed on 404, compact on About, and `:::desk` in a post *about this site*. Never Three.js on `/`.
-- **OG cards** are **PNG 1200×630**, dark, at `/og/$slug.png` and `/og/site.png`. WhatsApp, X (`summary_large_image`), and LinkedIn need PNG/JPEG, not SVG. Keep key text in the center ~66% (X crops 16:9). Aim under 300 KB for WhatsApp. Include `og:image:width/height/type`, `og:image:secure_url`, and `twitter:card`. Posts use `og:type=article`.
+- **OG cards** are **PNG 1200×630**, dark, at `/og/$slug.png` and `/og/site.png`. Text is drawn with a bundled Inter TTF — Workers have no system fonts, so a font-less resvg PNG is a blank card. WhatsApp, X (`summary_large_image`), and LinkedIn need PNG/JPEG, not SVG. Keep key text in the center ~66% (X crops 16:9). Aim under 300 KB for WhatsApp. Include `og:image:width/height/type`, `og:image:secure_url`, and `twitter:card`. Posts use `og:type=article`.
 - **Demos are receipts, not a channel.** 30–60s aim, 90s hard max. Poster required. Player mounts `<video>` only after play. Home never fetches the MP4.
 
 ## Stack
