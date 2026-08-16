@@ -22,7 +22,7 @@ export const Route = createFileRoute('/blog/')({
   head: ({ loaderData, match }) => ({
     meta: seo({
       title: `Writing${match.search.tag ? ` · ${match.search.tag}` : ''} — Om Naidu`,
-      description: 'Lab writeups tagged projects, research, systems, writing. No separate projects site.',
+      description: 'Projects, research, systems, and notes. Filter by category.',
       image: loaderData?.posts[0] ? `/og/${loaderData.posts[0].slug}` : undefined,
     }),
   }),
@@ -37,11 +37,10 @@ function BlogIndex() {
     <section className="wrap section" style={{ paddingTop: 48 }}>
       <p className="section-label">Writing</p>
       <h1 className="article-title" style={{ fontSize: 'clamp(36px, 6vw, 56px)' }}>
-        Receipts, not a feed.
+        Writing
       </h1>
       <p style={{ color: 'var(--muted)', maxWidth: '46ch', marginBottom: 28 }}>
-        Projects, research, systems, and notes live in one index. Filter by tag. Each serious post
-        gets a short demo and a proof block.
+        Projects, research, systems, and notes. One list. Filter by category.
       </p>
       <TagFilters active={tag} />
       <PostList posts={posts} />

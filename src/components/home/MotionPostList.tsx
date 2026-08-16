@@ -44,12 +44,14 @@ export function MotionPostList({
       <div>
         {posts.map((post) => (
           <Link key={post.slug} to="/blog/$slug" params={{ slug: post.slug }} className="post-row">
-            <span className="post-meta">{formatDate(post.publishedAt)}</span>
+            <span className="post-row-meta">
+              <span className="post-meta">{formatDate(post.publishedAt)}</span>
+              <span className="post-tag">{post.tag}</span>
+            </span>
             <span>
               <span className="post-title">{post.title}</span>
               <p className="post-abstract">{post.abstract}</p>
             </span>
-            <span className="post-tag">{post.tag}</span>
           </Link>
         ))}
       </div>
@@ -66,12 +68,14 @@ export function MotionPostList({
           transition={{ type: 'spring', stiffness: 380, damping: 28 }}
         >
           <Link to="/blog/$slug" params={{ slug: post.slug }} className="post-row">
-            <span className="post-meta">{formatDate(post.publishedAt)}</span>
+            <span className="post-row-meta">
+              <span className="post-meta">{formatDate(post.publishedAt)}</span>
+              <span className="post-tag">{post.tag}</span>
+            </span>
             <span>
               <span className="post-title">{post.title}</span>
               <p className="post-abstract">{post.abstract}</p>
             </span>
-            <span className="post-tag">{post.tag}</span>
           </Link>
         </motion.div>
       ))}

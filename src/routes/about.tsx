@@ -1,12 +1,29 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { seo } from '~/utils/seo'
+
+const SITE = 'https://omnaidu.com'
 
 export const Route = createFileRoute('/about')({
   head: () => ({
     meta: seo({
       title: 'About — Om Naidu',
-      description: 'Builder from Goa. Owns design and verification. Ships hard systems with AI as an accelerator.',
+      description: 'Software engineer in Goa. I ship systems, then write the receipt.',
+      url: '/about',
     }),
+    scripts: [
+      {
+        type: 'application/ld+json',
+        children: JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'Person',
+          name: 'Om Naidu',
+          url: SITE,
+          email: 'mailto:omnaidu42@gmail.com',
+          address: { '@type': 'PostalAddress', addressLocality: 'Goa', addressCountry: 'IN' },
+          sameAs: ['https://github.com/omnaiduu'],
+        }),
+      },
+    ],
   }),
   component: About,
 })
@@ -14,26 +31,35 @@ export const Route = createFileRoute('/about')({
 function About() {
   return (
     <section className="narrow article">
-      <p className="section-label">About</p>
-      <h1 className="article-title">Builder. Design owner. Verifier.</h1>
+      <p className="post-meta">Goa</p>
+      <h1 className="article-title">Om Naidu</h1>
       <div className="prose">
         <p>
-          I am Om Naidu, from Goa. This site is an engineering lab home — not a resume splash, not a
-          creator channel. People should skim it and think: this person tries hard things, ships real
-          systems, checks the work, and writes like a lab notebook.
+          I am a software engineer in Goa. I take on systems where the behavior has to be owned —
+          tools, backends, agent loops — and I put the work on this site as posts.
         </p>
         <p>
-          I use AI as an implementation accelerator. I own behavior, boundaries, and proof. The public
-          format is the same as the private one: problem → options → why this → what shipped → how
-          verified → demo / numbers.
+          I use AI to move faster. I still write the contract, the edge cases, and the proof. If I
+          cannot demo it or test it, it is not shipped.
         </p>
         <p>
-          Projects are posts with a <code>projects</code> tag, not a second website. Short video is a
-          30–90s embed of the thing running. Long talking YouTube is not the plan.
+          Start with{' '}
+          <Link className="link-ember" to="/">
+            selected work
+          </Link>
+          , or filter{' '}
+          <Link className="link-ember" to="/blog" search={{ tag: 'projects' }}>
+            projects
+          </Link>
+          . Notes and research live in the same list.
         </p>
         <p>
           <a className="link-ember" href="https://github.com/omnaiduu">
-            GitHub →
+            GitHub
+          </a>
+          {' · '}
+          <a className="link-ember" href="mailto:omnaidu42@gmail.com">
+            Email
           </a>
         </p>
       </div>

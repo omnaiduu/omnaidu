@@ -18,12 +18,14 @@ export function PostList({ posts }: { posts: Post[] }) {
     <div>
       {posts.map((post) => (
         <Link key={post.slug} to="/blog/$slug" params={{ slug: post.slug }} className="post-row">
-          <span className="post-meta">{formatDate(post.publishedAt)}</span>
+          <span className="post-row-meta">
+            <span className="post-meta">{formatDate(post.publishedAt)}</span>
+            <span className="post-tag">{post.tag}</span>
+          </span>
           <span>
             <span className="post-title">{post.title}</span>
             <p className="post-abstract">{post.abstract}</p>
           </span>
-          <span className="post-tag">{post.tag}</span>
         </Link>
       ))}
     </div>

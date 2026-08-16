@@ -284,6 +284,10 @@
   color: var(--ember);
 }
 
+.link-plain {
+  color: inherit;
+}
+
 .link-ember:hover,
 .nav-links a:hover,
 .wordmark:hover {
@@ -291,19 +295,32 @@
 }
 
 .home-index {
-  padding: 40px 0 8px;
+  padding: 48px 0 12px;
+}
+
+.home-name {
+  font-family: var(--title-font);
+  font-weight: var(--title-weight);
+  letter-spacing: var(--title-tracking);
+  font-size: clamp(32px, 5vw, 48px);
+  line-height: 1.1;
+  margin: 0 0 12px;
 }
 
 .home-lede {
-  max-width: 36ch;
+  max-width: 42ch;
   color: var(--muted);
   font-size: 18px;
-  line-height: 1.45;
+  line-height: 1.5;
 }
 
 .home-more {
-  margin-top: 14px;
+  margin-top: 16px;
   font-size: 14px;
+}
+
+.home-featured {
+  padding: 12px 0 8px;
 }
 
 .hero {
@@ -409,22 +426,41 @@
 
 .post-row {
   display: grid;
-  grid-template-columns: 140px 1fr auto;
+  grid-template-columns: 168px 1fr;
   gap: 24px;
   align-items: baseline;
   padding: 22px 0;
   border-top: 1px solid var(--hairline);
 }
 
+.post-row-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
 .post-row:hover .post-title {
   color: var(--ember);
 }
 
-.post-meta,
-.post-tag {
+.post-meta {
   color: var(--muted);
   font-size: 13px;
   font-family: var(--label-font);
+}
+
+.post-tag {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  color: var(--muted);
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  padding: 2px 8px;
+  line-height: 1.4;
 }
 
 .post-title {
@@ -1733,9 +1769,17 @@
 }
 
 .featured-post {
-  padding-bottom: 28px;
+  padding-bottom: 36px;
   margin-bottom: 8px;
   border-bottom: 1px solid var(--hairline);
+}
+
+.featured-kicker {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
 }
 
 .featured-post-title {
@@ -1747,10 +1791,28 @@
   margin: 10px 0 12px;
 }
 
+.featured-post-title .link-plain:hover {
+  color: var(--ember);
+}
+
 .featured-post-abstract {
   color: var(--muted);
   max-width: 54ch;
   margin-bottom: 14px;
+}
+
+.featured-post-go {
+  margin: 0 0 18px;
+  font-size: 14px;
+}
+
+.featured-post-media {
+  display: block;
+  max-width: 720px;
+}
+
+.featured-post-media .post-hero {
+  margin: 0;
 }
 
 .featured-post-demo {
