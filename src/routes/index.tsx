@@ -2,6 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { FeaturedPost, pickFeatured } from '~/components/FeaturedPost'
 import { PostList } from '~/components/PostList'
 import { fetchPosts } from '~/lib/queries'
+import { SITE_DESCRIPTION } from '~/lib/site'
 import { seo } from '~/utils/seo'
 
 export const Route = createFileRoute('/')({
@@ -13,8 +14,8 @@ export const Route = createFileRoute('/')({
   head: () => ({
     meta: seo({
       title: 'Om Naidu',
-      description: 'Software from Goa. I ship systems, then write what shipped and how I checked it.',
-      image: '/og/bankbot-turn-loop',
+      description: SITE_DESCRIPTION,
+      image: '/og/site',
       url: '/',
     }),
   }),
@@ -29,7 +30,9 @@ function Home() {
     <div>
       <section className="wrap home-index">
         <h1 className="home-name">Om Naidu</h1>
-        <p className="home-lede">I build software in Goa. I ship the system, then write what I shipped and how I checked it.</p>
+        <p className="home-lede">
+          I build software in Goa. I ship the system, then write what I shipped and how I checked it.
+        </p>
         <p className="home-more">
           <Link className="link-ember" to="/about">
             About
@@ -48,7 +51,7 @@ function Home() {
       ) : null}
       <section className="wrap section">
         <p className="section-label">Writing</p>
-        <PostList posts={rest} />
+        <PostList posts={rest} empty="Nothing published yet." />
       </section>
     </div>
   )

@@ -1,8 +1,16 @@
 import { env } from 'cloudflare:workers'
-import { SEED_POSTS } from './seed-data'
 import { rowToPost, type Post, type PostRow, type PostTag, type PublishInput } from './types'
 
-let seeded = false
+const DEMO_SLUGS = [
+  'bankbot-turn-loop',
+  'agentkit-tool-schema',
+  'verify-dont-read-every-line',
+  'lab-blog-not-long-youtube',
+  'edge-cache-d1-mcp',
+  'attention-as-a-dot-product',
+]
+
+let ready = false
 let memoryPosts: Post[] = []
 
 function hasDb() {
@@ -13,7 +21,7 @@ function hasDb() {
   }
 }
 
-function fromSeed(input: PublishInput, id: number): Post {
+function fromInput(input: PublishInput, id: number): Post {
   let benches: Post['proofBenches'] = []
   if (input.proofBenches) {
     try {
@@ -29,7 +37,7 @@ function fromSeed(input: PublishInput, id: number): Post {
     abstract: input.abstract,
     body: input.body,
     tag: input.tag,
-    publishedAt: input.publishedAt ?? '2026-08-16',
+    publishedAt: input.publishedAt ?? new Date().toISOString().slice(0, 10),
     demoUrl: input.demoUrl ?? null,
     posterUrl: input.posterUrl ?? null,
     repo: input.repo ?? null,
@@ -40,11 +48,11 @@ function fromSeed(input: PublishInput, id: number): Post {
   }
 }
 
-export async function ensureSeeded() {
-  if (seeded) return
+export async function ensureReady() {
+  if (ready) return
   if (!hasDb()) {
-    memoryPosts = SEED_POSTS.map((post, index) => fromSeed(post, index + 1))
-    seeded = true
+    memoryPosts = []
+    ready = true
     return
   }
 
@@ -71,25 +79,15 @@ export async function ensureSeeded() {
     'CREATE INDEX IF NOT EXISTS idx_posts_published ON posts(published_at DESC)',
   ).run()
 
-  const { results: existing } = await env.DB.prepare('SELECT slug FROM posts').all<{ slug: string }>()
-  const have = new Set((existing ?? []).map((row) => row.slug))
-  for (const post of SEED_POSTS) {
-    if (!have.has(post.slug)) await upsertPost(post)
+  for (const slug of DEMO_SLUGS) {
+    await env.DB.prepare('DELETE FROM posts WHERE slug = ?').bind(slug).run()
   }
 
-  const sitePost = SEED_POSTS.find((post) => post.slug === 'edge-cache-d1-mcp')
-  if (sitePost) {
-    const row = await env.DB.prepare('SELECT body FROM posts WHERE slug = ?')
-      .bind(sitePost.slug)
-      .first<{ body: string }>()
-    if (row && !row.body.includes(':::desk')) await upsertPost(sitePost)
-  }
-
-  seeded = true
+  ready = true
 }
 
 export async function listPosts(tag?: PostTag | 'all'): Promise<Post[]> {
-  await ensureSeeded()
+  await ensureReady()
   if (!hasDb()) {
     return memoryPosts.filter(
       (post) => post.status === 'published' && (!tag || tag === 'all' || post.tag === tag),
@@ -109,7 +107,7 @@ export async function listPosts(tag?: PostTag | 'all'): Promise<Post[]> {
 }
 
 export async function getPost(slug: string, opts?: { includeDrafts?: boolean }): Promise<Post | null> {
-  await ensureSeeded()
+  await ensureReady()
   const includeDrafts = opts?.includeDrafts === true
   if (!hasDb()) {
     return (
@@ -127,7 +125,7 @@ export async function getPost(slug: string, opts?: { includeDrafts?: boolean }):
 }
 
 export async function relatedPosts(slug: string, tag: string, limit = 2): Promise<Post[]> {
-  await ensureSeeded()
+  await ensureReady()
   if (!hasDb()) {
     return memoryPosts
       .filter((post) => post.slug !== slug && post.tag === tag && post.status === 'published')
@@ -146,7 +144,7 @@ async function upsertPost(input: PublishInput) {
   const status = input.status ?? 'published'
   if (!hasDb()) {
     const existing = memoryPosts.findIndex((post) => post.slug === input.slug)
-    const next = fromSeed(input, existing >= 0 ? memoryPosts[existing].id : memoryPosts.length + 1)
+    const next = fromInput(input, existing >= 0 ? memoryPosts[existing].id : memoryPosts.length + 1)
     if (existing >= 0) memoryPosts[existing] = next
     else memoryPosts.unshift(next)
     return
@@ -189,11 +187,11 @@ async function upsertPost(input: PublishInput) {
 }
 
 export async function publishPost(input: PublishInput): Promise<Post> {
-  await ensureSeeded()
+  await ensureReady()
   await upsertPost(input)
   const post = await getPost(input.slug, { includeDrafts: true })
   if (!post && input.status === 'draft') {
-    return fromSeed(input, 0)
+    return fromInput(input, 0)
   }
   if (!post) {
     throw new Error('Publish succeeded but post was not readable')
@@ -202,7 +200,7 @@ export async function publishPost(input: PublishInput): Promise<Post> {
 }
 
 export async function unpublishPost(slug: string) {
-  await ensureSeeded()
+  await ensureReady()
   if (!hasDb()) {
     memoryPosts = memoryPosts.map((post) =>
       post.slug === slug ? { ...post, status: 'draft' as const } : post,

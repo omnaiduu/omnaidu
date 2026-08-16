@@ -23,7 +23,7 @@ export const Route = createFileRoute('/blog/')({
     meta: seo({
       title: `Writing${match.search.tag ? ` · ${match.search.tag}` : ''} — Om Naidu`,
       description: 'Projects, research, systems, and notes. Filter by category.',
-      image: loaderData?.posts[0] ? `/og/${loaderData.posts[0].slug}` : undefined,
+      image: loaderData?.posts[0] ? `/og/${loaderData.posts[0].slug}` : '/og/site',
     }),
   }),
   component: BlogIndex,

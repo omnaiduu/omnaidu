@@ -1,9 +1,8 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { AnimatedLetters } from '~/components/Wordmark'
 import { TiltLaptop } from '~/components/home/MotionLooks'
+import { GITHUB_URL, SITE_EMAIL, SITE_EMAIL_HREF, SITE_URL } from '~/lib/site'
 import { seo } from '~/utils/seo'
-
-const SITE = 'https://omnaidu.com'
 
 export const Route = createFileRoute('/about')({
   head: () => ({
@@ -11,6 +10,7 @@ export const Route = createFileRoute('/about')({
       title: 'About — Om Naidu',
       description: 'Software engineer in Goa. I ship systems, then write the receipt.',
       url: '/about',
+      image: '/og/site',
     }),
     scripts: [
       {
@@ -19,10 +19,10 @@ export const Route = createFileRoute('/about')({
           '@context': 'https://schema.org',
           '@type': 'Person',
           name: 'Om Naidu',
-          url: SITE,
-          email: 'mailto:omnaidu42@gmail.com',
+          url: SITE_URL,
+          email: SITE_EMAIL_HREF,
           address: { '@type': 'PostalAddress', addressLocality: 'Goa', addressCountry: 'IN' },
-          sameAs: ['https://github.com/omnaiduu'],
+          sameAs: [GITHUB_URL],
         }),
       },
     ],
@@ -61,12 +61,12 @@ function About() {
           . Notes and research live in the same list.
         </p>
         <p>
-          <a className="link-ember" href="https://github.com/omnaiduu">
+          <a className="link-ember" href={GITHUB_URL}>
             GitHub
           </a>
           {' · '}
-          <a className="link-ember" href="mailto:omnaidu42@gmail.com">
-            Email
+          <a className="link-ember" href={SITE_EMAIL_HREF}>
+            {SITE_EMAIL}
           </a>
         </p>
       </div>

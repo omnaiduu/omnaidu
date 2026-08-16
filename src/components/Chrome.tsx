@@ -1,9 +1,8 @@
 import { Link } from '@tanstack/react-router'
-import { ThemeToggle } from '~/components/ThemeToggle'
 import { Wordmark } from '~/components/Wordmark'
-import type { ThemeId } from '~/lib/themes'
+import { GITHUB_URL, SITE_EMAIL_HREF } from '~/lib/site'
 
-export function SiteHeader({ theme }: { theme: ThemeId }) {
+export function SiteHeader() {
   return (
     <header className="site-header">
       <div className="wrap site-header-inner">
@@ -22,11 +21,7 @@ export function SiteHeader({ theme }: { theme: ThemeId }) {
           <Link to="/about" activeProps={{ 'data-status': 'active' }}>
             About
           </Link>
-          <Link to="/lab" activeProps={{ 'data-status': 'active' }}>
-            Lab
-          </Link>
         </nav>
-        <ThemeToggle active={theme} />
       </div>
     </header>
   )
@@ -37,12 +32,12 @@ export function SiteFooter() {
     <footer className="wrap footer">
       <span>Goa</span>
       <span>
-        <a className="link-ember" href="/rss.xml">
-          RSS
+        <a className="link-ember" href={GITHUB_URL}>
+          GitHub
         </a>
         {' · '}
-        <a className="link-ember" href="https://github.com/omnaiduu">
-          GitHub
+        <a className="link-ember" href={SITE_EMAIL_HREF}>
+          Email
         </a>
       </span>
     </footer>

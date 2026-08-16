@@ -12,19 +12,11 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as BlogRouteImport } from './routes/blog'
-import { Route as LabRouteImport } from './routes/lab'
 import { Route as McpRouteImport } from './routes/mcp'
-import { Route as RssDotxmlRouteImport } from './routes/rss[.]xml'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as ThemesRouteImport } from './routes/themes'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as FilesSplatRouteImport } from './routes/files.$'
-import { Route as LabIndexRouteImport } from './routes/lab.index'
-import { Route as LabComponentsRouteImport } from './routes/lab.components'
-import { Route as LabHomesRouteImport } from './routes/lab.homes'
-import { Route as LabOgRouteImport } from './routes/lab.og'
-import { Route as LabPlayerRouteImport } from './routes/lab.player'
 import { Route as OgSlugRouteImport } from './routes/og.$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -42,29 +34,14 @@ const BlogRoute = BlogRouteImport.update({
   path: '/blog',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LabRoute = LabRouteImport.update({
-  id: '/lab',
-  path: '/lab',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const McpRoute = McpRouteImport.update({
   id: '/mcp',
   path: '/mcp',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RssDotxmlRoute = RssDotxmlRouteImport.update({
-  id: '/rss.xml',
-  path: '/rss.xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ThemesRoute = ThemesRouteImport.update({
-  id: '/themes',
-  path: '/themes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
@@ -82,31 +59,6 @@ const FilesSplatRoute = FilesSplatRouteImport.update({
   path: '/files/$',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LabIndexRoute = LabIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => LabRoute,
-} as any)
-const LabComponentsRoute = LabComponentsRouteImport.update({
-  id: '/components',
-  path: '/components',
-  getParentRoute: () => LabRoute,
-} as any)
-const LabHomesRoute = LabHomesRouteImport.update({
-  id: '/homes',
-  path: '/homes',
-  getParentRoute: () => LabRoute,
-} as any)
-const LabOgRoute = LabOgRouteImport.update({
-  id: '/og',
-  path: '/og',
-  getParentRoute: () => LabRoute,
-} as any)
-const LabPlayerRoute = LabPlayerRouteImport.update({
-  id: '/player',
-  path: '/player',
-  getParentRoute: () => LabRoute,
-} as any)
 const OgSlugRoute = OgSlugRouteImport.update({
   id: '/og/$slug',
   path: '/og/$slug',
@@ -117,57 +69,34 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/blog': typeof BlogRouteWithChildren
-  '/lab': typeof LabRouteWithChildren
   '/mcp': typeof McpRoute
-  '/rss.xml': typeof RssDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/themes': typeof ThemesRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/files/$': typeof FilesSplatRoute
-  '/lab/components': typeof LabComponentsRoute
-  '/lab/homes': typeof LabHomesRoute
-  '/lab/og': typeof LabOgRoute
-  '/lab/player': typeof LabPlayerRoute
   '/og/$slug': typeof OgSlugRoute
   '/blog/': typeof BlogIndexRoute
-  '/lab/': typeof LabIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/mcp': typeof McpRoute
-  '/rss.xml': typeof RssDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/themes': typeof ThemesRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/files/$': typeof FilesSplatRoute
-  '/lab/components': typeof LabComponentsRoute
-  '/lab/homes': typeof LabHomesRoute
-  '/lab/og': typeof LabOgRoute
-  '/lab/player': typeof LabPlayerRoute
   '/og/$slug': typeof OgSlugRoute
   '/blog': typeof BlogIndexRoute
-  '/lab': typeof LabIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/blog': typeof BlogRouteWithChildren
-  '/lab': typeof LabRouteWithChildren
   '/mcp': typeof McpRoute
-  '/rss.xml': typeof RssDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/themes': typeof ThemesRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/files/$': typeof FilesSplatRoute
-  '/lab/components': typeof LabComponentsRoute
-  '/lab/homes': typeof LabHomesRoute
-  '/lab/og': typeof LabOgRoute
-  '/lab/player': typeof LabPlayerRoute
   '/og/$slug': typeof OgSlugRoute
   '/blog/': typeof BlogIndexRoute
-  '/lab/': typeof LabIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -175,67 +104,41 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/blog'
-    | '/lab'
     | '/mcp'
-    | '/rss.xml'
     | '/sitemap.xml'
-    | '/themes'
     | '/blog/$slug'
     | '/files/$'
-    | '/lab/components'
-    | '/lab/homes'
-    | '/lab/og'
-    | '/lab/player'
     | '/og/$slug'
     | '/blog/'
-    | '/lab/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/mcp'
-    | '/rss.xml'
     | '/sitemap.xml'
-    | '/themes'
     | '/blog/$slug'
     | '/files/$'
-    | '/lab/components'
-    | '/lab/homes'
-    | '/lab/og'
-    | '/lab/player'
     | '/og/$slug'
     | '/blog'
-    | '/lab'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/blog'
-    | '/lab'
     | '/mcp'
-    | '/rss.xml'
     | '/sitemap.xml'
-    | '/themes'
     | '/blog/$slug'
     | '/files/$'
-    | '/lab/components'
-    | '/lab/homes'
-    | '/lab/og'
-    | '/lab/player'
     | '/og/$slug'
     | '/blog/'
-    | '/lab/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   BlogRoute: typeof BlogRouteWithChildren
-  LabRoute: typeof LabRouteWithChildren
   McpRoute: typeof McpRoute
-  RssDotxmlRoute: typeof RssDotxmlRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
-  ThemesRoute: typeof ThemesRoute
   FilesSplatRoute: typeof FilesSplatRoute
   OgSlugRoute: typeof OgSlugRoute
 }
@@ -263,13 +166,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/lab': {
-      id: '/lab'
-      path: '/lab'
-      fullPath: '/lab'
-      preLoaderRoute: typeof LabRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/mcp': {
       id: '/mcp'
       path: '/mcp'
@@ -277,25 +173,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof McpRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/rss.xml': {
-      id: '/rss.xml'
-      path: '/rss.xml'
-      fullPath: '/rss.xml'
-      preLoaderRoute: typeof RssDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/themes': {
-      id: '/themes'
-      path: '/themes'
-      fullPath: '/themes'
-      preLoaderRoute: typeof ThemesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog/': {
@@ -319,41 +201,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FilesSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/lab/': {
-      id: '/lab/'
-      path: '/'
-      fullPath: '/lab/'
-      preLoaderRoute: typeof LabIndexRouteImport
-      parentRoute: typeof LabRoute
-    }
-    '/lab/components': {
-      id: '/lab/components'
-      path: '/components'
-      fullPath: '/lab/components'
-      preLoaderRoute: typeof LabComponentsRouteImport
-      parentRoute: typeof LabRoute
-    }
-    '/lab/homes': {
-      id: '/lab/homes'
-      path: '/homes'
-      fullPath: '/lab/homes'
-      preLoaderRoute: typeof LabHomesRouteImport
-      parentRoute: typeof LabRoute
-    }
-    '/lab/og': {
-      id: '/lab/og'
-      path: '/og'
-      fullPath: '/lab/og'
-      preLoaderRoute: typeof LabOgRouteImport
-      parentRoute: typeof LabRoute
-    }
-    '/lab/player': {
-      id: '/lab/player'
-      path: '/player'
-      fullPath: '/lab/player'
-      preLoaderRoute: typeof LabPlayerRouteImport
-      parentRoute: typeof LabRoute
-    }
     '/og/$slug': {
       id: '/og/$slug'
       path: '/og/$slug'
@@ -376,33 +223,12 @@ const BlogRouteChildren: BlogRouteChildren = {
 
 const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
-interface LabRouteChildren {
-  LabComponentsRoute: typeof LabComponentsRoute
-  LabHomesRoute: typeof LabHomesRoute
-  LabOgRoute: typeof LabOgRoute
-  LabPlayerRoute: typeof LabPlayerRoute
-  LabIndexRoute: typeof LabIndexRoute
-}
-
-const LabRouteChildren: LabRouteChildren = {
-  LabComponentsRoute: LabComponentsRoute,
-  LabHomesRoute: LabHomesRoute,
-  LabOgRoute: LabOgRoute,
-  LabPlayerRoute: LabPlayerRoute,
-  LabIndexRoute: LabIndexRoute,
-}
-
-const LabRouteWithChildren = LabRoute._addFileChildren(LabRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   BlogRoute: BlogRouteWithChildren,
-  LabRoute: LabRouteWithChildren,
   McpRoute: McpRoute,
-  RssDotxmlRoute: RssDotxmlRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
-  ThemesRoute: ThemesRoute,
   FilesSplatRoute: FilesSplatRoute,
   OgSlugRoute: OgSlugRoute,
 }
@@ -411,10 +237,11 @@ export const routeTree = rootRouteImport
   ._addFileTypes<FileRouteTypes>()
 
 import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
+import type { startInstance } from './start.ts'
 declare module '@tanstack/react-start' {
   interface Register {
     ssr: true
     router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
   }
 }

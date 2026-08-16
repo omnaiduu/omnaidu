@@ -9,9 +9,15 @@ function formatDate(value: string) {
   })
 }
 
-export function PostList({ posts }: { posts: Post[] }) {
+export function PostList({
+  posts,
+  empty = 'Nothing in this tag yet.',
+}: {
+  posts: Post[]
+  empty?: string
+}) {
   if (posts.length === 0) {
-    return <p style={{ color: 'var(--muted)' }}>Nothing in this tag yet.</p>
+    return <p style={{ color: 'var(--muted)' }}>{empty}</p>
   }
 
   return (

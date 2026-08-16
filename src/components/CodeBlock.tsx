@@ -1,3 +1,5 @@
+'use client'
+
 import * as React from 'react'
 import { highlightCode } from '~/lib/highlight'
 import { nodeText } from '~/lib/node-text'

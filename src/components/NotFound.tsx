@@ -1,3 +1,5 @@
+'use client'
+
 import { Link } from '@tanstack/react-router'
 import type { ReactNode } from 'react'
 import { TiltLaptop } from '~/components/home/MotionLooks'

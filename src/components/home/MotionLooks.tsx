@@ -1,3 +1,5 @@
+'use client'
+
 import { motion, useReducedMotion, useSpring } from 'motion/react'
 import * as React from 'react'
 import { ComputerScene } from '~/components/ComputerScene'

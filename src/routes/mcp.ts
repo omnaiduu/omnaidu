@@ -10,7 +10,7 @@ const PROTOCOL_VERSION = '2025-03-26'
 const tools = [
   {
     name: 'list_posts',
-    description: 'List lab posts from D1 (optional tag filter). Private — AI publish path only.',
+    description: 'List published posts from D1 (optional tag filter). Private — AI publish path only.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -196,7 +196,7 @@ export const Route = createFileRoute('/mcp')({
       GET: ({ request }) => {
         if (!authorized(request)) return unauthorized()
         return json({
-          name: 'omnaidu-lab',
+          name: 'omnaidu',
           version: '0.2.0',
           protocolVersion: PROTOCOL_VERSION,
           transport: 'json-rpc over HTTP POST /mcp',
@@ -223,7 +223,7 @@ export const Route = createFileRoute('/mcp')({
               result: {
                 protocolVersion: PROTOCOL_VERSION,
                 capabilities: { tools: {} },
-                serverInfo: { name: 'omnaidu-lab', version: '0.2.0' },
+                serverInfo: { name: 'omnaidu', version: '0.2.0' },
               },
             })
           }

@@ -13,7 +13,7 @@
     "db:seed": "wrangler d1 execute omnaidu-lab --file=./seed.sql --local"
   },
   "dependencies": {
-    "@react-three/fiber": "^9.7.0",
+    "@resvg/resvg-wasm": "^2.6.2",
     "@tanstack/react-router": "^1.170.29",
     "@tanstack/react-router-devtools": "^1.167.1",
     "@tanstack/react-start": "^1.168.46",
@@ -28,7 +28,6 @@
     "remark-directive": "^4.0.0",
     "remark-gfm": "^4.0.1",
     "remark-math": "^6.0.0",
-    "three": "^0.185.1",
     "unist-util-visit": "^5.1.0"
   },
   "devDependencies": {
@@ -42,8 +41,8 @@
     "@types/node": "^22.5.4",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
-    "@types/three": "^0.185.4",
     "@vitejs/plugin-react": "^6.0.1",
+    "@vitejs/plugin-rsc": "^0.5.34",
     "tailwindcss": "^4.2.2",
     "typescript": "^5.9.2",
     "vite": "^8.0.14",

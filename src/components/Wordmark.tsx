@@ -1,3 +1,5 @@
+'use client'
+
 import { Link } from '@tanstack/react-router'
 import { motion, useReducedMotion } from 'motion/react'
 

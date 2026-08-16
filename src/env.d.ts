@@ -12,3 +12,8 @@ interface Env {
 declare module 'cloudflare:workers' {
   export const env: Env
 }
+
+declare module '*.wasm' {
+  const value: WebAssembly.Module
+  export default value
+}

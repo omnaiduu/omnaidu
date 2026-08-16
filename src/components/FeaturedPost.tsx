@@ -1,5 +1,4 @@
 import { Link } from '@tanstack/react-router'
-import { motion } from 'motion/react'
 import { PostHero } from '~/components/PostHero'
 import type { Post } from '~/lib/types'
 
@@ -17,12 +16,7 @@ export function pickFeatured(posts: Post[]) {
 
 export function FeaturedPost({ post }: { post: Post }) {
   return (
-    <motion.article
-      className="featured-post"
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-    >
+    <article className="featured-post">
       <p className="featured-kicker">
         <span className="post-tag">{post.tag}</span>
         <span className="post-meta">{formatDate(post.publishedAt)}</span>
@@ -43,6 +37,6 @@ export function FeaturedPost({ post }: { post: Post }) {
           <PostHero src={null} poster={post.posterUrl} alt={post.title} priority />
         </Link>
       ) : null}
-    </motion.article>
+    </article>
   )
 }
