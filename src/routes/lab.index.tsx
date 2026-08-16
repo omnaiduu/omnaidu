@@ -18,7 +18,7 @@ const CARDS = [
   {
     to: '/lab/og' as const,
     title: 'OG',
-    copy: 'Open Graph card gallery — parchment, ink, and type styles at 1200×630.',
+    copy: 'Settled parchment share card at 1200×630. Light cream, ember mark, title, abstract.',
   },
   {
     to: '/lab/player' as const,

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-label="Scaled dot-product attention">
+  <rect width="1280" height="720" fill="#f7f7f4"/>
+  <rect x="40" y="40" width="1200" height="640" fill="#ffffff" stroke="#e6e5e0"/>
+  <rect x="80" y="76" width="10" height="10" fill="#f54e00"/>
+  <text x="102" y="87" fill="#7a7974" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" letter-spacing="3.2">FIGURE 1 · SCALED DOT-PRODUCT ATTENTION</text>
+  <line x1="80" y1="108" x2="1200" y2="108" stroke="#e6e5e0"/>
+  <rect x="120" y="168" width="220" height="96" fill="#f7f7f4" stroke="#e6e5e0"/>
+  <text x="230" y="214" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="32" fill="#26251e">Q</text>
+  <text x="230" y="242" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#7a7974">queries</text>
+  <rect x="530" y="168" width="220" height="96" fill="#f7f7f4" stroke="#e6e5e0"/>
+  <text x="640" y="214" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="32" fill="#26251e">K</text>
+  <text x="640" y="242" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#7a7974">keys</text>
+  <rect x="940" y="168" width="220" height="96" fill="#f7f7f4" stroke="#e6e5e0"/>
+  <text x="1050" y="214" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="32" fill="#26251e">V</text>
+  <text x="1050" y="242" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#7a7974">values</text>
+  <text x="640" y="380" text-anchor="middle" font-family="ui-serif, Georgia, serif" font-size="36" fill="#26251e">Attention(Q, K, V)</text>
+  <text x="640" y="440" text-anchor="middle" font-family="ui-serif, Georgia, serif" font-size="26" fill="#26251e">= softmax( QK¤ / d– ) V</text>
+  <text x="640" y="530" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#7a7974">Scale keeps logit variance O(1) as the key dimension grows.</text>
+  <text x="80" y="640" fill="#f54e00" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16">omnaidu.com</text>
+</svg>

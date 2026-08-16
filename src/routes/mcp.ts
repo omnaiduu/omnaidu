@@ -33,7 +33,7 @@ const tools = [
   {
     name: 'publish_post',
     description:
-      'Create or update a post in D1. Purges Cache API entries for the list and slug. Body is markdown with :::callout :::demo :::figure :::proof :::pullquote directives.',
+      'Create or update a post in D1. Purges Cache API entries for the list and slug. Body is markdown: $inline$ and $$display$$ math (KaTeX); :::callout :::demo :::hero :::figure :::proof :::pullquote :::theorem :::lemma :::definition :::proposition :::refs :::steps :::chart :::details :::diff :::filetree :::graph :::arch :::terminal :::timeline :::apispec :::compare :::kbd. Lead media: demoUrl as mp4/webm for a video hero, or posterUrl (image/svg) with no demoUrl for a still.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -46,8 +46,14 @@ const tools = [
           enum: ['projects', 'research', 'systems', 'writing'],
         },
         publishedAt: { type: 'string' },
-        demoUrl: { type: 'string' },
-        posterUrl: { type: 'string' },
+        demoUrl: {
+          type: 'string',
+          description: 'Lead video (mp4/webm/mov). Omit for an image-only hero.',
+        },
+        posterUrl: {
+          type: 'string',
+          description: 'Lead still, or video poster. Image/svg URL. Used as the hero when demoUrl is empty.',
+        },
         repo: { type: 'string' },
         proofTests: { type: 'string' },
         proofBenches: { type: 'string', description: 'JSON array of {name,value}' },

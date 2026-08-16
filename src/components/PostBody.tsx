@@ -3,10 +3,19 @@ import type { Components } from 'react-markdown'
 import ReactMarkdown from 'react-markdown'
 import remarkDirective from 'remark-directive'
 import remarkGfm from 'remark-gfm'
+import remarkMath from 'remark-math'
+import rehypeKatex from 'rehype-katex'
+import 'katex/dist/katex.min.css'
 import type { Root } from 'mdast'
 import { visit } from 'unist-util-visit'
 import { Callout } from '~/components/mdx/Callout'
 import { Kbd } from '~/components/mdx/Kbd'
+import {
+  MdxDefinition,
+  MdxLemma,
+  MdxProposition,
+  MdxTheorem,
+} from '~/components/mdx/MdxAcademic'
 import { MdxApiSpec } from '~/components/mdx/MdxApiSpec'
 import { MdxArch } from '~/components/mdx/MdxArch'
 import { MdxChart } from '~/components/mdx/MdxChart'
@@ -17,11 +26,14 @@ import { MdxDiff } from '~/components/mdx/MdxDiff'
 import { MdxFileTree } from '~/components/mdx/MdxFileTree'
 import { MdxFigure } from '~/components/mdx/MdxFigure'
 import { MdxGraph } from '~/components/mdx/MdxGraph'
+import { MdxHero } from '~/components/mdx/MdxHero'
 import { MdxProof } from '~/components/mdx/MdxProof'
 import { MdxPullquote } from '~/components/mdx/MdxPullquote'
 import { MdxSteps } from '~/components/mdx/MdxSteps'
 import { MdxTerminal } from '~/components/mdx/MdxTerminal'
 import { MdxTimeline } from '~/components/mdx/MdxTimeline'
+import { Refs } from '~/components/mdx/Refs'
+import { headingId } from '~/lib/headings'
 
 function remarkDirectiveHast() {
   return (tree: Root) => {
@@ -40,11 +52,7 @@ function remarkDirectiveHast() {
 }
 
 function slugify(text: string) {
-  return text
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, '')
-    .trim()
-    .replace(/\s+/g, '-')
+  return headingId(text)
 }
 
 function getText(children: React.ReactNode): string {
@@ -116,24 +124,31 @@ export function PostBody({ markdown }: { markdown: string }) {
   return (
     <div className="prose">
       <ReactMarkdown
-        remarkPlugins={[remarkGfm, remarkDirective, remarkDirectiveHast]}
+        remarkPlugins={[remarkGfm, remarkMath, remarkDirective, remarkDirectiveHast]}
+        rehypePlugins={[[rehypeKatex, { throwOnError: false, strict: 'ignore' }]]}
         components={{
           apispec: MdxApiSpec,
           arch: MdxArch,
           callout: Callout,
           chart: MdxChart,
           compare: MdxCompare,
+          definition: MdxDefinition,
           demo: MdxDemo,
           details: MdxDetails,
           diff: MdxDiff,
           figure: MdxFigure,
           filetree: MdxFileTree,
           graph: MdxGraph,
+          hero: MdxHero,
           kbd: Kbd,
+          lemma: MdxLemma,
           proof: MdxProof,
+          proposition: MdxProposition,
           pullquote: MdxPullquote,
+          refs: Refs,
           steps: MdxSteps,
           terminal: MdxTerminal,
+          theorem: MdxTheorem,
           timeline: MdxTimeline,
           a: ({ href, children }) => (
             <a className="link-ember" href={href} rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}>

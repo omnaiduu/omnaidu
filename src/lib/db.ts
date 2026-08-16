@@ -71,11 +71,10 @@ export async function ensureSeeded() {
     'CREATE INDEX IF NOT EXISTS idx_posts_published ON posts(published_at DESC)',
   ).run()
 
-  const count = await env.DB.prepare('SELECT COUNT(*) as n FROM posts').first<{ n: number }>()
-  if (!count || count.n === 0) {
-    for (const post of SEED_POSTS) {
-      await upsertPost(post)
-    }
+  const { results: existing } = await env.DB.prepare('SELECT slug FROM posts').all<{ slug: string }>()
+  const have = new Set((existing ?? []).map((row) => row.slug))
+  for (const post of SEED_POSTS) {
+    if (!have.has(post.slug)) await upsertPost(post)
   }
 
   seeded = true

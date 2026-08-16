@@ -1,8 +1,13 @@
 import { createFileRoute, Link, notFound } from '@tanstack/react-router'
-import { DemoPlayer } from '~/components/DemoPlayer'
+import { motion } from 'motion/react'
+import { CiteButton } from '~/components/CiteButton'
 import { PostBody } from '~/components/PostBody'
+import { PostHero } from '~/components/PostHero'
+import { PostToc } from '~/components/PostToc'
 import { fetchPost } from '~/lib/queries'
 import { seo } from '~/utils/seo'
+
+const SITE = 'https://omnaidu.com'
 
 export const Route = createFileRoute('/blog/$slug')({
   loader: async ({ params, location }) => {
@@ -12,6 +17,7 @@ export const Route = createFileRoute('/blog/$slug')({
   },
   head: ({ loaderData, params }) => {
     const post = loaderData?.post
+    const url = `${SITE}/blog/${params.slug}`
     return {
       meta: seo({
         title: post ? `${post.title} — Om Naidu` : 'Om Naidu',
@@ -19,6 +25,24 @@ export const Route = createFileRoute('/blog/$slug')({
         image: `/og/${params.slug}`,
         url: `/blog/${params.slug}`,
       }),
+      scripts: post
+        ? [
+            {
+              type: 'application/ld+json',
+              children: JSON.stringify({
+                '@context': 'https://schema.org',
+                '@type': post.tag === 'research' ? 'ScholarlyArticle' : 'BlogPosting',
+                headline: post.title,
+                description: post.abstract,
+                datePublished: post.publishedAt,
+                image: `${SITE}/og/${params.slug}`,
+                url,
+                author: { '@type': 'Person', name: 'Om Naidu', url: SITE },
+                publisher: { '@type': 'Person', name: 'Om Naidu', url: SITE },
+              }),
+            },
+          ]
+        : [],
     }
   },
   component: BlogPost,
@@ -36,23 +60,28 @@ function BlogPost() {
   const { post, related } = Route.useLoaderData()
 
   return (
-    <article className="article">
+    <motion.article
+      className="article"
+      data-tag={post.tag}
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+    >
       <div className="narrow">
         <p className="post-meta">
           {formatDate(post.publishedAt)} · {post.tag} · {post.readingMinutes} min
         </p>
         <h1 className="article-title">{post.title}</h1>
-        <p style={{ color: 'var(--muted)', fontSize: 18, marginBottom: 28 }}>{post.abstract}</p>
+        <p className="post-abstract-lead">{post.abstract}</p>
+        <p className="post-byline">
+          Om Naidu · Goa
+          <CiteButton post={post} />
+        </p>
+        <PostToc markdown={post.body} />
       </div>
-      {post.demoUrl ? (
-        <div className="narrow">
-          <DemoPlayer
-            src={post.demoUrl}
-            poster={post.posterUrl}
-            caption="Demo only. 30–90s of the thing running."
-          />
-        </div>
-      ) : null}
+      <div className="narrow">
+        <PostHero src={post.demoUrl} poster={post.posterUrl} alt={post.title} priority />
+      </div>
       <div className="narrow">
         <PostBody markdown={post.body} />
         {related.length > 0 ? (
@@ -68,6 +97,6 @@ function BlogPost() {
           </div>
         ) : null}
       </div>
-    </article>
+    </motion.article>
   )
 }

@@ -19,6 +19,10 @@ import { MdxSteps } from '~/components/mdx/MdxSteps'
 import { NetworkGraph, SAMPLE_GRAPH } from '~/components/mdx/NetworkGraph'
 import { Terminal, SAMPLE_TERMINAL_LINES } from '~/components/mdx/Terminal'
 import { Timeline, SAMPLE_TIMELINE } from '~/components/mdx/Timeline'
+import { Academic } from '~/components/mdx/Academic'
+import { MathPreview } from '~/components/mdx/MathPreview'
+import { PostHero } from '~/components/PostHero'
+import { Refs } from '~/components/mdx/Refs'
 import { CodeBlock } from '~/components/PostBody'
 import { seo } from '~/utils/seo'
 
@@ -99,6 +103,10 @@ const TOC = [
   ['api', 'API spec'],
   ['notes', 'Footnotes'],
   ['compare', 'Compare'],
+  ['math', 'Math'],
+  ['theorem', 'Theorem'],
+  ['hero', 'Hero'],
+  ['refs', 'References'],
 ] as const
 
 function LabComponents() {
@@ -365,14 +373,77 @@ function LabComponents() {
         id="compare"
         title="Compare"
         when="Before/after stills side by side."
-        directive={`:::compare{before="/og/bankbot-turn-loop" after="/og/bankbot-turn-loop?style=ink" beforeCaption="Parchment" afterCaption="Ink"}\n:::`}
+        directive={`:::compare{before="/og/bankbot-turn-loop" after="/og/attention-as-a-dot-product" beforeCaption="Project" afterCaption="Research"}\n:::`}
       >
         <Compare
-          before={{ src: '/og/bankbot-turn-loop', alt: 'Parchment OG' }}
-          after={{ src: '/og/bankbot-turn-loop?style=ink', alt: 'Ink OG' }}
-          beforeCaption="Parchment"
-          afterCaption="Ink"
+          before={{ src: '/og/bankbot-turn-loop', alt: 'Bankbot OG' }}
+          after={{ src: '/og/attention-as-a-dot-product', alt: 'Attention OG' }}
+          beforeCaption="Project card"
+          afterCaption="Research card"
         />
+      </LabBlock>
+
+      <LabBlock
+        id="math"
+        title="Math"
+        when="KaTeX. Inline $…$ and display $$…$$. Display equations number automatically."
+        directive={`The map is $\\mathrm{softmax}(QK^\\top / \\sqrt{d_k})$.
+
+$$
+\\mathrm{Attention}(Q, K, V) = \\mathrm{softmax}\\left(\\frac{QK^\\top}{\\sqrt{d_k}}\\right)V
+$$`}
+      >
+        <p className="lab-block-when" style={{ marginBottom: 12 }}>
+          Inline: the scale is <MathPreview tex={'\\sqrt{d_k}'} display={false} />.
+        </p>
+        <MathPreview tex={'\\mathrm{Attention}(Q, K, V) = \\mathrm{softmax}\\left(\\frac{QK^\\top}{\\sqrt{d_k}}\\right)V'} />
+      </LabBlock>
+
+      <LabBlock
+        id="theorem"
+        title="Theorem / definition"
+        when="Research environments. lemma, definition, proposition too."
+        directive={`:::theorem{title="Softmax saturates without scaling"}
+Scale logits by $\\sqrt{d_k}$.
+:::`}
+      >
+        <Academic kind="definition" title="Scaled dot-product attention">
+          A softmax over scaled query–key inner products, applied to values.
+        </Academic>
+        <Academic kind="lemma" title="Row-stochastic map">
+          Each softmax row is a convex combination of the value rows.
+        </Academic>
+        <Academic kind="theorem" title="Softmax saturates without scaling">
+          If inner products grow like √dₖ, the softmax concentrates on the max.
+        </Academic>
+      </LabBlock>
+
+      <LabBlock
+        id="hero"
+        title="Lead media"
+        when="Image or video at the top of a post. Video if the URL is mp4/webm. Otherwise the poster."
+        directive={`:::hero{src="/media/demo.mp4" poster="/media/demo-poster.svg"}
+Caption
+:::
+
+Or set demoUrl / posterUrl on the post. Image-only: posterUrl, no demoUrl.`}
+      >
+        <PostHero src={null} poster="/media/attention-hero.svg" caption="Image hero — research figure, no video fetch." />
+      </LabBlock>
+
+      <LabBlock
+        id="refs"
+        title="References"
+        when="A short bibliography at the end of a research note."
+        directive={`:::refs
+Vaswani et al. Attention Is All You Need. 2017.
+:::`}
+      >
+        <Refs>
+          Vaswani et al. Attention Is All You Need. NeurIPS 2017.
+          {'\n'}
+          Elhage et al. A Mathematical Framework for Transformer Circuits. 2021.
+        </Refs>
       </LabBlock>
     </section>
   )

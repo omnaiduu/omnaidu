@@ -476,9 +476,142 @@
   margin: 12px 0 18px;
 }
 
+.post-abstract-lead {
+  font-size: 1.12em;
+  line-height: 1.45;
+  color: var(--muted);
+  max-width: 46ch;
+  margin: 0 0 18px;
+}
+
+.post-byline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0 0 8px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.cite-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.cite-btn {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ember);
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--ember) 40%, var(--hairline));
+  border-radius: 999px;
+  padding: 4px 10px;
+  cursor: pointer;
+}
+
+.cite-btn:hover {
+  background: color-mix(in srgb, var(--ember) 10%, transparent);
+}
+
+.post-toc {
+  margin: 18px 0 8px;
+}
+
+.post-toc-label {
+  font-family: var(--label-font);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.post-toc ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.post-toc li {
+  margin: 0 0 6px;
+}
+
+.post-toc a {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.post-toc a:hover {
+  color: var(--ember);
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.post-hero {
+  margin: 8px 0 2.2em;
+  animation: rise-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.post-hero img {
+  width: 100%;
+  display: block;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  background: var(--bg-soft);
+}
+
+.post-hero figcaption {
+  margin-top: 8px;
+  font-size: 0.88em;
+  color: var(--muted);
+}
+
+.article[data-tag='research'] .article-title {
+  font-family: var(--font-serif);
+  font-weight: 450;
+  letter-spacing: -0.022em;
+}
+
+.article[data-tag='research'] .prose {
+  font-family: var(--font-serif);
+  font-size: 1.06em;
+  line-height: 1.68;
+}
+
+.article[data-tag='research'] .prose h2,
+.article[data-tag='research'] .prose h3,
+.article[data-tag='research'] .prose .mdx-academic-label,
+.article[data-tag='research'] .prose .mdx-refs-title,
+.article[data-tag='research'] .prose .footnotes,
+.article[data-tag='research'] .prose code,
+.article[data-tag='research'] .prose pre {
+  font-family: var(--font-sans);
+}
+
+.prose h2,
+.prose h3 {
+  scroll-margin-top: 88px;
+}
+
 .prose {
   font-size: var(--body-size);
   line-height: 1.7;
+  counter-reset: eq thm lem defn prop;
 }
 
 .prose h2,
@@ -789,6 +922,9 @@
 .code-block {
   position: relative;
   margin: 0 0 1.4em;
+  background: var(--demo-frame);
+  border-radius: var(--radius);
+  overflow: hidden;
 }
 
 .code-block pre {
@@ -818,17 +954,21 @@
   text-transform: uppercase;
   padding: 4px 8px;
   border-radius: var(--radius);
-  background: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.82);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: color-mix(in srgb, var(--ember) 22%, transparent);
+  color: #ffc4a8;
+  border: 1px solid color-mix(in srgb, var(--ember) 55%, rgba(255, 255, 255, 0.2));
+  cursor: pointer;
 }
 
 .code-block-header .code-copy {
   position: static;
+  color: #ffb089;
+  font-weight: 500;
 }
 
 .code-copy:hover {
-  background: rgba(255, 255, 255, 0.16);
+  background: color-mix(in srgb, var(--ember) 38%, transparent);
+  color: #fff;
 }
 
 .table-wrap {
@@ -955,6 +1095,190 @@
   margin-top: 2em;
 }
 
+.mdx-academic {
+  margin: 1.6em 0;
+  padding: 16px 18px 16px 20px;
+  border-left: 2px solid var(--hairline);
+  background: var(--bg-soft);
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+.mdx-academic[data-kind='theorem'],
+.mdx-academic[data-kind='lemma'] {
+  border-left-color: var(--ember);
+}
+
+.mdx-academic[data-kind='definition'] {
+  border-left-color: var(--ink);
+}
+
+.mdx-academic[data-kind='proposition'] {
+  border-left-color: color-mix(in srgb, var(--ember) 55%, var(--ink));
+}
+
+.mdx-academic[data-kind='theorem'] {
+  counter-increment: thm;
+}
+
+.mdx-academic[data-kind='lemma'] {
+  counter-increment: lem;
+}
+
+.mdx-academic[data-kind='definition'] {
+  counter-increment: defn;
+}
+
+.mdx-academic[data-kind='proposition'] {
+  counter-increment: prop;
+}
+
+.mdx-academic-label {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.92em;
+  font-weight: 600;
+  font-style: normal;
+  margin-bottom: 0.4em;
+  color: var(--ink);
+}
+
+.mdx-academic[data-kind='theorem'] .mdx-academic-label:empty::before {
+  content: 'Theorem ' counter(thm) '.';
+}
+
+.mdx-academic[data-kind='theorem'] .mdx-academic-label:not(:empty)::before {
+  content: 'Theorem ' counter(thm) '. ';
+}
+
+.mdx-academic[data-kind='lemma'] .mdx-academic-label:empty::before {
+  content: 'Lemma ' counter(lem) '.';
+}
+
+.mdx-academic[data-kind='lemma'] .mdx-academic-label:not(:empty)::before {
+  content: 'Lemma ' counter(lem) '. ';
+}
+
+.mdx-academic[data-kind='definition'] .mdx-academic-label:empty::before {
+  content: 'Definition ' counter(defn) '.';
+}
+
+.mdx-academic[data-kind='definition'] .mdx-academic-label:not(:empty)::before {
+  content: 'Definition ' counter(defn) '. ';
+}
+
+.mdx-academic[data-kind='proposition'] .mdx-academic-label:empty::before {
+  content: 'Proposition ' counter(prop) '.';
+}
+
+.mdx-academic[data-kind='proposition'] .mdx-academic-label:not(:empty)::before {
+  content: 'Proposition ' counter(prop) '. ';
+}
+
+.mdx-academic[data-kind='theorem'] .mdx-academic-body,
+.mdx-academic[data-kind='lemma'] .mdx-academic-body,
+.mdx-academic[data-kind='proposition'] .mdx-academic-body {
+  font-style: italic;
+}
+
+.mdx-academic-body > :last-child {
+  margin-bottom: 0;
+}
+
+.mdx-refs {
+  margin: 2.4em 0 1em;
+  padding-top: 1.4em;
+  border-top: 1px solid var(--hairline);
+}
+
+.mdx-refs-title {
+  font-family: var(--label-font);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 14px;
+  font-weight: 500;
+}
+
+.mdx-refs ol {
+  padding-left: 1.35em;
+  color: var(--muted);
+  font-size: 0.92em;
+  font-family: var(--font-sans);
+}
+
+.mdx-refs li {
+  margin-bottom: 0.45em;
+}
+
+.katex {
+  color: inherit;
+  font-size: 1.05em;
+}
+
+.prose .katex-display,
+.math-preview-display {
+  position: relative;
+  margin: 1.5em 0;
+  padding: 0.85em 3.2em 0.85em 0.8em;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background: var(--bg-soft);
+  border-radius: var(--radius);
+  counter-increment: eq;
+}
+
+.math-preview-display {
+  counter-reset: eq;
+}
+
+.prose .katex-display::after,
+.math-preview-display .katex-display::after {
+  content: '(' counter(eq) ')';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  font-family: var(--font-sans);
+  font-size: 0.85em;
+  font-style: normal;
+}
+
+.math-preview {
+  color: inherit;
+}
+
+.math-preview:not(.math-preview-display) {
+  display: inline;
+}
+
+.prose .footnotes {
+  margin-top: 2.8em;
+  padding-top: 1.4em;
+  border-top: 1px solid var(--hairline);
+  font-size: 0.9em;
+  color: var(--muted);
+  font-family: var(--font-sans);
+}
+
+.prose .footnotes h2 {
+  font-family: var(--label-font);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 12px;
+  font-weight: 500;
+}
+
+.prose [data-footnote-ref],
+.prose .footnote-ref {
+  color: var(--ember);
+  font-size: 0.78em;
+  text-decoration: none;
+}
+
 /* ——— Lab ——— */
 
 .lab-layout {
@@ -990,6 +1314,7 @@
 
 .lab-page {
   padding-bottom: 48px;
+  counter-reset: eq thm lem defn prop;
 }
 
 .lab-title {
@@ -2177,7 +2502,8 @@
   .ember-pulse,
   .type-caret,
   .signal-ring,
-  .home-stagger .post-row {
+  .home-stagger .post-row,
+  .post-hero {
     animation: none !important;
   }
 }

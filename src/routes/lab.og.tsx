@@ -11,74 +11,33 @@ export const Route = createFileRoute('/lab/og')({
   head: () => ({
     meta: seo({
       title: 'OG images — Lab',
-      description: '1200×630 SVG share cards. Parchment, ink, and type.',
+      description: 'Settled parchment share card, 1200×630, light mode.',
       url: '/lab/og',
     }),
   }),
 })
-
-const STYLES = [
-  {
-    id: 'parchment',
-    label: 'Parchment',
-    query: '',
-    why: 'Default. Cream card, ember footer. Matches the live site.',
-  },
-  {
-    id: 'ink',
-    label: 'Ink',
-    query: '?style=ink',
-    why: 'Dark card for night posts.',
-  },
-  {
-    id: 'type',
-    label: 'Type',
-    query: '?style=type',
-    why: 'Giant title, no abstract. For short names that can shout.',
-  },
-] as const
 
 function LabOg() {
   const { posts } = Route.useLoaderData()
 
   return (
     <section className="lab-page">
-      <h1 className="lab-title">OG images</h1>
+      <h1 className="lab-title">OG card — settled</h1>
       <p className="lab-lead">
-        Each card is SVG at <strong>1200×630</strong>, cached one hour, served from{' '}
-        <code>/og/[slug]</code>. Parchment is the default <code>og:image</code>. Ink and type are
-        query styles so you can pick per post later. Crawlers that refuse SVG still need a PNG
-        pipeline — this gallery is how the cards look on the site.
+        Light parchment only. 1200×630 SVG at <code>/og/[slug]</code>. Cream field, ember mark,
+        title, two-line abstract, omnaidu.com. This is what posts share.
       </p>
-
-      <div className="og-gallery">
+      <div className="og-style-grid">
         {posts.map((post) => (
-          <article key={post.slug} className="og-post-group">
-            <h2 className="og-post-title">{post.title}</h2>
-            <div className="og-style-grid">
-              {STYLES.map((style) => (
-                <figure key={style.id} className="og-card">
-                  <a href={`/og/${post.slug}${style.query}`} target="_blank" rel="noopener noreferrer">
-                    <img
-                      src={`/og/${post.slug}${style.query}`}
-                      alt={`${post.title} — ${style.label} OG`}
-                      width={1200}
-                      height={630}
-                      loading="lazy"
-                    />
-                  </a>
-                  <figcaption>
-                    <span className="og-style-label">{style.label}</span>
-                    <span>{style.why}</span>
-                    <code>
-                      /og/{post.slug}
-                      {style.query}
-                    </code>
-                  </figcaption>
-                </figure>
-              ))}
-            </div>
-          </article>
+          <figure key={post.slug} className="og-card">
+            <a href={`/og/${post.slug}`} target="_blank" rel="noopener noreferrer">
+              <img src={`/og/${post.slug}`} alt={post.title} width={1200} height={630} loading="lazy" />
+            </a>
+            <figcaption>
+              <span className="og-style-label">{post.title}</span>
+              <code>/og/{post.slug}</code>
+            </figcaption>
+          </figure>
         ))}
       </div>
     </section>

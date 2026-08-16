@@ -238,4 +238,61 @@ Short demos are H.264 MP4 with \`faststart\`, not HLS.
 Agents should publish without opening a PR for every paragraph. The site code lives in git. The words live in D1 so a publish is one tool call.
 `,
   },
+  {
+    slug: 'attention-as-a-dot-product',
+    title: 'Attention is a scaled dot product. Write it down.',
+    abstract:
+      'A short research note: the transformer attention map as notation, a bound, and a picture — the shape a lab post should have.',
+    tag: 'research',
+    publishedAt: '2026-08-16',
+    posterUrl: '/media/attention-hero.svg',
+    proofTests: 'n/a — note',
+    proofBenches: '[]',
+    readingMinutes: 5,
+    body: `# Attention is a scaled dot product. Write it down.
+
+The lead figure is a still — set \`posterUrl\` when the receipt is a diagram, \`demoUrl\` when it is a 45s run. Inline math belongs in the sentence, not in a screenshot.
+
+## Shape of a note
+
+A research post here is notation, a bound, a figure, and a citation. Not a thread. Not a lecture.
+
+## Notation
+
+Queries, keys, and values. The map everyone ships:
+
+$$
+\\mathrm{Attention}(Q, K, V) = \\mathrm{softmax}\\left(\\frac{QK^\\top}{\\sqrt{d_k}}\\right)V
+$$
+
+The $\\sqrt{d_k}$ term keeps the logits from saturating the softmax as the key dimension grows.[^scale]
+
+:::definition{title="Scaled dot-product attention"}
+Given $Q, K \\in \\mathbb{R}^{n \\times d_k}$ and $V \\in \\mathbb{R}^{n \\times d_v}$, attention is the convex combination of value rows weighted by a softmax over scaled query–key inner products.
+:::
+
+## Why the scale
+
+If coordinates of $Q$ and $K$ are $O(1)$, entries of $QK^\\top$ have variance that grows like $d_k$. Softmax then collapses onto the max.
+
+$$
+\\mathrm{Var}(q \\cdot k) = d_k \\quad \\Rightarrow \\quad \\frac{q \\cdot k}{\\sqrt{d_k}} \\text{ has variance } O(1)
+$$
+
+:::theorem{title="Softmax saturates without scaling"}
+If entries of $QK^\\top$ grow like $\\sqrt{d_k}$, the softmax concentrates on the max. Scaling by $\\sqrt{d_k}$ keeps the variance of the logits $O(1)$ when coordinates are $O(1)$.
+:::
+
+:::lemma{title="Row-stochastic map"}
+Each row of $\\mathrm{softmax}(QK^\\top / \\sqrt{d_k})$ is non-negative and sums to one, so the output is a convex combination of the rows of $V$.
+:::
+
+[^scale]: Vaswani et al. introduce the $\\sqrt{d_k}$ factor in §3.2.1 of *Attention Is All You Need*.
+
+:::refs
+Vaswani et al. Attention Is All You Need. NeurIPS 2017.
+Elhage et al. A Mathematical Framework for Transformer Circuits. 2021.
+:::
+`,
+  },
 ]
