@@ -17,7 +17,7 @@ const SPEC = [
   '30–90s of the thing running. No talking-head recap.',
   'H.264 MP4 + faststart (moov at the front). ≤720p. Target 2–8MB. The seed clip is 16KB / 6s / 1280×720.',
   'Poster required so the page never shows a black 16:9 hole. SVG or a still WebP is fine.',
-  'preload="none" and no src until play — scrolling the homepage does not download every demo.',
+  'No <video> element until play — only the poster image is in the DOM. Then preload="none". Scrolling home never downloads an MP4 (home uses the still only).',
   'Muted + playsInline so tap-to-play works on iOS without a fullscreen hijack.',
   'Optional WebVTT captions load with the file, not before.',
   'Uploads go to R2 via private MCP upload_media, served at /files/… with Range requests, Cache API, and Cache-Control: immutable.',

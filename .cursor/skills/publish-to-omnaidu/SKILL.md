@@ -18,23 +18,42 @@ Do **not**:
 
 ## Video limits (simple)
 
-| What | Limit |
-|---|---|
-| File type | `.mp4` (best) or `.webm` |
-| Longest | 90 seconds. Aim 30–60s |
-| Size | **40 MB max**. Aim 2–8 MB |
-| Size on screen | 720p or smaller |
-| Sound | Off is fine. The player starts muted |
+Hard caps are enforced on upload. Aim for the smaller numbers.
 
-Images: jpeg/png/webp/avif, **8 MB max**. SVG **512 KB**. GIF **4 MB**.
+| What | Hard max | Aim for |
+|---|---|---|
+| File type | `.mp4` or `.webm` | **H.264 `.mp4`** |
+| Length | **90 seconds** | **30–60s** |
+| File size | **40 MB** | **2–8 MB** |
+| Frame size | — | **720p or smaller** (1280×720) |
+| Frame rate | — | 30 fps |
+| Sound | — | Strip it (`-an`). Player starts muted |
 
-Encode first:
+The player does **not** download the MP4 until someone hits play. The page still downloads the **poster**. Home never embeds the video — only the still.
+
+## Image limits (simple)
+
+| What | Hard max | Aim for |
+|---|---|---|
+| Poster / photo | **8 MB** jpeg/png/webp/avif | **webp, 40–200 KB**, 1280×720 |
+| Diagram | **512 KB** SVG | Small UTF-8 SVG (not a Latin-1 export) |
+| GIF | **4 MB** | Prefer a 5–10s mp4 instead |
+
+Do **not** upload: phone camera originals, 4K, screenshots of code (use a fenced block), a video with no poster.
+
+## How to process a demo (required)
+
+On disk, before `upload_media`:
 
 ```bash
-ffmpeg -i take.mov -an -c:v libx264 -pix_fmt yuv420p -vf scale=-2:720 -movflags +faststart -crf 23 demo.mp4
+# 1. Clip → small H.264, no audio, moov at the front
+ffmpeg -i take.mov -an -c:v libx264 -pix_fmt yuv420p -r 30 -vf scale=-2:720 -movflags +faststart -crf 23 demo.mp4
+
+# 2. One still from ~1s in. This is the page load.
+ffmpeg -i demo.mp4 -ss 00:00:01 -frames:v 1 -vf scale=-2:720 poster.webp
 ```
 
-Also save one still frame as `poster.webp`. Every video needs a poster so the page is not a black box.
+If the mp4 is still over ~8 MB, raise `-crf` to 26 or cut the clip. Do not upload the `.mov`.
 
 ## How to upload a demo
 
@@ -44,10 +63,10 @@ Also save one still frame as `poster.webp`. Every video needs a poster so the pa
 4. You get URLs like `/files/uploads/....mp4`.
 5. Call `publish_post` with:
    - `demoUrl` = the mp4 URL (this makes the **top of the post** a video)
-   - `posterUrl` = the still
+   - `posterUrl` = the still (**required** if there is a video)
    - or only `posterUrl` if there is no video (a picture at the top)
 
-You can also put a player in the body:
+If `demoUrl` is set, do **not** also paste `:::demo` of the **same** file in the body. That would be two posters and two players. Use `:::demo` only for a second, different clip.
 
 ```md
 :::demo{src="/files/uploads/….mp4" poster="/files/uploads/….webp"}

@@ -75,7 +75,7 @@ const tools = [
   {
     name: 'upload_media',
     description:
-      'Upload an already-optimized image or short video to R2. Images: webp/avif/jpeg/png. Video: H.264 MP4 faststart, 30–90s, ≤720p. Returns a /files/... URL for posts.',
+      'Upload an already-optimized image or short demo clip to R2. Do not upload camera originals. Video: H.264 MP4 (preferred) or webm, 30–90s (aim 30–60s), ≤720p, faststart, 40MB hard max (aim 2–8MB), mute unless sound is the point. Every video also needs a separate poster still (webp/jpeg, 1280×720, aim 40–200KB). Images: webp/avif/jpeg/png 8MB max (aim under 400KB); SVG 512KB UTF-8; GIF 4MB (prefer mp4). Returns a /files/... URL for posts.',
     inputSchema: {
       type: 'object',
       properties: {

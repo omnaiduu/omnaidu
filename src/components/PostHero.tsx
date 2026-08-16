@@ -31,7 +31,14 @@ export function PostHero({
         : poster ?? null
 
   if (video) {
-    return <DemoPlayer src={video} poster={poster} caption={caption ?? 'Demo. 30–90s of the thing running.'} />
+    return (
+      <DemoPlayer
+        src={video}
+        poster={poster}
+        caption={caption ?? 'Demo. 30–90s of the thing running.'}
+        priority={priority}
+      />
+    )
   }
 
   if (!image) return null

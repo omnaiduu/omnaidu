@@ -5,12 +5,15 @@ export function DemoPlayer({
   poster,
   caption,
   captions,
+  priority = false,
 }: {
   src: string
   poster?: string | null
   caption?: string
   captions?: string | null
+  priority?: boolean
 }) {
+  const rootRef = React.useRef<HTMLDivElement>(null)
   const videoRef = React.useRef<HTMLVideoElement>(null)
   const [armed, setArmed] = React.useState(false)
   const [playing, setPlaying] = React.useState(false)
@@ -22,6 +25,23 @@ export function DemoPlayer({
     video.muted = true
     void video.play().then(() => setPlaying(true)).catch(() => {})
   }, [armed, src])
+
+  React.useEffect(() => {
+    const root = rootRef.current
+    if (!root) return
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        const video = videoRef.current
+        if (!video) return
+        if (!entry.isIntersecting && !video.paused) {
+          video.pause()
+        }
+      },
+      { threshold: 0.15 },
+    )
+    io.observe(root)
+    return () => io.disconnect()
+  }, [armed])
 
   function play() {
     setArmed(true)
@@ -55,30 +75,49 @@ export function DemoPlayer({
         <span className="demo-stage-bar-line" />
       </div>
       <div
+        ref={rootRef}
         className="player"
         onKeyDown={onKeyDown}
         tabIndex={0}
         role="group"
         aria-label="Demo video player"
       >
-        <video
-          ref={videoRef}
-          src={armed ? src : undefined}
-          poster={poster ?? undefined}
-          playsInline
-          preload="none"
-          controls={playing}
-          muted
-          width={1280}
-          height={720}
-          onPlay={() => setPlaying(true)}
-          onPause={() => setPlaying(false)}
-          onEnded={() => setPlaying(false)}
-        >
-          {armed && captions ? (
-            <track kind="captions" srcLang="en" label="Captions" src={captions} default />
-          ) : null}
-        </video>
+        {armed ? (
+          <video
+            ref={videoRef}
+            src={src}
+            poster={poster ?? undefined}
+            playsInline
+            preload="none"
+            controls={playing}
+            muted
+            width={1280}
+            height={720}
+            disablePictureInPicture
+            controlsList="nodownload noremoteplayback"
+            onPlay={() => setPlaying(true)}
+            onPause={() => setPlaying(false)}
+            onEnded={() => setPlaying(false)}
+          >
+            {captions ? (
+              <track kind="captions" srcLang="en" label="Captions" src={captions} default />
+            ) : null}
+          </video>
+        ) : poster ? (
+          <img
+            className="player-poster"
+            src={poster}
+            alt=""
+            width={1280}
+            height={720}
+            decoding="async"
+            loading={priority ? 'eager' : 'lazy'}
+            fetchPriority={priority ? 'high' : 'low'}
+            draggable={false}
+          />
+        ) : (
+          <div className="player-fallback" />
+        )}
         {!playing ? (
           <button
             type="button"
