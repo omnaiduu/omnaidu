@@ -1,0 +1,11 @@
+node_modules
+.tanstack
+.DS_Store
+.cache
+.env
+.env.local
+dist
+.wrangler
+.output
+worker-configuration.d.ts
+*.log
