@@ -989,6 +989,68 @@
   padding: 0;
 }
 
+.code-block .hljs-comment,
+.code-block .hljs-quote {
+  color: #8a8680;
+  font-style: italic;
+}
+
+.code-block .hljs-keyword,
+.code-block .hljs-selector-tag,
+.code-block .hljs-built_in {
+  color: #ffb089;
+}
+
+.code-block .hljs-string,
+.code-block .hljs-attr,
+.code-block .hljs-attribute,
+.code-block .hljs-addition {
+  color: #e7d5b3;
+}
+
+.code-block .hljs-number,
+.code-block .hljs-literal,
+.code-block .hljs-symbol {
+  color: #c4d4a8;
+}
+
+.code-block .hljs-title,
+.code-block .hljs-title.function_,
+.code-block .hljs-title.class_ {
+  color: #efece6;
+}
+
+.code-block .hljs-type,
+.code-block .hljs-class .hljs-title {
+  color: #d4c4a8;
+}
+
+.code-block .hljs-variable,
+.code-block .hljs-params,
+.code-block .hljs-property {
+  color: #efece6;
+}
+
+.code-block .hljs-meta,
+.code-block .hljs-doctag {
+  color: #9a958a;
+}
+
+.code-block .hljs-deletion {
+  color: #e8a0a0;
+}
+
+.code-block .hljs-regexp,
+.code-block .hljs-selector-attr,
+.code-block .hljs-selector-pseudo {
+  color: #d4c4a8;
+}
+
+.code-block .hljs-punctuation,
+.code-block .hljs-operator {
+  color: #c8c4bc;
+}
+
 .code-copy {
   position: absolute;
   top: 10px;

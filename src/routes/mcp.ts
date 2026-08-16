@@ -33,7 +33,7 @@ const tools = [
   {
     name: 'publish_post',
     description:
-      'Create or update a post in D1. Purges Cache API entries for the list and slug. Body is markdown: $inline$ and $$display$$ math (KaTeX); :::callout :::demo :::hero :::figure :::proof :::pullquote :::theorem :::lemma :::definition :::proposition :::refs :::steps :::chart :::details :::diff :::filetree :::graph :::arch :::terminal :::timeline :::apispec :::compare :::kbd :::desk. Lead media: demoUrl as mp4/webm for a video hero, or posterUrl (image/svg) with no demoUrl for a still.',
+      'Create or update a post in D1. Purges Cache API entries for the list and slug. Body is markdown. Fenced code with a language (```rust, ```ts, ```bash, …) is highlighted automatically — there is no :::code block. Math: $inline$ and $$display$$ (KaTeX). Directives: :::callout :::demo :::hero :::figure :::proof :::pullquote :::theorem :::lemma :::definition :::proposition :::refs :::steps :::chart :::details :::diff :::filetree :::graph :::arch :::terminal :::timeline :::apispec :::compare :::kbd :::desk. Lead media: demoUrl as mp4/webm for a video hero, or posterUrl (image/svg) with no demoUrl for a still.',
     inputSchema: {
       type: 'object',
       properties: {

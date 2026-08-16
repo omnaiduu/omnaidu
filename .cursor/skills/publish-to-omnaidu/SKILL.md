@@ -98,3 +98,27 @@ Body is markdown. First `# title` is stripped (the page already has a title).
 5. Short demo or a figure
 
 Do not write a YouTube script. Keep it readable.
+
+## Code
+
+Write a normal markdown fence with a language. Highlighting is automatic. There is no `:::code` block.
+
+```rust
+match intent {
+    Intent::Balance => tools.balances(session).await?,
+}
+```
+
+Languages that color: rust, ts/tsx, js, json, bash, python, go, sql, css, html, yaml, markdown, toml.
+
+## How the AI picks a block
+
+It is **not** automatic from the topic. You write the markdown (or the agent does).
+
+- A video at the top → `demoUrl` + `posterUrl`, or `:::demo` / `:::hero`
+- A warning → `:::callout`
+- Math → `$...$` / `$$...$$`
+- A theorem → `:::theorem`
+- Code → ` ```rust ` (no extra component)
+
+The skill + the `publish_post` tool text are how the agent knows. If those are missing, it will guess and often skip posters or use the wrong tag.

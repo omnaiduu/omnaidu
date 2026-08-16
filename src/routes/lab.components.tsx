@@ -24,7 +24,7 @@ import { MathPreview } from '~/components/mdx/MathPreview'
 import { PostHero } from '~/components/PostHero'
 import { Refs } from '~/components/mdx/Refs'
 import { TiltLaptop } from '~/components/home/MotionLooks'
-import { CodeBlock } from '~/components/PostBody'
+import { CodeBlock } from '~/components/CodeBlock'
 import { seo } from '~/utils/seo'
 
 export const Route = createFileRoute('/lab/components')({
@@ -247,7 +247,7 @@ function LabComponents() {
       <LabBlock
         id="code"
         title="Code block"
-        when="Fenced code with language label and copy button."
+        when="Fenced code. Put a language after the ticks (```rust). Colors are automatic."
         directive={'```rust\nmatch intent {\n    Intent::Balance => tools.balances(session).await?,\n}\n```'}
       >
         <CodeBlock className="language-rust">

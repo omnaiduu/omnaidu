@@ -34,6 +34,7 @@ import { MdxSteps } from '~/components/mdx/MdxSteps'
 import { MdxTerminal } from '~/components/mdx/MdxTerminal'
 import { MdxTimeline } from '~/components/mdx/MdxTimeline'
 import { Refs } from '~/components/mdx/Refs'
+import { CodeBlock } from '~/components/CodeBlock'
 import { headingId } from '~/lib/headings'
 
 function remarkDirectiveHast() {
@@ -63,46 +64,6 @@ function getText(children: React.ReactNode): string {
     return getText(children.props.children)
   }
   return ''
-}
-
-function languageLabel(className?: string) {
-  if (!className) return null
-  const match = className.match(/language-([\w-]+)/)
-  return match?.[1] ?? null
-}
-
-export function CodeBlock({ children, className }: { children?: React.ReactNode; className?: string }) {
-  const [copied, setCopied] = React.useState(false)
-  const text = getText(children).replace(/\n$/, '')
-  const lang = languageLabel(className)
-
-  async function copy() {
-    try {
-      await navigator.clipboard.writeText(text)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
-    } catch {
-      /* clipboard unavailable */
-    }
-  }
-
-  if (!className) {
-    return <code>{children}</code>
-  }
-
-  return (
-    <div className="code-block">
-      <div className="code-block-header">
-        <span className="code-lang">{lang ?? 'code'}</span>
-        <button type="button" className="code-copy" onClick={copy} aria-label="Copy code">
-          {copied ? 'Copied' : 'Copy'}
-        </button>
-      </div>
-      <pre className={className}>
-        <code>{children}</code>
-      </pre>
-    </div>
-  )
 }
 
 function ProseImage({ src, alt }: { src?: string; alt?: string }) {

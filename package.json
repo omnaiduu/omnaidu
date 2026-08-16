@@ -17,6 +17,7 @@
     "@tanstack/react-router": "^1.170.29",
     "@tanstack/react-router-devtools": "^1.167.1",
     "@tanstack/react-start": "^1.168.46",
+    "highlight.js": "^11.12.0",
     "katex": "^0.18.4",
     "marked": "^16.2.1",
     "motion": "^12.23.12",
