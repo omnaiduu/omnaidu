@@ -15,8 +15,7 @@
     "SITE_NAME": "Om Naidu",
   },
   "routes": [
-    { "pattern": "omnaidu.com", "custom_domain": true },
-    { "pattern": "www.omnaidu.com", "custom_domain": true },
+    { "pattern": "omnaidu.com/*", "zone_id": "17ec0ef624a7800a7a9a83481225f29c" },
   ],
   "d1_databases": [
     {

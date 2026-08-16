@@ -12,7 +12,6 @@ export const Route = createFileRoute('/sitemap.xml')({
           '',
           '/blog',
           '/about',
-          '/themes',
           ...posts.map((post) => `/blog/${post.slug}`),
         ]
         const xml = `<?xml version="1.0" encoding="UTF-8"?>

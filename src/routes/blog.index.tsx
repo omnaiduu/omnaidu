@@ -10,17 +10,18 @@ function parseTag(value: unknown): Tag {
 }
 
 export const Route = createFileRoute('/blog/')({
-  validateSearch: (search: Record<string, unknown>) => ({
-    tag: parseTag(search.tag),
-  }),
-  loaderDeps: ({ search }) => ({ tag: search.tag }),
+  validateSearch: (search: Record<string, unknown>): { tag?: Tag } => {
+    if (search.tag == null || search.tag === 'all') return {}
+    return { tag: parseTag(search.tag) }
+  },
+  loaderDeps: ({ search }) => ({ tag: search.tag ?? 'all' }),
   loader: async ({ deps, location }) => {
     const posts = await fetchPosts({ data: { tag: deps.tag, url: location.href } })
     return { posts }
   },
   head: ({ loaderData, match }) => ({
     meta: seo({
-      title: `Writing${match.search.tag !== 'all' ? ` · ${match.search.tag}` : ''} — Om Naidu`,
+      title: `Writing${match.search.tag ? ` · ${match.search.tag}` : ''} — Om Naidu`,
       description: 'Lab writeups tagged projects, research, systems, writing. No separate projects site.',
       image: loaderData?.posts[0] ? `/og/${loaderData.posts[0].slug}` : undefined,
     }),
@@ -30,7 +31,7 @@ export const Route = createFileRoute('/blog/')({
 
 function BlogIndex() {
   const { posts } = Route.useLoaderData()
-  const { tag } = Route.useSearch()
+  const tag = Route.useSearch().tag ?? 'all'
 
   return (
     <section className="wrap section" style={{ paddingTop: 48 }}>
