@@ -11,6 +11,13 @@ interface Env {
 
 declare module 'cloudflare:workers' {
   export const env: Env
+  export const cache: {
+    purge(opts: {
+      tags?: string[]
+      pathPrefixes?: string[]
+      purgeEverything?: boolean
+    }): Promise<unknown>
+  }
 }
 
 declare module '*.wasm' {

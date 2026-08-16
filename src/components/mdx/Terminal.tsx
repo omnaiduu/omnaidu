@@ -1,5 +1,5 @@
 export function Terminal({
-  prompt = 'om@lab',
+  prompt = 'om@omnaidu',
   lines,
 }: {
   prompt?: string

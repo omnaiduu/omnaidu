@@ -42,6 +42,17 @@ export async function cachedJson<T>(
 
 const LIST_KEYS = ['list:all', 'list:projects', 'list:research', 'list:systems', 'list:writing']
 
+async function purgeWorkersCache(slug?: string) {
+  try {
+    const { cache } = await import('cloudflare:workers')
+    const tags = ['html', 'og']
+    if (slug) tags.push(`post-${slug}`)
+    await cache.purge({ tags })
+  } catch {
+    // Workers Cache purge needs cache.enabled and a supported runtime.
+  }
+}
+
 export async function purgePostCaches(request: Request, slug?: string) {
   try {
     const cache = caches.default
@@ -52,4 +63,5 @@ export async function purgePostCaches(request: Request, slug?: string) {
   } catch {
     // Preview accounts may not expose Cache API the same way.
   }
+  await purgeWorkersCache(slug)
 }

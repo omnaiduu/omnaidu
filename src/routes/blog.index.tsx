@@ -3,6 +3,7 @@ import { PostList } from '~/components/PostList'
 import { TagFilters } from '~/components/TagFilters'
 import { fetchPosts } from '~/lib/queries'
 import { TAGS, type Tag } from '~/lib/types'
+import { ogImagePath } from '~/lib/site'
 import { seo } from '~/utils/seo'
 
 function parseTag(value: unknown): Tag {
@@ -23,7 +24,7 @@ export const Route = createFileRoute('/blog/')({
     meta: seo({
       title: `Writing${match.search.tag ? ` · ${match.search.tag}` : ''} — Om Naidu`,
       description: 'Projects, research, systems, and notes. Filter by category.',
-      image: loaderData?.posts[0] ? `/og/${loaderData.posts[0].slug}` : '/og/site',
+      image: loaderData?.posts[0] ? ogImagePath(loaderData.posts[0].slug) : ogImagePath('site'),
     }),
   }),
   component: BlogIndex,

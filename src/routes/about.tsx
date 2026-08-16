@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { AnimatedLetters } from '~/components/Wordmark'
 import { TiltLaptop } from '~/components/home/MotionLooks'
-import { GITHUB_URL, SITE_EMAIL, SITE_EMAIL_HREF, SITE_URL } from '~/lib/site'
+import { ogImagePath, GITHUB_URL, SITE_EMAIL, SITE_EMAIL_HREF, SITE_URL } from '~/lib/site'
 import { seo } from '~/utils/seo'
 
 export const Route = createFileRoute('/about')({
@@ -10,7 +10,7 @@ export const Route = createFileRoute('/about')({
       title: 'About — Om Naidu',
       description: 'Software engineer in Goa. I ship systems, then write the receipt.',
       url: '/about',
-      image: '/og/site',
+      image: ogImagePath('site'),
     }),
     scripts: [
       {

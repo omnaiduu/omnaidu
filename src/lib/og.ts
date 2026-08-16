@@ -37,18 +37,18 @@ function wrapLines(text: string, max: number, maxLines: number) {
 }
 
 export function renderOgSvg(opts: { title: string; tag: string; abstract: string }) {
-  const titles = wrapLines(opts.title, 28, 3)
-  const abstracts = wrapLines(opts.abstract, 52, 2)
+  const titles = wrapLines(opts.title, 26, 3)
+  const abstracts = wrapLines(opts.abstract, 48, 2)
   const titleXml = titles
     .map(
       (line, i) =>
-        `<text x="88" y="${236 + i * 58}" fill="${C.ink}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="48" font-weight="400">${escapeXml(line)}</text>`,
+        `<text x="120" y="${248 + i * 56}" fill="${C.ink}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="46" font-weight="400">${escapeXml(line)}</text>`,
     )
     .join('\n  ')
   const abstractXml = abstracts
     .map(
       (line, i) =>
-        `<text x="88" y="${236 + titles.length * 58 + 36 + i * 32}" fill="${C.muted}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22">${escapeXml(line)}</text>`,
+        `<text x="120" y="${248 + titles.length * 56 + 34 + i * 30}" fill="${C.muted}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22">${escapeXml(line)}</text>`,
     )
     .join('\n  ')
 
@@ -56,12 +56,12 @@ export function renderOgSvg(opts: { title: string; tag: string; abstract: string
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <rect width="1200" height="630" fill="${C.bg}"/>
   <rect x="48" y="48" width="1104" height="534" fill="${C.card}" stroke="${C.line}"/>
-  <rect x="88" y="92" width="10" height="10" fill="${C.ember}"/>
-  <text x="110" y="104" fill="${C.muted}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="20" letter-spacing="3.5">OMNAIDU.COM · ${escapeXml(opts.tag.toUpperCase())}</text>
-  <line x1="88" y1="128" x2="1112" y2="128" stroke="${C.line}"/>
+  <rect x="120" y="96" width="10" height="10" fill="${C.ember}"/>
+  <text x="142" y="108" fill="${C.muted}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="20" letter-spacing="3.5">OMNAIDU.COM · ${escapeXml(opts.tag.toUpperCase())}</text>
+  <line x1="120" y1="132" x2="1080" y2="132" stroke="${C.line}"/>
   ${titleXml}
   ${abstractXml}
-  <text x="88" y="534" fill="${C.ember}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="20">omnaidu.com</text>
+  <text x="120" y="508" fill="${C.ember}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="20">omnaidu.com</text>
 </svg>`
 }
 

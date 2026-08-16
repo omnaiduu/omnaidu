@@ -9,11 +9,14 @@ This site has **no admin page**. You publish with MCP tools. Visitors never see 
 
 Owner: Om Naidu, Goa. Email **hello@omnaidu.com**. Dark-only hiring index. Content in D1, not git.
 
+Live: https://omnaidu.com
+
 ## Connect MCP (Cursor)
 
 You need the omnaidu MCP connected, with `PUBLISH_SECRET`.
 
-Cursor → Settings → MCP:
+1. Copy `.cursor/mcp.json.example` to Cursor Settings → MCP (or `.cursor/mcp.json` locally — never commit the real secret).
+2. Replace `YOUR_PUBLISH_SECRET` with the Worker secret (`wrangler secret put PUBLISH_SECRET`).
 
 ```json
 {
@@ -30,12 +33,41 @@ Cursor → Settings → MCP:
 
 The Worker also accepts `x-publish-secret`. If the server is missing, stop and say so — do not invent a publish UI or commit the post into git.
 
+To reuse this skill on another machine, copy this folder to `~/.cursor/skills/publish-to-omnaidu/`.
+
 Do **not**:
 - Commit videos or posts into git
 - Mention `/mcp` in public post copy
 - Upload a huge camera file
 - Restore light mode, RSS, or a Lab route
 - Put a video on the homepage (home is poster-only)
+- Add Exa as a public site-search box
+
+## How to use the MCP tools
+
+Call tools over JSON-RPC `POST https://omnaidu.com/mcp` (Cursor does this for you).
+
+| Tool | When | Notes |
+|---|---|---|
+| `list_posts` | Before writing, to avoid duplicate slugs | Optional `tag` |
+| `get_post` | Editing an existing slug | Includes drafts |
+| `upload_media` | Images/video **before** `publish_post` | Base64 in JSON. Returns `/files/...` |
+| `publish_post` | Create or update | Purges HTML + D1 caches |
+| `unpublish_post` | Hide | Sets `status: draft` |
+| `list_media` | Reuse an existing file | Recent R2 uploads |
+
+Typical order: encode → `upload_media` (poster, then mp4) → `publish_post`.
+
+Required on `publish_post`: `slug`, `title`, `abstract`, `body`, `tag`.
+
+**Tags (exactly one):** `projects` | `research` | `systems` | `writing`
+
+- `projects` — shipped work. Eligible for the homepage **Selected** slot (latest one).
+- `research` — notes, math, papers.
+- `systems` — infra, caching, workers, D1.
+- `writing` — everything else.
+
+Body is markdown. First `# title` is stripped. Lead video: `demoUrl` + `posterUrl`. Image-only lead: `posterUrl` only.
 
 ## Video limits
 
@@ -92,36 +124,9 @@ If `demoUrl` is set, do **not** also paste `:::demo` of the **same** file in the
 :::
 ```
 
-## How to write a post
+## Blocks (write these yourself — nothing auto-picks)
 
-`publish_post`. Required: `slug`, `title`, `abstract`, `body`, `tag`.
-
-Tags: `projects` | `research` | `systems` | `writing`
-
-Body is markdown. First `# title` is stripped.
-
-### Blocks
-
-**Use often**
-
-- `$inline math$` and `$$display math$$`
-- `:::callout{tone="note"}` (note, warn, idea, result, danger)
-- `:::demo{src poster}` short video
-- `:::hero{src poster}` image or video lead
-- `:::figure{src alt}` picture
-- `:::proof{tests repo}` tests / benches
-- `:::steps`
-- `:::theorem` `:::lemma` `:::definition` `:::proposition`
-- `:::refs`
-- `:::desk` 2D laptop (only on a post about this site)
-
-**Use when needed**
-
-- `:::pullquote` `:::chart` `:::details` `:::diff` `:::filetree` `:::graph` `:::arch` `:::terminal` `:::timeline` `:::apispec` `:::compare` `:::kbd`
-
-## Code
-
-Normal markdown fence with a language. Highlighting is automatic. No `:::code`.
+Fenced code with a language is highlighted. No `:::code`.
 
 ```rust
 match intent {
@@ -131,22 +136,98 @@ match intent {
 
 Languages that color: rust, ts/tsx, js, json, bash, python, go, sql, css, html, yaml, markdown, toml.
 
-## How the AI picks a block
+**Use often**
 
-It is **not** automatic from the topic. You write the markdown.
+```md
+:::callout{tone="note"}
+Keep the contract in the tool schema, not the prompt.
+:::
 
-- Video at the top → `demoUrl` + `posterUrl`
-- Warning → `:::callout`
-- Math → `$...$`
-- Theorem → `:::theorem`
-- Code → ` ```rust `
+$E = mc^2$
 
-## Other tools
+:::figure{src="/files/uploads/….webp" alt="Loop diagram"}
+Turn loop, one request at a time.
+:::
 
-- `list_posts` — what is live
-- `get_post` — one slug, including drafts
-- `unpublish_post` — hide (`status: draft`)
-- `list_media` — recent uploads
+:::proof{tests="142 passed" repo="https://github.com/omnaiduu/…"}
+{"benches":[{"name":"p95","value":"12ms"}]}
+:::
+
+:::steps
+1. Write the contract
+2. Ship the loop
+3. Put the receipt here
+:::
+
+:::theorem{title="Cache key"}
+Worker version is in the key unless cross_version_cache is on.
+:::
+
+:::refs
+RFC 9111
+Cloudflare Workers Cache
+:::
+```
+
+Callout tones: `note`, `warn`, `idea`, `result`, `danger`. Also `:::lemma` `:::definition` `:::proposition`.
+
+**Use when needed**
+
+```md
+:::pullquote{cite="Om"}
+Ship the system, then write the receipt.
+:::
+
+:::chart{kind="bar"}
+[{"label":"before","value":120},{"label":"after","value":18}]
+:::
+
+:::details{summary="Edge cases"}
+Empty slug is rejected.
+:::
+
+:::diff
+- old header
++ new header
+:::
+
+:::filetree
+{"name":"app","children":[{"name":"src","children":[{"name":"main.rs"}]}]}
+:::
+
+:::graph
+{"nodes":[{"id":"a","label":"Worker","x":40,"y":80},{"id":"b","label":"D1","x":200,"y":80}],"edges":[{"from":"a","to":"b"}]}
+:::
+
+:::arch
+[{"id":"w","label":"Worker"},{"id":"d1","label":"D1"},{"id":"r2","label":"R2"}]
+:::
+
+:::terminal{prompt="om@omnaidu"}
+pnpm exec wrangler deploy
+:::
+
+:::timeline
+[{"date":"Aug 16","title":"RSC + cache","detail":"Post bodies stay on the server."}]
+:::
+
+:::apispec{method="POST" path="/mcp" status="200" description="Private JSON-RPC"}
+:::
+
+:::compare{before="/files/a.webp" after="/files/b.webp" beforeCaption="Before" afterCaption="After"}
+:::
+
+:::kbd
+⌘K
+:::
+
+:::desk
+:::
+```
+
+`:::desk` is the 2D laptop. Only on a post about this site.
+
+`:::hero{src poster}` is an in-body lead. Prefer `demoUrl`/`posterUrl` on the post instead of duplicating it.
 
 ## Shape of a good post
 
@@ -156,4 +237,8 @@ It is **not** automatic from the topic. You write the markdown.
 4. How you checked it (tests / numbers)
 5. Short demo or a figure
 
-Do not write a YouTube script. Keep it readable. Dark OG card is generated from title + abstract at `/og/{slug}`.
+Do not write a YouTube script. Keep it readable. Dark OG card is generated from title + abstract at `/og/{slug}.png` (1200×630 PNG for WhatsApp, X, LinkedIn).
+
+## Design reminders while writing
+
+See `AGENTS.md`. Dark only. Quiet type. Selected work then the list. No Lab, no RSS, no light mode.

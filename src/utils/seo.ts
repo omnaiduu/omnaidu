@@ -1,6 +1,6 @@
-import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from '~/lib/site'
+import { ogImagePath, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from '~/lib/site'
 
-const DEFAULT_OG_IMAGE = `${SITE_URL}/og/site`
+const DEFAULT_OG_IMAGE = `${SITE_URL}${ogImagePath('site')}`
 
 function isAbsolute(url: string): boolean {
   return /^https?:\/\//i.test(url)
@@ -12,18 +12,28 @@ function absoluteUrl(path: string): string {
   return `${SITE_URL}${normalized}`
 }
 
+function absoluteOgImage(path?: string): string {
+  if (!path) return DEFAULT_OG_IMAGE
+  if (isAbsolute(path)) return path
+  const match = path.match(/^\/og\/(.+?)(?:\.png)?$/i)
+  if (match) return `${SITE_URL}${ogImagePath(match[1])}`
+  return absoluteUrl(path)
+}
+
 export const seo = ({
   title,
   description,
   image,
   url,
+  type = 'website',
 }: {
   title: string
   description?: string
   image?: string
   url?: string
+  type?: 'website' | 'article'
 }) => {
-  const ogImage = absoluteUrl(image ?? DEFAULT_OG_IMAGE)
+  const ogImage = absoluteOgImage(image)
   const ogUrl = url ? absoluteUrl(url) : SITE_URL
   const desc = description ?? SITE_DESCRIPTION
 
@@ -32,7 +42,7 @@ export const seo = ({
     { name: 'description', content: desc },
     { name: 'theme-color', content: '#14120b' },
     { name: 'color-scheme', content: 'dark' },
-    { property: 'og:type', content: 'website' },
+    { property: 'og:type', content: type },
     { property: 'og:site_name', content: SITE_NAME },
     { property: 'og:locale', content: 'en_US' },
     { property: 'og:title', content: title },

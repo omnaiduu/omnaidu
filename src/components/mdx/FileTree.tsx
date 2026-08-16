@@ -28,20 +28,19 @@ export function FileTree({ tree }: { tree: TreeNode }) {
 }
 
 export const SAMPLE_FILE_TREE: TreeNode = {
-  name: 'bankbot-rs',
+  name: 'app',
   children: [
     {
       name: 'src',
       children: [
         { name: 'main.rs' },
-        { name: 'turn.rs' },
+        { name: 'lib.rs' },
         {
           name: 'tools',
-          children: [{ name: 'transfer.rs' }, { name: 'balance.rs' }],
+          children: [{ name: 'mod.rs' }],
         },
       ],
     },
     { name: 'Cargo.toml' },
-    { name: 'openapi.yaml' },
   ],
 }

@@ -2,7 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { FeaturedPost, pickFeatured } from '~/components/FeaturedPost'
 import { PostList } from '~/components/PostList'
 import { fetchPosts } from '~/lib/queries'
-import { SITE_DESCRIPTION } from '~/lib/site'
+import { ogImagePath, SITE_DESCRIPTION } from '~/lib/site'
 import { seo } from '~/utils/seo'
 
 export const Route = createFileRoute('/')({
@@ -15,7 +15,7 @@ export const Route = createFileRoute('/')({
     meta: seo({
       title: 'Om Naidu',
       description: SITE_DESCRIPTION,
-      image: '/og/site',
+      image: ogImagePath('site'),
       url: '/',
     }),
   }),

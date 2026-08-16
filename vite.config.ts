@@ -15,9 +15,13 @@ export default defineConfig({
   plugins: [
     tailwindcss(),
     cloudflare({
+      // TanStack Start's Worker fetch lives in the `ssr` environment
+      // (`@tanstack/react-start/server-entry`). RSC is a child module graph
+      // inside that Worker. Do not set the parent to `rsc` — that entry has
+      // no default export and wrangler deploy fails with a service-worker error.
       viteEnvironment: {
-        name: 'rsc',
-        childEnvironments: ['ssr'],
+        name: 'ssr',
+        childEnvironments: ['rsc'],
       },
     }),
     tanstackStart({

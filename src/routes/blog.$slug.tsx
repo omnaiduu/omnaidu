@@ -3,7 +3,7 @@ import { CiteButton } from '~/components/CiteButton'
 import { PostHero } from '~/components/PostHero'
 import { PostToc } from '~/components/PostToc'
 import { fetchPostPage } from '~/lib/queries'
-import { SITE_URL } from '~/lib/site'
+import { ogImagePath, SITE_URL } from '~/lib/site'
 import { seo } from '~/utils/seo'
 
 export const Route = createFileRoute('/blog/$slug')({
@@ -19,8 +19,9 @@ export const Route = createFileRoute('/blog/$slug')({
       meta: seo({
         title: post ? `${post.title} — Om Naidu` : 'Om Naidu',
         description: post?.abstract,
-        image: `/og/${params.slug}`,
+        image: ogImagePath(params.slug),
         url: `/blog/${params.slug}`,
+        type: 'article',
       }),
       scripts: post
         ? [
@@ -32,7 +33,7 @@ export const Route = createFileRoute('/blog/$slug')({
                 headline: post.title,
                 description: post.abstract,
                 datePublished: post.publishedAt,
-                image: `${SITE_URL}/og/${params.slug}`,
+                image: `${SITE_URL}${ogImagePath(params.slug)}`,
                 url,
                 author: { '@type': 'Person', name: 'Om Naidu', url: SITE_URL },
                 publisher: { '@type': 'Person', name: 'Om Naidu', url: SITE_URL },

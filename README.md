@@ -23,6 +23,8 @@ Open http://localhost:3000
 
 There is no RSS feed and no `/lab` workshop.
 
+The Worker parent environment must be **`ssr`**, with RSC as a child (`childEnvironments: ['rsc']`). See `AGENTS.md`.
+
 ## Deploy
 
 ```bash
@@ -45,7 +47,7 @@ Same value as `PUBLISH_SECRET` on the Worker.
 
 ### 2. Connect Cursor
 
-Cursor Settings → MCP → add a remote server:
+Copy `.cursor/mcp.json.example`, put the real secret in Cursor Settings → MCP (do not commit it):
 
 ```json
 {
@@ -62,24 +64,38 @@ Cursor Settings → MCP → add a remote server:
 
 `x-publish-secret` is also accepted. Unauthenticated calls get 401. Visitors never see a UI for this.
 
-### 3. Tools
+### 3. Skill (copy this)
+
+The publish contract lives at:
+
+```
+.cursor/skills/publish-to-omnaidu/SKILL.md
+```
+
+Cursor loads it automatically in this repo. To use it on another machine, copy that folder to:
+
+```
+~/.cursor/skills/publish-to-omnaidu/
+```
+
+Then type `/publish-to-omnaidu` or just ask to publish a post. The skill covers ffmpeg, posters, tags, and every markdown block.
+
+### 4. Tools
 
 | Tool | What it does |
 |---|---|
 | `list_posts` | Published posts (optional tag) |
 | `get_post` | One slug, including drafts |
-| `publish_post` | Create/update. Purges list + slug caches |
+| `publish_post` | Create/update. Purges list + slug + HTML caches |
 | `unpublish_post` | Set `status: draft` |
 | `upload_media` | Optimized image/video → R2 → `/files/...` |
 | `list_media` | Recent uploads |
 
-### 4. A post
+### 5. A post
 
 Required: `slug`, `title`, `abstract`, `body`, `tag` (`projects` \| `research` \| `systems` \| `writing`).
 
 Body is markdown. Lead video: `demoUrl` + `posterUrl`. Image-only lead: `posterUrl` only.
-
-Copy the Cursor skill from `.cursor/skills/publish-to-omnaidu/SKILL.md` into any machine that should publish. That file is the full contract (ffmpeg, posters, blocks).
 
 ## Video / images (short)
 
@@ -94,8 +110,12 @@ Encode, then upload. The player does not fetch the MP4 until play. Home never em
 
 ## OG
 
-`/og/site` and `/og/{slug}` return **PNG 1200×630** (dark). Wired for WhatsApp, X large image, and LinkedIn.
+`/og/site.png` and `/og/{slug}.png` return **PNG 1200×630** (dark). Wired for WhatsApp, X large image, and LinkedIn. Crawlers are allowed in `/robots.txt`.
+
+## Caching
+
+`cache.enabled: true`. HTML is cached at the edge for 60s (`cdn-cache-control`) with stale-while-revalidate. Publish purges those tags. `/mcp` is never cached.
 
 ## Design
 
-See `AGENTS.md`. Dark only. Quiet type. Selected work then the list.
+See `AGENTS.md`. Dark only. Quiet type. Selected work then the list. Future agents should read that file before editing UI.

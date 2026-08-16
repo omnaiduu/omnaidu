@@ -17,7 +17,7 @@ export const Route = createRootRoute({
         title: 'Om Naidu',
         description: SITE_DESCRIPTION,
         url: '/',
-        image: '/og/site',
+        image: '/og/site.png',
       }),
     ],
     links: [

@@ -14,7 +14,8 @@ function withCacheHeaders(pathname: string, response: Response) {
   }
 
   if (pathname.startsWith('/og/')) {
-    headers.set('cache-control', 'public, max-age=300, s-maxage=86400')
+    // Edge TTL via cdn-cache-control. s-maxage would disable stale-while-revalidate.
+    headers.set('cache-control', 'public, max-age=300')
     headers.set('cdn-cache-control', 'public, max-age=86400')
     headers.set('cache-tag', 'og')
     return new Response(response.body, { status: response.status, headers })
@@ -28,9 +29,11 @@ function withCacheHeaders(pathname: string, response: Response) {
   }
 
   if (type.includes('text/html')) {
-    headers.set('cache-control', 'public, max-age=0, s-maxage=60, stale-while-revalidate=600')
-    headers.set('cdn-cache-control', 'public, max-age=60')
-    headers.set('cache-tag', 'html')
+    // Browsers: no store. Edge: 60s fresh, then SWR. Use max-age on
+    // cdn-cache-control — s-maxage disables stale-while-revalidate.
+    headers.set('cache-control', 'public, max-age=0')
+    headers.set('cdn-cache-control', 'public, max-age=60, stale-while-revalidate=600')
+    headers.set('cache-tag', pathname.startsWith('/blog/') ? `html,post-${pathname.slice('/blog/'.length)}` : 'html')
   }
 
   return new Response(response.body, { status: response.status, headers })
