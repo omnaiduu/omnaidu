@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720" role="img" aria-label="This site">
+  <rect width="1280" height="720" fill="#14120b"/>
+  <rect x="48" y="48" width="1184" height="624" fill="#1c1a13" stroke="rgba(239,236,230,0.12)"/>
+  <rect x="88" y="88" width="10" height="10" fill="#ff6a2a"/>
+  <text x="112" y="98" fill="#9a958a" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" letter-spacing="4">OMNAIDU.COM</text>
+  <line x1="88" y1="128" x2="1192" y2="128" stroke="rgba(239,236,230,0.12)"/>
+  <text x="88" y="372" fill="#efece6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="64">This site</text>
+  <text x="88" y="428" fill="#9a958a" font-family="ui-sans-serif, system-ui, sans-serif" font-size="24">Hiring index. Selected work, then the list.</text>
+</svg>
