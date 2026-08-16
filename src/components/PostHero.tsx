@@ -42,7 +42,6 @@ export function PostHero({
         src={image}
         alt={alt ?? caption ?? ''}
         loading={priority ? 'eager' : 'lazy'}
-        fetchPriority={priority ? 'high' : 'auto'}
         decoding="async"
       />
       {caption ? <figcaption>{caption}</figcaption> : null}
