@@ -38,22 +38,10 @@ export function AnimatedLetters({
 }
 
 export function Wordmark() {
-  const reduceMotion = useReducedMotion()
-
   return (
     <Link to="/" className="wordmark" aria-label="omnaidu home">
-      <AnimatedLetters text="omnaidu" className="wordmark-text" />
-      <motion.span
-        className="wordmark-mark"
-        aria-hidden
-        initial={reduceMotion ? false : { scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={
-          reduceMotion
-            ? undefined
-            : { delay: 0.3, type: 'spring', stiffness: 480, damping: 20 }
-        }
-      />
+      <span className="wordmark-text">omnaidu</span>
+      <span className="wordmark-mark" aria-hidden />
     </Link>
   )
 }
