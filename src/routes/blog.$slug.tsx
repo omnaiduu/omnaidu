@@ -62,6 +62,9 @@ function BlogPost() {
   const { post, related, Body } = Route.useLoaderData()
   const tocItems = extractHeadings(post.body)
   const hasToc = tocItems.length >= 3
+  const showProof =
+    !/:::proof/.test(post.body) &&
+    Boolean(post.proofTests || post.proofBenches.length > 0 || post.repo)
 
   return (
     <article
@@ -71,13 +74,18 @@ function BlogPost() {
       <div className="wrap article-grid">
         <header className="article-head">
           <p className="post-crumb">
-            <Link className="link-ember" to="/blog">
+            <Link className="link-ember" to="/blog" activeOptions={{ exact: true, includeSearch: true }}>
               Writing
             </Link>
             <span className="post-crumb-sep" aria-hidden>
               /
             </span>
-            <Link className="link-ember" to="/blog" search={{ tag: post.tag }}>
+            <Link
+              className="link-ember"
+              to="/blog"
+              search={{ tag: post.tag }}
+              activeOptions={{ exact: true, includeSearch: true }}
+            >
               {post.tag}
             </Link>
           </p>
@@ -100,7 +108,7 @@ function BlogPost() {
         </div>
         <div className="article-body">
           {Body}
-          <Proof post={post} />
+          {showProof ? <Proof post={post} /> : null}
           {related.length > 0 ? (
             <div className="related">
               <p className="section-label">Related</p>
@@ -108,7 +116,7 @@ function BlogPost() {
             </div>
           ) : null}
           <p className="article-back">
-            <Link className="link-ember" to="/blog">
+            <Link className="link-ember" to="/blog" activeOptions={{ exact: true, includeSearch: true }}>
               ← All writing
             </Link>
           </p>
