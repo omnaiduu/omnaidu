@@ -66,7 +66,7 @@ function BlogPost() {
         <h1 className="article-title">{post.title}</h1>
         <p className="post-abstract-lead">{post.abstract}</p>
         <p className="post-byline">
-          Om Naidu · Goa
+          Om Naidu
           <CiteButton post={post} />
         </p>
         <PostToc markdown={post.body} />

@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router'
 import { FeaturedPost, pickFeatured } from '~/components/FeaturedPost'
 import { PostList } from '~/components/PostList'
 import { fetchPosts } from '~/lib/queries'
@@ -30,18 +30,7 @@ function Home() {
     <div>
       <section className="wrap home-index">
         <h1 className="home-name">Om Naidu</h1>
-        <p className="home-lede">
-          I build software in Goa. I ship the system, then write what I shipped and how I checked it.
-        </p>
-        <p className="home-more">
-          <Link className="link-ember" to="/about">
-            About
-          </Link>
-          {' · '}
-          <a className="link-ember" href="https://github.com/omnaiduu">
-            GitHub
-          </a>
-        </p>
+        <p className="home-lede">{SITE_DESCRIPTION}</p>
       </section>
       {featured ? (
         <section className="wrap home-featured">
