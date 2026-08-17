@@ -26,8 +26,8 @@ export function AnimatedLetters({
         <motion.span
           key={`${ch}-${i}`}
           className="letter"
-          initial={{ opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ y: 6 }}
+          animate={{ y: 0 }}
           transition={{ delay: delay + i * 0.028, duration: 0.38, ease: EASE }}
         >
           {ch === ' ' ? '\u00a0' : ch}
