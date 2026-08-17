@@ -25,6 +25,7 @@ function Home() {
   const { posts } = Route.useLoaderData()
   const featured = pickFeatured(posts)
   const rest = featured ? posts.filter((post) => post.slug !== featured.slug) : posts
+  const showList = rest.length > 0 || !featured
 
   return (
     <div>
@@ -49,10 +50,12 @@ function Home() {
           <FeaturedPost post={featured} />
         </section>
       ) : null}
-      <section className="wrap section">
-        <p className="section-label">Writing</p>
-        <PostList posts={rest} empty="Nothing published yet." />
-      </section>
+      {showList ? (
+        <section className="wrap section">
+          <p className="section-label">Writing</p>
+          <PostList posts={rest} empty="Nothing published yet." className="home-stagger" />
+        </section>
+      ) : null}
     </div>
   )
 }

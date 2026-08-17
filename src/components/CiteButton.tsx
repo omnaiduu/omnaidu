@@ -34,13 +34,13 @@ export function CiteButton({ post }: { post: Post }) {
   }
 
   return (
-    <span className="cite-group">
+    <>
       <button type="button" className="cite-btn" onClick={() => copy('apa')}>
         {copied === 'apa' ? 'Copied' : 'Copy citation'}
       </button>
       <button type="button" className="cite-btn" onClick={() => copy('bib')}>
         {copied === 'bib' ? 'Copied' : 'BibTeX'}
       </button>
-    </span>
+    </>
   )
 }

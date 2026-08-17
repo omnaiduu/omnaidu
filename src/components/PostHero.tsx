@@ -48,6 +48,8 @@ export function PostHero({
       <img
         src={image}
         alt={alt ?? caption ?? ''}
+        width={1280}
+        height={720}
         loading={priority ? 'eager' : 'lazy'}
         decoding="async"
       />

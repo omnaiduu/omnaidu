@@ -22,7 +22,8 @@ export const Route = createRootRoute({
     ],
     links: [
       { rel: 'stylesheet', href: appCss },
-      { rel: 'icon', href: '/favicon.ico' },
+      { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
+      { rel: 'manifest', href: '/site.webmanifest' },
     ],
   }),
   errorComponent: DefaultCatchBoundary,
@@ -34,8 +35,11 @@ export const Route = createRootRoute({
 function RootComponent() {
   return (
     <div className="site-shell">
+      <a href="#main" className="skip-link">
+        Skip to content
+      </a>
       <SiteHeader />
-      <main className="site-main">
+      <main id="main" className="site-main" tabIndex={-1}>
         <Outlet />
       </main>
       <SiteFooter />

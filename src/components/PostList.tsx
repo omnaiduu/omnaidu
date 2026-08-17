@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { EmptyState } from '~/components/EmptyState'
 import type { Post } from '~/lib/types'
 
 function formatDate(value: string) {
@@ -12,16 +13,18 @@ function formatDate(value: string) {
 export function PostList({
   posts,
   empty = 'Nothing in this tag yet.',
+  className,
 }: {
   posts: Post[]
   empty?: string
+  className?: string
 }) {
   if (posts.length === 0) {
-    return <p style={{ color: 'var(--muted)' }}>{empty}</p>
+    return <EmptyState>{empty}</EmptyState>
   }
 
   return (
-    <div>
+    <div className={className}>
       {posts.map((post) => (
         <Link key={post.slug} to="/blog/$slug" params={{ slug: post.slug }} className="post-row">
           <span className="post-row-meta">

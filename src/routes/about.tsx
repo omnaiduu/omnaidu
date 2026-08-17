@@ -60,8 +60,8 @@ function About() {
           </Link>
           . Notes and research live in the same list.
         </p>
-        <p>
-          <a className="link-ember" href={GITHUB_URL}>
+        <p className="about-contact">
+          <a className="link-ember" href={GITHUB_URL} rel="me">
             GitHub
           </a>
           {' · '}

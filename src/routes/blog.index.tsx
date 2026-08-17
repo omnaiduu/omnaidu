@@ -35,16 +35,14 @@ function BlogIndex() {
   const tag = Route.useSearch().tag ?? 'all'
 
   return (
-    <section className="wrap section" style={{ paddingTop: 48 }}>
-      <p className="section-label">Writing</p>
-      <h1 className="article-title" style={{ fontSize: 'clamp(36px, 6vw, 56px)' }}>
-        Writing
-      </h1>
-      <p style={{ color: 'var(--muted)', maxWidth: '46ch', marginBottom: 28 }}>
-        Projects, research, systems, and notes. One list. Filter by category.
-      </p>
+    <section className="wrap section page-writing">
+      <h1 className="article-title page-title">Writing</h1>
+      <p className="page-lead">Projects, research, systems, and notes. One list. Filter by category.</p>
       <TagFilters active={tag} />
-      <PostList posts={posts} />
+      <PostList
+        posts={posts}
+        empty={tag === 'all' ? 'Nothing published yet.' : `Nothing in ${tag} yet.`}
+      />
     </section>
   )
 }

@@ -18,7 +18,9 @@ export function FeaturedPost({ post }: { post: Post }) {
   return (
     <article className="featured-post">
       <p className="featured-kicker">
-        <span className="post-tag">{post.tag}</span>
+        <Link className="post-tag" to="/blog" search={{ tag: post.tag }}>
+          {post.tag}
+        </Link>
         <span className="post-meta">{formatDate(post.publishedAt)}</span>
       </p>
       <h2 className="featured-post-title">
