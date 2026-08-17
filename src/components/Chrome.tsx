@@ -30,7 +30,6 @@ export function SiteHeader() {
 export function SiteFooter() {
   return (
     <footer className="wrap footer">
-      <span>Goa</span>
       <span>
         <a className="link-ember" href={GITHUB_URL}>
           GitHub
