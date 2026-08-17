@@ -1555,7 +1555,11 @@ html[data-scrolled='true'] .site-header {
   margin: 10px 0 12px;
 }
 
-.featured-post-title .link-plain:hover {
+.featured-post-title .link-plain {
+  transition: color 160ms ease;
+}
+
+.featured-post:hover .featured-post-title .link-plain {
   color: var(--ember);
 }
 
@@ -2358,6 +2362,15 @@ a.post-tag:hover {
 
   .header-end {
     order: 2;
+  }
+
+  .chip {
+    min-height: 44px;
+    padding: 10px 16px;
+  }
+
+  .nav-links a {
+    padding: 10px 0 4px;
   }
 
   .desk-grid,
