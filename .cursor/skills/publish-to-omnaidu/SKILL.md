@@ -145,12 +145,14 @@ Keep the contract in the tool schema, not the prompt.
 
 $E = mc^2$
 
+The plan is $99, or $0.75 per million tokens.
+
 :::figure{src="/files/uploads/….webp" alt="Loop diagram"}
 Turn loop, one request at a time.
 :::
 
-:::proof{tests="142 passed" repo="https://github.com/omnaiduu/…"}
-{"benches":[{"name":"p95","value":"12ms"}]}
+:::proof{repo="https://github.com/omnaiduu/…"}
+{"benches":[{"name":"p95","value":"12ms"},{"name":"p99","value":"40ms"}]}
 :::
 
 :::steps
@@ -170,6 +172,10 @@ Cloudflare Workers Cache
 ```
 
 Callout tones: `note`, `warn`, `idea`, `result`, `danger`. Also `:::lemma` `:::definition` `:::proposition`.
+
+Prices such as `$99` and `$0.75` render as money, including in a directive caption. An equation still needs its closing dollar. A body that already wrote `\$99` still shows `$99`.
+
+A proof card is one column. Each bench `name` is the row label, then the value. `tests="142 passed"` still prints that line; add `label="Suites"` when that row needs a name. A repo alone is one row.
 
 **Use when needed**
 

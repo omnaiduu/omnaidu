@@ -33,7 +33,7 @@ const tools = [
   {
     name: 'publish_post',
     description:
-      'Create or update a post in D1. Purges Cache API entries for the list and slug. Body is markdown. Fenced code with a language (```rust, ```ts, ```bash, …) is highlighted automatically — there is no :::code block. Math: $inline$ and $$display$$ (KaTeX). Directives: :::callout :::demo :::hero :::figure :::proof :::pullquote :::theorem :::lemma :::definition :::proposition :::refs :::steps :::chart :::details :::diff :::filetree :::graph :::arch :::terminal :::timeline :::apispec :::compare :::kbd :::desk. Lead media: demoUrl as mp4/webm for a video hero, or posterUrl (image/svg) with no demoUrl for a still.',
+      'Create or update a post in D1. Purges Cache API entries for the list and slug. Body is markdown. Fenced code with a language (```rust, ```ts, ```bash, …) is highlighted automatically — there is no :::code block. Math: $inline$ and $$display$$ (KaTeX). Prices such as $99 and $0.75 stay text. Directives: :::callout :::demo :::hero :::figure :::proof :::pullquote :::theorem :::lemma :::definition :::proposition :::refs :::steps :::chart :::details :::diff :::filetree :::graph :::arch :::terminal :::timeline :::apispec :::compare :::kbd :::desk. Lead media: demoUrl as mp4/webm for a video hero, or posterUrl (image/svg) with no demoUrl for a still.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -55,8 +55,14 @@ const tools = [
           description: 'Lead still, or video poster. Image/svg URL. Used as the hero when demoUrl is empty.',
         },
         repo: { type: 'string' },
-        proofTests: { type: 'string' },
-        proofBenches: { type: 'string', description: 'JSON array of {name,value}' },
+        proofTests: {
+          type: 'string',
+          description: 'Shown as its own proof row. Put a name on proofBenches when the row needs a label.',
+        },
+        proofBenches: {
+          type: 'string',
+          description: 'JSON array of {name,value}. name is the row label.',
+        },
         readingMinutes: { type: 'number' },
         status: { type: 'string', enum: ['published', 'draft'] },
       },

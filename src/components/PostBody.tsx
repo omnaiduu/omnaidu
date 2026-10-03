@@ -35,6 +35,7 @@ import { MdxTerminal } from '~/components/mdx/MdxTerminal'
 import { MdxTimeline } from '~/components/mdx/MdxTimeline'
 import { Refs } from '~/components/mdx/Refs'
 import { CodeBlock } from '~/components/CodeBlock'
+import { prepareMarkdown } from '~/lib/currency'
 import { headingId } from '~/lib/headings'
 
 function remarkDirectiveHast() {
@@ -81,7 +82,7 @@ function stripLeadingTitle(source: string) {
 }
 
 export function PostBody({ markdown }: { markdown: string }) {
-  const body = stripLeadingTitle(markdown)
+  const body = prepareMarkdown(stripLeadingTitle(markdown))
 
   return (
     <div className="prose">
