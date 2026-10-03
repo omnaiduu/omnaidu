@@ -1,6 +1,6 @@
 # omnaidu.com
 
-Om Naidu — software from Goa. Dark-only hiring index. Posts in D1. Agents publish through a private MCP.
+Om Naidu — dark-only hiring index. Posts in D1. Agents publish through a private MCP.
 
 Email: **hello@omnaidu.com**
 

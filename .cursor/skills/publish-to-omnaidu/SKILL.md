@@ -7,7 +7,7 @@ description: Publish a post or demo clip to omnaidu.com through the private MCP.
 
 This site has **no admin page**. You publish with MCP tools. Visitors never see that.
 
-Owner: Om Naidu, Goa. Email **hello@omnaidu.com**. Dark-only hiring index. Content in D1, not git.
+Owner: Om Naidu. Email **hello@omnaidu.com**. Dark-only hiring index. Content in D1, not git. Do not put Goa in on-site copy.
 
 Live: https://omnaidu.com
 
