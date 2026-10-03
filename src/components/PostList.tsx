@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import type { ReactNode } from 'react'
 import type { Post } from '~/lib/types'
 
 function formatDate(value: string) {
@@ -12,16 +13,18 @@ function formatDate(value: string) {
 export function PostList({
   posts,
   empty = 'Nothing in this tag yet.',
+  stagger = false,
 }: {
   posts: Post[]
-  empty?: string
+  empty?: ReactNode
+  stagger?: boolean
 }) {
   if (posts.length === 0) {
-    return <p style={{ color: 'var(--muted)' }}>{empty}</p>
+    return typeof empty === 'string' ? <p className="index-empty-plain">{empty}</p> : empty
   }
 
   return (
-    <div>
+    <div className={stagger ? 'home-stagger' : undefined}>
       {posts.map((post) => (
         <Link key={post.slug} to="/blog/$slug" params={{ slug: post.slug }} className="post-row">
           <span className="post-row-meta">

@@ -22,8 +22,10 @@ function withCacheHeaders(pathname: string, response: Response) {
   }
 
   if (pathname.startsWith('/files/') || pathname.startsWith('/media/') || pathname.startsWith('/assets/')) {
-    if (!existing) {
+    if (response.ok && !existing) {
       headers.set('cache-control', 'public, max-age=31536000, immutable')
+    } else if (!response.ok) {
+      headers.set('cache-control', 'public, max-age=0')
     }
     return new Response(response.body, { status: response.status, headers })
   }
