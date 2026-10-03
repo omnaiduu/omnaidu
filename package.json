@@ -10,7 +10,8 @@
     "deploy": "npm run build && wrangler deploy",
     "cf-typegen": "wrangler types",
     "db:migrate": "wrangler d1 execute omnaidu-lab --file=./schema.sql --local",
-    "db:seed": "wrangler d1 execute omnaidu-lab --file=./seed.sql --local"
+    "db:seed": "wrangler d1 execute omnaidu-lab --file=./seed.sql --local",
+    "test": "node --experimental-strip-types --test src/lib/currency.test.ts src/lib/proof-rows.test.ts"
   },
   "dependencies": {
     "@resvg/resvg-wasm": "^2.6.2",

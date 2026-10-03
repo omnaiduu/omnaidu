@@ -1,53 +1,27 @@
-import * as React from 'react'
+import type { ReactNode } from 'react'
+import { ProofCard } from '~/components/ProofCard'
 import { nodeText } from '~/lib/node-text'
-
-type Bench = { name: string; value: string }
+import { rowsFromDirective } from '~/lib/proof-rows'
 
 export function MdxProof({
   tests,
+  label,
   repo,
+  repoLabel,
   children,
 }: {
   tests?: string
+  label?: string
   repo?: string
-  children?: React.ReactNode
+  repoLabel?: string
+  children?: ReactNode
 }) {
-  let benches: Bench[] = []
-  const raw = nodeText(children).trim()
-  if (raw.startsWith('{')) {
-    try {
-      const parsed = JSON.parse(raw) as { benches?: Bench[] }
-      benches = parsed.benches ?? []
-    } catch {
-      /* ignore malformed JSON */
-    }
-  }
-
-  return (
-    <aside className="proof mdx-proof">
-      <h2>Proof</h2>
-      <div className="proof-grid">
-        {tests ? (
-          <div>
-            <small>Tests</small>
-            <strong>{tests}</strong>
-          </div>
-        ) : null}
-        {benches.map((bench) => (
-          <div key={bench.name}>
-            <small>{bench.name}</small>
-            <strong>{bench.value}</strong>
-          </div>
-        ))}
-        {repo ? (
-          <div>
-            <small>Repo</small>
-            <a className="link-ember" href={repo}>
-              Open GitHub →
-            </a>
-          </div>
-        ) : null}
-      </div>
-    </aside>
-  )
+  const rows = rowsFromDirective({
+    tests,
+    label,
+    repo,
+    repoLabel,
+    body: nodeText(children),
+  })
+  return <ProofCard className="mdx-proof" rows={rows} />
 }

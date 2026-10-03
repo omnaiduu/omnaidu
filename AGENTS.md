@@ -64,7 +64,7 @@ Demo seed posts were deleted. Do not re-seed Bankbot / attention / kitchen-sink 
 
 Markdown + directives mapped in `PostBody`. Fenced code with a language is highlighted automatically. There is no `:::code`.
 
-Use often: `$math$`, `:::callout`, `:::demo` / `:::hero`, `:::figure`, `:::proof`, `:::steps`, `:::theorem` family, `:::refs`.
+Use often: `$math$`, `:::callout`, `:::demo` / `:::hero`, `:::figure`, `:::proof`, `:::steps`, `:::theorem` family, `:::refs`. Prices (`$99`, `$0.75`) stay text; equations keep a closing dollar (`$E = mc^2$`). A `:::proof` row label comes from the post (`benches[].name`), one row per fact.
 
 Use when needed: pullquote, chart, details, diff, filetree, graph, arch, terminal, timeline, apispec, compare, kbd, desk.
 

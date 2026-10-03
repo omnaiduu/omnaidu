@@ -630,19 +630,26 @@
   margin: 0 0 14px;
 }
 
-.proof-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+.proof-rows {
+  display: flex;
+  flex-direction: column;
   gap: 16px;
 }
 
-.proof-grid small {
+.proof-row small {
   display: block;
   color: var(--muted);
   font-size: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   margin-bottom: 4px;
+}
+
+.proof-row strong {
+  display: block;
+  font-weight: 500;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
 }
 
 .footer {
