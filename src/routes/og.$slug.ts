@@ -24,7 +24,7 @@ export const Route = createFileRoute('/og/$slug')({
           tag: post?.tag ?? 'writing',
           abstract: post?.abstract ?? SITE_DESCRIPTION,
         })
-        return new Response(png, { headers: pngHeaders() })
+        return new Response(png as unknown as BodyInit, { headers: pngHeaders() })
       },
     },
   },

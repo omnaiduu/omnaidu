@@ -1,23 +1,19 @@
 /// <reference types="@cloudflare/workers-types" />
 /// <reference types="vite/client" />
 
-interface Env {
-  DB: D1Database
-  MEDIA: R2Bucket
-  SITE_URL: string
-  SITE_NAME: string
-  PUBLISH_SECRET?: string
+declare namespace Cloudflare {
+  interface Env {
+    DB: D1Database
+    MEDIA: R2Bucket
+    SITE_URL: string
+    SITE_NAME: string
+    PUBLISH_SECRET?: string
+    STATS_TOKEN?: string
+  }
 }
 
-declare module 'cloudflare:workers' {
-  export const env: Env
-  export const cache: {
-    purge(opts: {
-      tags?: string[]
-      pathPrefixes?: string[]
-      purgeEverything?: boolean
-    }): Promise<unknown>
-  }
+interface CacheStorage {
+  readonly default: Cache
 }
 
 declare module '*.wasm' {

@@ -52,6 +52,7 @@ function RootDocument({ children }: { children: ReactNode }) {
       <body>
         {children}
         <Scripts />
+        <script src="/visit.js" defer />
       </body>
     </html>
   )

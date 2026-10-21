@@ -17,3 +17,19 @@ CREATE TABLE IF NOT EXISTS posts (
 
 CREATE INDEX IF NOT EXISTS idx_posts_tag ON posts(tag);
 CREATE INDEX IF NOT EXISTS idx_posts_published ON posts(published_at DESC);
+
+CREATE TABLE IF NOT EXISTS visits (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  ts TEXT NOT NULL,
+  path TEXT NOT NULL,
+  referrer_host TEXT,
+  utm_source TEXT,
+  utm_medium TEXT,
+  utm_campaign TEXT,
+  device TEXT NOT NULL,
+  source TEXT NOT NULL,
+  country TEXT
+);
+
+CREATE INDEX IF NOT EXISTS idx_visits_ts ON visits(ts);
+CREATE INDEX IF NOT EXISTS idx_visits_source_ts ON visits(source, ts);

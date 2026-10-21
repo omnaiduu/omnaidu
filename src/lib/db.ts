@@ -1,5 +1,6 @@
 import { env } from 'cloudflare:workers'
 import { rowToPost, type Post, type PostRow, type PostTag, type PublishInput } from './types'
+import { ensureVisits } from './visits-db'
 
 const DEMO_SLUGS = [
   'bankbot-turn-loop',
@@ -82,6 +83,8 @@ export async function ensureReady() {
   for (const slug of DEMO_SLUGS) {
     await env.DB.prepare('DELETE FROM posts WHERE slug = ?').bind(slug).run()
   }
+
+  await ensureVisits()
 
   ready = true
 }
