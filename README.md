@@ -151,4 +151,4 @@ Use `utm_source=x` for X. `taggedUrl()` in `src/lib/visits.ts` builds the same U
 
 ## Design
 
-See `AGENTS.md`. Dark only. Quiet type. Selected work then the list. Future agents should read that file before editing UI.
+See `AGENTS.md`. Dark only. Quiet type. Folio home: kicker, name, contact rail, then selected work (or an open slot), then the list. Future agents should read that file before editing UI.
