@@ -114,7 +114,40 @@ Encode, then upload. The player does not fetch the MP4 until play. Home never em
 
 ## Caching
 
-`cache.enabled: true`. HTML is cached at the edge for 60s (`cdn-cache-control`) with stale-while-revalidate. Publish purges those tags. `/mcp` is never cached.
+`cache.enabled: true`. HTML is cached at the edge for 60s (`cdn-cache-control`) with stale-while-revalidate. Publish purges those tags. `/mcp` is never cached. `/admin` and `/api` are `private, no-store`.
+
+## Visits
+
+A first-party script, `/visit.js` (under 1KB), posts the path, referrer, and `utm_*` tags to `/api/visit` on load and on client navigations. No cookies, no third-party script, no IP. The user agent is used to drop bots and to mark phone vs desktop, then thrown away. Country is Cloudflare's `request.cf.country`.
+
+`/admin/stats` is the dashboard (today / 7 days / 30 days). It is not linked from the site. Two locks:
+
+1. Worker secret `STATS_TOKEN`. The browser asks for a password; the username can be anything and the password is the token. `Authorization: Bearer` and `x-stats-token` also work.
+2. Cloudflare Access on `omnaidu.com/admin/*` (one email, one-time PIN). The token still applies. Access on the apex does not cover the `workers.dev` hostname.
+
+```bash
+pnpm db:migrate:remote
+pnpm exec wrangler secret put STATS_TOKEN
+pnpm deploy
+```
+
+`db:migrate:remote` runs `wrangler d1 execute omnaidu-lab --remote --file=./schema.sql`. That file only adds tables, so it is safe to re-run. The worker also creates `visits` on first write.
+
+Access, in the Cloudflare dashboard:
+
+1. Zero Trust → Integrations → Identity providers → Add new identity provider → One-time PIN.
+2. Zero Trust → Access controls → Applications → Create new application → Self-hosted and private → Add public hostname.
+3. Domain `omnaidu.com`, path `admin/*`. Leave the tunnel off. The site is already on Cloudflare, and a path of `admin/*` covers `/admin/stats`.
+4. Policy: Allow. Include → Emails → the one address you read. Require → Login methods → One-time PIN.
+5. Create the application. `/admin/stats` should ask for that email's PIN, then the stats token.
+
+Tagged links:
+
+```
+https://omnaidu.com/<path>?utm_source=linkedin&utm_medium=social&utm_campaign=<slug>
+```
+
+Use `utm_source=x` for X. `taggedUrl()` in `src/lib/visits.ts` builds the same URL. If `utm_source` is missing, the referrer host is used: `linkedin.com` / `lnkd.in` → linkedin, `t.co` / `x.com` / `twitter.com` → x, Google → search, nothing → direct. Anything else is kept as the host and grouped under Other on the dashboard. `twitter`, `lnkd.in`, and `google` as a `utm_source` value are folded into x, linkedin, and search.
 
 ## Design
 

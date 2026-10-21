@@ -78,3 +78,4 @@ Full syntax: `.cursor/skills/publish-to-omnaidu/SKILL.md`.
 - Do not publicize `/mcp` in on-site copy (README/skill for the owner is fine).
 - Do not add a pile of new MDX toys. The set is already large.
 - Do not add Exa-powered site search. Exa is for the agent researching while writing, not a public search box.
+- Do not add Google Analytics, cookies, or a consent banner. `/visit.js` is the page-view beacon. Do not link `/admin/stats` from the site.

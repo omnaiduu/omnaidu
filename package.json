@@ -10,8 +10,10 @@
     "deploy": "npm run build && wrangler deploy",
     "cf-typegen": "wrangler types",
     "db:migrate": "wrangler d1 execute omnaidu-lab --file=./schema.sql --local",
+    "db:migrate:remote": "wrangler d1 execute omnaidu-lab --remote --file=./schema.sql",
     "db:seed": "wrangler d1 execute omnaidu-lab --file=./seed.sql --local",
-    "test": "node --experimental-strip-types --test src/lib/currency.test.ts src/lib/proof-rows.test.ts"
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --test src/lib/currency.test.ts src/lib/proof-rows.test.ts src/lib/visits.test.ts"
   },
   "dependencies": {
     "@resvg/resvg-wasm": "^2.6.2",
@@ -39,6 +41,7 @@
     "@fontsource-variable/newsreader": "^5.3.0",
     "@tailwindcss/vite": "^4.2.2",
     "@types/katex": "^0.16.8",
+    "@types/mdast": "^4.0.4",
     "@types/node": "^22.5.4",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",

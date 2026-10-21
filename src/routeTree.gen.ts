@@ -15,6 +15,9 @@ import { Route as BlogRouteImport } from './routes/blog'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as VisitDotjsRouteImport } from './routes/visit[.]js'
+import { Route as AdminStatsRouteImport } from './routes/admin.stats'
+import { Route as ApiVisitRouteImport } from './routes/api.visit'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as FilesSplatRouteImport } from './routes/files.$'
@@ -50,6 +53,21 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
+const VisitDotjsRoute = VisitDotjsRouteImport.update({
+  id: '/visit.js',
+  path: '/visit.js',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminStatsRoute = AdminStatsRouteImport.update({
+  id: '/admin/stats',
+  path: '/admin/stats',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiVisitRoute = ApiVisitRouteImport.update({
+  id: '/api/visit',
+  path: '/api/visit',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -78,6 +96,9 @@ export interface FileRoutesByFullPath {
   '/mcp': typeof McpRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/visit.js': typeof VisitDotjsRoute
+  '/admin/stats': typeof AdminStatsRoute
+  '/api/visit': typeof ApiVisitRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/files/$': typeof FilesSplatRoute
   '/og/$slug': typeof OgSlugRoute
@@ -89,6 +110,9 @@ export interface FileRoutesByTo {
   '/mcp': typeof McpRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/visit.js': typeof VisitDotjsRoute
+  '/admin/stats': typeof AdminStatsRoute
+  '/api/visit': typeof ApiVisitRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/files/$': typeof FilesSplatRoute
   '/og/$slug': typeof OgSlugRoute
@@ -102,6 +126,9 @@ export interface FileRoutesById {
   '/mcp': typeof McpRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/visit.js': typeof VisitDotjsRoute
+  '/admin/stats': typeof AdminStatsRoute
+  '/api/visit': typeof ApiVisitRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/files/$': typeof FilesSplatRoute
   '/og/$slug': typeof OgSlugRoute
@@ -116,6 +143,9 @@ export interface FileRouteTypes {
     | '/mcp'
     | '/robots.txt'
     | '/sitemap.xml'
+    | '/visit.js'
+    | '/admin/stats'
+    | '/api/visit'
     | '/blog/$slug'
     | '/files/$'
     | '/og/$slug'
@@ -127,6 +157,9 @@ export interface FileRouteTypes {
     | '/mcp'
     | '/robots.txt'
     | '/sitemap.xml'
+    | '/visit.js'
+    | '/admin/stats'
+    | '/api/visit'
     | '/blog/$slug'
     | '/files/$'
     | '/og/$slug'
@@ -139,6 +172,9 @@ export interface FileRouteTypes {
     | '/mcp'
     | '/robots.txt'
     | '/sitemap.xml'
+    | '/visit.js'
+    | '/admin/stats'
+    | '/api/visit'
     | '/blog/$slug'
     | '/files/$'
     | '/og/$slug'
@@ -152,6 +188,9 @@ export interface RootRouteChildren {
   McpRoute: typeof McpRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  VisitDotjsRoute: typeof VisitDotjsRoute
+  AdminStatsRoute: typeof AdminStatsRoute
+  ApiVisitRoute: typeof ApiVisitRoute
   FilesSplatRoute: typeof FilesSplatRoute
   OgSlugRoute: typeof OgSlugRoute
 }
@@ -198,6 +237,27 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/visit.js': {
+      id: '/visit.js'
+      path: '/visit.js'
+      fullPath: '/visit.js'
+      preLoaderRoute: typeof VisitDotjsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/stats': {
+      id: '/admin/stats'
+      path: '/admin/stats'
+      fullPath: '/admin/stats'
+      preLoaderRoute: typeof AdminStatsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/visit': {
+      id: '/api/visit'
+      path: '/api/visit'
+      fullPath: '/api/visit'
+      preLoaderRoute: typeof ApiVisitRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog/': {
@@ -250,6 +310,9 @@ const rootRouteChildren: RootRouteChildren = {
   McpRoute: McpRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  VisitDotjsRoute: VisitDotjsRoute,
+  AdminStatsRoute: AdminStatsRoute,
+  ApiVisitRoute: ApiVisitRoute,
   FilesSplatRoute: FilesSplatRoute,
   OgSlugRoute: OgSlugRoute,
 }

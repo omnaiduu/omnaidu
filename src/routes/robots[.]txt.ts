@@ -4,6 +4,8 @@ import { SITE_URL } from '~/lib/site'
 const BODY = `User-agent: *
 Allow: /
 Disallow: /mcp
+Disallow: /admin
+Disallow: /api
 
 User-agent: WhatsApp
 Allow: /

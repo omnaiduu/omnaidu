@@ -8,8 +8,10 @@ function withCacheHeaders(pathname: string, response: Response) {
   const headers = new Headers(response.headers)
   const type = headers.get('content-type') ?? ''
 
-  if (pathname === '/mcp' || pathname.startsWith('/mcp')) {
+  if (pathname.startsWith('/mcp') || pathname.startsWith('/admin') || pathname.startsWith('/api')) {
     headers.set('cache-control', 'private, no-store')
+    headers.delete('cdn-cache-control')
+    headers.delete('cache-tag')
     return new Response(response.body, { status: response.status, headers })
   }
 

@@ -1,0 +1,5 @@
+// Same-origin page-view beacon. Keep the served script under 1KB.
+export const VISIT_JS = `(function(){function send(){var p=location.pathname;if(/^\\/(admin|api|mcp|og|files|assets|media)(\\/|$)/.test(p)||p==="/visit.js")return;var key=p+location.search;if(key===send.last)return;send.last=key;var q=new URLSearchParams(location.search);var body=JSON.stringify({path:p,referrer:document.referrer||"",utm_source:q.get("utm_source"),utm_medium:q.get("utm_medium"),utm_campaign:q.get("utm_campaign")});var blob=new Blob([body],{type:"text/plain;charset=UTF-8"});if(!(navigator.sendBeacon&&navigator.sendBeacon("/api/visit",blob)))fetch("/api/visit",{method:"POST",body:body,headers:{"content-type":"text/plain;charset=UTF-8"},keepalive:!0}).catch(function(){})}function arm(){send();var ps=history.pushState,rs=history.replaceState;history.pushState=function(){ps.apply(this,arguments);send()};history.replaceState=function(){rs.apply(this,arguments);send()};addEventListener("popstate",send)}if(document.prerendering)addEventListener("prerenderingchange",arm,{once:!0});else arm()})();
+`
+
+export const VISIT_JS_MAX_BYTES = 1024
