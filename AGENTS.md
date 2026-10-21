@@ -1,6 +1,8 @@
 # omnaidu.com — agent context
 
-Personal site for **Om Naidu** (Goa). Hiring-facing writing index, not a creator channel, not a resume splash, not a kitchen-sink lab.
+Personal site for **Om Naidu**. Hiring-facing writing index, not a creator channel, not a resume splash, not a kitchen-sink lab.
+
+Do **not** put Goa (or any other location) in on-site copy, footers, bylines, or OG text.
 
 Live: https://omnaidu.com  
 Email: hello@omnaidu.com  
@@ -10,7 +12,7 @@ GitHub: https://github.com/omnaiduu
 
 - **Dark only.** Warm near-black (`#14120b`), cream type (`#efece6`), ember (`#ff6a2a`). No light mode, no theme toggle, no parchment/paper/terminal skins, no `/themes`.
 - **Quiet type.** Geist sans, Geist Mono for code, Newsreader only if a post needs a serif aside. Titles are regular weight, tight tracking.
-- **Home is a hiring index.** Name, one sentence, About / GitHub. Then **Selected** (latest `projects` post, poster still only — never a video on `/`). Then the rest of the list with category chips.
+- **Home is a hiring index.** Name and one sentence. Then **Selected** (latest `projects` post, poster still only — never a video on `/`). Then the rest of the list with category chips.
 - **One blog. Four tags.** `projects` | `research` | `systems` | `writing`. Filter on `/blog`. Every post must pick exactly one of those — there is no other taxonomy.
 - **No Lab route.** Workshop pages are gone. Do not add `/lab`, `/themes`, or RSS.
 - **2D laptop** is allowed on 404, compact on About, and `:::desk` in a post *about this site*. Never Three.js on `/`.
