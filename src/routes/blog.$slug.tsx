@@ -1,5 +1,6 @@
 import { createFileRoute, Link, notFound } from '@tanstack/react-router'
 import { CiteButton } from '~/components/CiteButton'
+import { KeyResults } from '~/components/KeyResults'
 import { PostHero } from '~/components/PostHero'
 import { PostToc, PostTocRail } from '~/components/PostToc'
 import { fetchPostPage } from '~/lib/queries'
@@ -65,9 +66,10 @@ function BlogPost() {
         </p>
         <h1 className="article-title">{post.title}</h1>
         <p className="post-abstract-lead">{post.abstract}</p>
+        <KeyResults benches={post.proofBenches} className="key-results-post" />
         <p className="post-byline">
           Om Naidu · Goa
-          <CiteButton post={post} />
+          {post.tag === 'research' ? <CiteButton post={post} /> : null}
         </p>
         <PostToc markdown={post.body} />
       </div>

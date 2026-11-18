@@ -10,10 +10,13 @@ GitHub: https://github.com/omnaiduu
 
 - **Dark only.** Warm near-black (`#14120b`), cream type (`#efece6`), ember (`#ff6a2a`). No light mode, no theme toggle, no parchment/paper/terminal skins, no `/themes`.
 - **Quiet type.** Geist sans, Geist Mono for code, Newsreader only if a post needs a serif aside. Titles are regular weight, tight tracking.
-- **Home is a hiring index.** Name, one sentence, About / GitHub. Then **Selected** (latest `projects` post, poster still only — never a video on `/`). Then the rest of the list with category chips.
+- **Home is a hiring index.** Name, one sentence, About / GitHub / Email. Then **Selected** (latest `projects` post, its first three `proofBenches` as key results, poster still only — never a video on `/`). Then the rest of the list. Category chips (on rows, in `/blog` filters, and the **Projects** nav link) only appear once posts span more than one tag.
+- **Results up front.** Post headers and the Selected card show the first three `proofBenches` (`KeyResults`). Put the strongest, plainest numbers first when publishing.
+- **About is plain facts.** Bio, what I work on, three recent posts with one number each (from `proofBenches`), tools, contact. No illustration.
+- **Post contents** sit in a sticky left rail on wide screens and a collapsed row on narrow ones. Citation links (`CiteButton`) show on `research` posts only.
 - **One blog. Four tags.** `projects` | `research` | `systems` | `writing`. Filter on `/blog`. Every post must pick exactly one of those — there is no other taxonomy.
 - **No Lab route.** Workshop pages are gone. Do not add `/lab`, `/themes`, or RSS.
-- **2D laptop** is allowed on 404, compact on About, and `:::desk` in a post *about this site*. Never Three.js on `/`.
+- **2D laptop** is allowed on 404 and `:::desk` in a post *about this site*. Not on About. Never Three.js on `/`.
 - **OG cards** are **PNG 1200×630**, dark, at `/og/$slug.png` and `/og/site.png`. Text is drawn with a bundled Inter TTF — Workers have no system fonts, so a font-less resvg PNG is a blank card. WhatsApp, X (`summary_large_image`), and LinkedIn need PNG/JPEG, not SVG. Keep key text in the center ~66% (X crops 16:9). Aim under 300 KB for WhatsApp. Include `og:image:width/height/type`, `og:image:secure_url`, and `twitter:card`. Posts use `og:type=article`.
 - **Demos are receipts, not a channel.** 30–60s aim, 90s hard max. Poster required. Player mounts `<video>` only after play. Home never fetches the MP4.
 

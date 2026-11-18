@@ -25,6 +25,7 @@ function Home() {
   const { posts } = Route.useLoaderData()
   const featured = pickFeatured(posts)
   const rest = featured ? posts.filter((post) => post.slug !== featured.slug) : posts
+  const showTag = new Set(posts.map((post) => post.tag)).size > 1
 
   return (
     <div>
@@ -50,12 +51,12 @@ function Home() {
       {featured ? (
         <section className="wrap home-featured">
           <p className="section-label">Selected</p>
-          <FeaturedPost post={featured} />
+          <FeaturedPost post={featured} showTag={showTag} />
         </section>
       ) : null}
       <section className="wrap section">
         <p className="section-label">Writing</p>
-        <PostList posts={rest} empty="Nothing published yet." />
+        <PostList posts={rest} empty="Nothing published yet." showTag={showTag} />
       </section>
     </div>
   )

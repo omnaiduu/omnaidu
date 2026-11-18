@@ -40,7 +40,6 @@ function BlogIndex() {
 
   return (
     <section className="wrap section" style={{ paddingTop: 48 }}>
-      <p className="section-label">Writing</p>
       <h1 className="article-title" style={{ fontSize: 'clamp(36px, 6vw, 56px)' }}>
         Writing
       </h1>

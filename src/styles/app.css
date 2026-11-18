@@ -440,24 +440,68 @@
 .cite-group {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 14px;
   margin-left: auto;
 }
 
 .cite-btn {
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ember);
-  background: color-mix(in srgb, var(--ember) 12%, var(--bg-lift));
-  border: 1px solid color-mix(in srgb, var(--ember) 55%, var(--hairline));
-  border-radius: 999px;
-  padding: 4px 10px;
+  font: inherit;
+  font-size: 13px;
+  color: var(--muted);
+  background: none;
+  border: 0;
+  padding: 0;
   cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: var(--hairline);
+  text-underline-offset: 3px;
 }
 
 .cite-btn:hover {
-  background: color-mix(in srgb, var(--ember) 10%, transparent);
+  color: var(--ember);
+  text-decoration-color: currentColor;
+}
+
+/* Key results: a post's first measured numbers, before the reader scrolls. */
+.key-results {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px 28px;
+  margin: 0;
+}
+
+.key-result {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: 4px;
+  min-width: 0;
+  padding-left: 12px;
+  border-left: 1px solid var(--hairline);
+}
+
+.key-result-value {
+  margin: 0;
+  color: var(--ink);
+  font-size: 19px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.key-result-label {
+  color: var(--muted);
+  font-size: 12.5px;
+  line-height: 1.35;
+}
+
+.key-results-post {
+  margin: 22px 0 20px;
+}
+
+.key-results-featured {
+  max-width: 720px;
+  margin: 4px 0 18px;
 }
 
 .post-toc-label {
@@ -1286,9 +1330,88 @@
   margin-top: 8px;
 }
 
-.about-desk {
-  max-width: 220px;
-  margin: 8px 0 28px;
+/* About: a short bio, then plain facts a reviewer can scan. */
+.about .prose {
+  margin-top: 8px;
+}
+
+.about-block {
+  margin-top: 44px;
+  padding-top: 20px;
+  border-top: 1px solid var(--hairline);
+}
+
+.about-block .section-label {
+  margin: 0 0 14px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.about-focus {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.about-focus li {
+  position: relative;
+  padding-left: 18px;
+  margin: 0 0 8px;
+  line-height: 1.55;
+}
+
+.about-focus li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 6px;
+  height: 1px;
+  background: var(--ember);
+}
+
+.about-work {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.about-work li {
+  margin: 0 0 18px;
+}
+
+.about-work-title {
+  color: var(--ink);
+  font-size: 17px;
+  line-height: 1.35;
+}
+
+.about-work-title:hover {
+  color: var(--ember);
+}
+
+.about-work-fact {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.about-work-value {
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.about-all,
+.about-contact {
+  margin: 0;
+  font-size: 15px;
+}
+
+.about-tools {
+  margin: 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.7;
 }
 
 .mdx-desk {
