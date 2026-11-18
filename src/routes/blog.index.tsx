@@ -17,8 +17,12 @@ export const Route = createFileRoute('/blog/')({
   },
   loaderDeps: ({ search }) => ({ tag: search.tag ?? 'all' }),
   loader: async ({ deps, location }) => {
-    const posts = await fetchPosts({ data: { tag: deps.tag, url: location.href } })
-    return { posts }
+    // One cached list; filter here so the chips know which categories have posts.
+    const all = await fetchPosts({ data: { tag: 'all', url: location.href } })
+    const counts: Partial<Record<Tag, number>> = {}
+    for (const post of all) counts[post.tag] = (counts[post.tag] ?? 0) + 1
+    const posts = deps.tag === 'all' ? all : all.filter((post) => post.tag === deps.tag)
+    return { posts, counts }
   },
   head: ({ loaderData, match }) => ({
     meta: seo({
@@ -31,19 +35,18 @@ export const Route = createFileRoute('/blog/')({
 })
 
 function BlogIndex() {
-  const { posts } = Route.useLoaderData()
+  const { posts, counts } = Route.useLoaderData()
   const tag = Route.useSearch().tag ?? 'all'
 
   return (
     <section className="wrap section" style={{ paddingTop: 48 }}>
-      <p className="section-label">Writing</p>
       <h1 className="article-title" style={{ fontSize: 'clamp(36px, 6vw, 56px)' }}>
         Writing
       </h1>
       <p style={{ color: 'var(--muted)', maxWidth: '46ch', marginBottom: 28 }}>
-        Projects, research, systems, and notes. One list. Filter by category.
+        Projects, research, systems, and notes, newest first.
       </p>
-      <TagFilters active={tag} />
+      <TagFilters active={tag} counts={counts} />
       <PostList posts={posts} />
     </section>
   )

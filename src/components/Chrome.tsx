@@ -1,8 +1,8 @@
 import { Link } from '@tanstack/react-router'
 import { Wordmark } from '~/components/Wordmark'
-import { GITHUB_URL, SITE_EMAIL_HREF } from '~/lib/site'
+import { GITHUB_URL, LINKEDIN_URL, SITE_EMAIL_HREF } from '~/lib/site'
 
-export function SiteHeader() {
+export function SiteHeader({ showProjects = false }: { showProjects?: boolean }) {
   return (
     <header className="site-header">
       <div className="wrap site-header-inner">
@@ -11,13 +11,15 @@ export function SiteHeader() {
           <Link to="/blog" activeProps={{ 'data-status': 'active' }}>
             Writing
           </Link>
-          <Link
-            to="/blog"
-            search={{ tag: 'projects' }}
-            activeProps={{ 'data-status': 'active' }}
-          >
-            Projects
-          </Link>
+          {showProjects ? (
+            <Link
+              to="/blog"
+              search={{ tag: 'projects' }}
+              activeProps={{ 'data-status': 'active' }}
+            >
+              Projects
+            </Link>
+          ) : null}
           <Link to="/about" activeProps={{ 'data-status': 'active' }}>
             About
           </Link>
@@ -30,10 +32,14 @@ export function SiteHeader() {
 export function SiteFooter() {
   return (
     <footer className="wrap footer">
-      <span>Goa</span>
+      <span>Om Naidu · AI engineer · Goa, India</span>
       <span>
         <a className="link-ember" href={GITHUB_URL}>
           GitHub
+        </a>
+        {' · '}
+        <a className="link-ember" href={LINKEDIN_URL}>
+          LinkedIn
         </a>
         {' · '}
         <a className="link-ember" href={SITE_EMAIL_HREF}>

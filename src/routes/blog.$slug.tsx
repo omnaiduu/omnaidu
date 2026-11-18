@@ -1,7 +1,8 @@
 import { createFileRoute, Link, notFound } from '@tanstack/react-router'
 import { CiteButton } from '~/components/CiteButton'
+import { KeyResults } from '~/components/KeyResults'
 import { PostHero } from '~/components/PostHero'
-import { PostToc } from '~/components/PostToc'
+import { PostToc, PostTocRail } from '~/components/PostToc'
 import { fetchPostPage } from '~/lib/queries'
 import { ogImagePath, SITE_URL } from '~/lib/site'
 import { seo } from '~/utils/seo'
@@ -65,29 +66,33 @@ function BlogPost() {
         </p>
         <h1 className="article-title">{post.title}</h1>
         <p className="post-abstract-lead">{post.abstract}</p>
+        <KeyResults benches={post.proofBenches} className="key-results-post" />
         <p className="post-byline">
           Om Naidu · Goa
-          <CiteButton post={post} />
+          {post.tag === 'research' ? <CiteButton post={post} /> : null}
         </p>
         <PostToc markdown={post.body} />
       </div>
       <div className="narrow">
         <PostHero src={post.demoUrl} poster={post.posterUrl} alt={post.title} priority />
       </div>
-      <div className="narrow">
-        {Body}
-        {related.length > 0 ? (
-          <div style={{ marginTop: 48 }}>
-            <p className="section-label">Related</p>
-            {related.map((item) => (
-              <p key={item.slug} style={{ marginBottom: 10 }}>
-                <Link className="link-ember" to="/blog/$slug" params={{ slug: item.slug }}>
-                  {item.title} →
-                </Link>
-              </p>
-            ))}
-          </div>
-        ) : null}
+      <div className="post-layout">
+        <PostTocRail markdown={post.body} />
+        <div className="post-main">
+          {Body}
+          {related.length > 0 ? (
+            <div style={{ marginTop: 48 }}>
+              <p className="section-label">Related</p>
+              {related.map((item) => (
+                <p key={item.slug} style={{ marginBottom: 10 }}>
+                  <Link className="link-ember" to="/blog/$slug" params={{ slug: item.slug }}>
+                    {item.title} →
+                  </Link>
+                </p>
+              ))}
+            </div>
+          ) : null}
+        </div>
       </div>
     </article>
   )

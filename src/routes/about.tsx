@@ -1,14 +1,39 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { AnimatedLetters } from '~/components/Wordmark'
-import { TiltLaptop } from '~/components/home/MotionLooks'
-import { ogImagePath, GITHUB_URL, SITE_EMAIL, SITE_EMAIL_HREF, SITE_URL } from '~/lib/site'
+import { fetchPosts } from '~/lib/queries'
+import { ogImagePath, GITHUB_URL, LINKEDIN_URL, OPEN_TO_WORK, SITE_EMAIL, SITE_EMAIL_HREF, SITE_URL } from '~/lib/site'
 import { seo } from '~/utils/seo'
 
+const FOCUS = [
+  'Small open models, fine-tuned with LoRA and served on one GPU.',
+  'Search and agent loops where code runs the steps and the model only reads.',
+  'Testing that holds up: held-out questions, plain baselines, cost per answer.',
+]
+
+const TOOLS = [
+  'Python',
+  'PyTorch',
+  'Transformers',
+  'PEFT / LoRA',
+  'vLLM',
+  'SGLang',
+  'Modal',
+  'FastAPI',
+  'TypeScript',
+  'React',
+  'Cloudflare Workers',
+]
+
 export const Route = createFileRoute('/about')({
+  loader: async ({ location }) => {
+    const posts = await fetchPosts({ data: { tag: 'all', url: location.href } })
+    // Three most recent posts that carry a measured result.
+    const selected = posts.filter((post) => post.proofBenches?.[0]?.value).slice(0, 3)
+    return { selected }
+  },
   head: () => ({
     meta: seo({
       title: 'About — Om Naidu',
-      description: 'Software engineer in Goa. I ship systems, then write the receipt.',
+      description: 'AI engineer in Goa. Small open models, search and agent loops, honest testing.',
       url: '/about',
       image: ogImagePath('site'),
     }),
@@ -19,10 +44,12 @@ export const Route = createFileRoute('/about')({
           '@context': 'https://schema.org',
           '@type': 'Person',
           name: 'Om Naidu',
+          jobTitle: 'AI Engineer',
+          image: `${SITE_URL}/media/om-naidu.webp`,
           url: SITE_URL,
           email: SITE_EMAIL_HREF,
           address: { '@type': 'PostalAddress', addressLocality: 'Goa', addressCountry: 'IN' },
-          sameAs: [GITHUB_URL],
+          sameAs: [GITHUB_URL, LINKEDIN_URL],
         }),
       },
     ],
@@ -31,42 +58,103 @@ export const Route = createFileRoute('/about')({
 })
 
 function About() {
+  const { selected } = Route.useLoaderData()
+
   return (
-    <section className="narrow article">
-      <p className="post-meta">Goa</p>
-      <h1 className="article-title">
-        <AnimatedLetters text="Om Naidu" delay={0.08} />
-      </h1>
-      <div className="about-desk" aria-hidden>
-        <TiltLaptop compact />
-      </div>
+    <section className="narrow article about">
+      <header className="about-head">
+        <div>
+          <p className="post-meta">AI engineer · Goa, India</p>
+          <h1 className="article-title">Om Naidu</h1>
+          <p className="open-to-work">
+            <span className="open-to-work-dot" aria-hidden />
+            {OPEN_TO_WORK}
+          </p>
+        </div>
+        <img
+          className="about-photo"
+          src="/media/om-naidu.webp"
+          srcSet="/media/om-naidu-sm.webp 320w, /media/om-naidu.webp 640w"
+          sizes="(max-width: 640px) 112px, 160px"
+          width={160}
+          height={200}
+          alt="Om Naidu"
+          fetchPriority="high"
+        />
+      </header>
       <div className="prose">
         <p>
-          I am a software engineer in Goa. I take on systems where the behavior has to be owned —
+          I am an AI engineer in Goa. I take on systems where the behavior has to be owned —
           tools, backends, agent loops — and I put the work on this site as posts.
         </p>
         <p>
           I use AI to move faster. I still write the contract, the edge cases, and the proof. If I
           cannot demo it or test it, it is not shipped.
         </p>
-        <p>
-          Start with{' '}
-          <Link className="link-ember" to="/">
-            selected work
-          </Link>
-          , or filter{' '}
-          <Link className="link-ember" to="/blog" search={{ tag: 'projects' }}>
-            projects
-          </Link>
-          . Notes and research live in the same list.
-        </p>
-        <p>
+      </div>
+
+      <div className="about-block">
+        <h2 className="section-label">What I work on</h2>
+        <ul className="about-focus">
+          {FOCUS.map((line) => (
+            <li key={line}>{line}</li>
+          ))}
+        </ul>
+      </div>
+
+      {selected.length > 0 ? (
+        <div className="about-block">
+          <h2 className="section-label">Selected work</h2>
+          <ul className="about-work">
+            {selected.map((post) => {
+              const fact = post.proofBenches[0]
+              return (
+                <li key={post.slug}>
+                  <Link className="about-work-title" to="/blog/$slug" params={{ slug: post.slug }}>
+                    {post.title}
+                  </Link>
+                  <p className="about-work-fact">
+                    <span className="about-work-value">{fact.value}</span>
+                    {fact.name ? <span> · {fact.name}</span> : null}
+                    {post.repo ? (
+                      <>
+                        {' · '}
+                        <a className="link-ember" href={post.repo}>
+                          Code
+                        </a>
+                      </>
+                    ) : null}
+                  </p>
+                </li>
+              )
+            })}
+          </ul>
+          <p className="about-all">
+            <Link className="link-ember" to="/blog">
+              All writing →
+            </Link>
+          </p>
+        </div>
+      ) : null}
+
+      <div className="about-block">
+        <h2 className="section-label">Tools I use</h2>
+        <p className="about-tools">{TOOLS.join(' · ')}</p>
+      </div>
+
+      <div className="about-block">
+        <h2 className="section-label">Contact</h2>
+        <p className="about-contact">
+          <a className="link-ember" href={SITE_EMAIL_HREF}>
+            {SITE_EMAIL}
+          </a>
+          {' · '}
           <a className="link-ember" href={GITHUB_URL}>
             GitHub
           </a>
           {' · '}
-          <a className="link-ember" href={SITE_EMAIL_HREF}>
-            {SITE_EMAIL}
+          <a className="link-ember" href={LINKEDIN_URL}>
+            LinkedIn
           </a>
         </p>
       </div>
