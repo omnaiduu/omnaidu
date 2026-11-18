@@ -3,10 +3,11 @@
 import { useReducedMotion } from 'motion/react'
 
 const RUST_LINES = [
+  // Short enough to fit the compact laptop on /about without clipping.
   'match intent {',
-  '    Intent::Balance => tools.balances(s).await?,',
-  '    Intent::Transfer(t) => tools.transfer(s, t).await?,',
-  '    Intent::Unknown => Reply::clarify("…"),',
+  '  Balance => tools.balance(s)?,',
+  '  Transfer(t) => tools.send(s, t)?,',
+  '  _ => Reply::clarify("…"),',
   '}',
 ]
 

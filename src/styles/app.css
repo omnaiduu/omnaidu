@@ -392,6 +392,12 @@
   font-size: 13px;
 }
 
+.chip-count {
+  margin-left: 6px;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.6;
+}
+
 .chip[data-active='true'] {
   background: var(--ink);
   color: var(--bg);
@@ -454,17 +460,13 @@
   background: color-mix(in srgb, var(--ember) 10%, transparent);
 }
 
-.post-toc {
-  margin: 18px 0 8px;
-}
-
 .post-toc-label {
   font-family: var(--label-font);
   font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--muted);
-  margin-bottom: 10px;
+  margin: 0 0 10px;
 }
 
 .post-toc ol {
@@ -482,8 +484,105 @@
   font-size: 14px;
 }
 
-.post-toc a:hover {
+.post-toc a:hover,
+.post-toc a[aria-current='location'] {
   color: var(--ember);
+}
+
+/* Narrow screens: contents fold into one line under the byline. */
+.post-toc-inline {
+  margin: 4px 0 8px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.post-toc-inline summary {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  cursor: pointer;
+  list-style: none;
+}
+
+.post-toc-inline summary::-webkit-details-marker {
+  display: none;
+}
+
+.post-toc-inline summary .post-toc-label {
+  margin: 0;
+}
+
+.post-toc-inline summary::after {
+  content: '+';
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1;
+}
+
+.post-toc-inline[open] summary::after {
+  content: '−';
+}
+
+.post-toc-count {
+  margin-left: auto;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.post-toc-inline nav {
+  padding: 0 0 16px;
+}
+
+.post-toc-inline summary:focus-visible {
+  outline: 2px solid var(--ember);
+  outline-offset: 2px;
+}
+
+/* Wide screens: the body sits in the reading column, contents in a sticky rail to its left. */
+.post-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) min(720px, calc(100% - 40px)) minmax(0, 1fr);
+}
+
+.post-main {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+}
+
+.post-rail {
+  display: none;
+}
+
+@media (min-width: 1240px) {
+  .post-toc-inline {
+    display: none;
+  }
+
+  .post-rail {
+    display: block;
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: end;
+    align-self: start;
+    position: sticky;
+    top: 88px;
+    width: min(220px, calc(100% - 56px));
+    margin: 8px 48px 0 0;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+
+  .post-rail .post-toc li {
+    margin: 0 0 8px;
+    line-height: 1.35;
+  }
+
+  .post-rail .post-toc a {
+    font-size: 13px;
+  }
 }
 
 @keyframes rise-in {
@@ -2105,5 +2204,9 @@
   .wrap,
   .narrow {
     width: min(1120px, calc(100% - 28px));
+  }
+
+  .post-layout {
+    grid-template-columns: 14px minmax(0, 1fr) 14px;
   }
 }
