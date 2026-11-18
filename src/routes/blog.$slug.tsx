@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound } from '@tanstack/react-router'
+import { createFileRoute, Link, notFound, redirect } from '@tanstack/react-router'
 import { CiteButton } from '~/components/CiteButton'
 import { KeyResults } from '~/components/KeyResults'
 import { PostHero } from '~/components/PostHero'
@@ -7,8 +7,15 @@ import { fetchPostPage } from '~/lib/queries'
 import { ogImagePath, SITE_URL } from '~/lib/site'
 import { seo } from '~/utils/seo'
 
+// Old posts that were merged into another post. The old link forwards to the new one.
+const MOVED: Record<string, string> = {
+  'a-remote-for-long-video': 'search-then-open-a-few-seconds',
+}
+
 export const Route = createFileRoute('/blog/$slug')({
   loader: async ({ params, location }) => {
+    const movedTo = MOVED[params.slug]
+    if (movedTo) throw redirect({ to: '/blog/$slug', params: { slug: movedTo }, statusCode: 301 })
     const data = await fetchPostPage({ data: { slug: params.slug, url: location.href } })
     if (!data) throw notFound()
     return data
