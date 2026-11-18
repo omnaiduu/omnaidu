@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { fetchPosts } from '~/lib/queries'
-import { ogImagePath, GITHUB_URL, SITE_EMAIL, SITE_EMAIL_HREF, SITE_URL } from '~/lib/site'
+import { ogImagePath, GITHUB_URL, OPEN_TO_WORK, SITE_EMAIL, SITE_EMAIL_HREF, SITE_URL } from '~/lib/site'
 import { seo } from '~/utils/seo'
 
 const FOCUS = [
@@ -33,7 +33,7 @@ export const Route = createFileRoute('/about')({
   head: () => ({
     meta: seo({
       title: 'About — Om Naidu',
-      description: 'Software engineer in Goa. I ship systems, then write the receipt.',
+      description: 'AI engineer in Goa. Small open models, search and agent loops, honest testing.',
       url: '/about',
       image: ogImagePath('site'),
     }),
@@ -44,6 +44,8 @@ export const Route = createFileRoute('/about')({
           '@context': 'https://schema.org',
           '@type': 'Person',
           name: 'Om Naidu',
+          jobTitle: 'AI Engineer',
+          image: `${SITE_URL}/media/om-naidu.webp`,
           url: SITE_URL,
           email: SITE_EMAIL_HREF,
           address: { '@type': 'PostalAddress', addressLocality: 'Goa', addressCountry: 'IN' },
@@ -60,11 +62,29 @@ function About() {
 
   return (
     <section className="narrow article about">
-      <p className="post-meta">Software engineer · Goa, India</p>
-      <h1 className="article-title">Om Naidu</h1>
+      <header className="about-head">
+        <div>
+          <p className="post-meta">AI engineer · Goa, India</p>
+          <h1 className="article-title">Om Naidu</h1>
+          <p className="open-to-work">
+            <span className="open-to-work-dot" aria-hidden />
+            {OPEN_TO_WORK}
+          </p>
+        </div>
+        <img
+          className="about-photo"
+          src="/media/om-naidu.webp"
+          srcSet="/media/om-naidu-sm.webp 320w, /media/om-naidu.webp 640w"
+          sizes="(max-width: 640px) 112px, 160px"
+          width={160}
+          height={200}
+          alt="Om Naidu"
+          fetchPriority="high"
+        />
+      </header>
       <div className="prose">
         <p>
-          I am a software engineer in Goa. I take on systems where the behavior has to be owned —
+          I am an AI engineer in Goa. I take on systems where the behavior has to be owned —
           tools, backends, agent loops — and I put the work on this site as posts.
         </p>
         <p>

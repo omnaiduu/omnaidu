@@ -12,7 +12,7 @@ GitHub: https://github.com/omnaiduu
 - **Quiet type.** Geist sans, Geist Mono for code, Newsreader only if a post needs a serif aside. Titles are regular weight, tight tracking.
 - **Home is a hiring index.** Name, one sentence, About / GitHub / Email. Then **Selected** (latest `projects` post, its first three `proofBenches` as key results, poster still only — never a video on `/`). Then the rest of the list. Category chips (on rows, in `/blog` filters, and the **Projects** nav link) only appear once posts span more than one tag.
 - **Results up front.** Post headers and the Selected card show the first three `proofBenches` (`KeyResults`). Put the strongest, plainest numbers first when publishing.
-- **About is plain facts.** Bio, what I work on, three recent posts with one number each (from `proofBenches`), tools, contact. No illustration.
+- **About is plain facts.** Photo (`/media/om-naidu.webp`), open-to-work line (`OPEN_TO_WORK` in `site.ts`), bio, what I work on, three recent posts with one number each (from `proofBenches`), tools, contact. No illustration.
 - **Post contents** sit in a sticky left rail on wide screens and a collapsed row on narrow ones. Citation links (`CiteButton`) show on `research` posts only.
 - **One blog. Four tags.** `projects` | `research` | `systems` | `writing`. Filter on `/blog`. Every post must pick exactly one of those — there is no other taxonomy.
 - **No Lab route.** Workshop pages are gone. Do not add `/lab`, `/themes`, or RSS.

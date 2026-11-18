@@ -2,7 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { FeaturedPost, pickFeatured } from '~/components/FeaturedPost'
 import { PostList } from '~/components/PostList'
 import { fetchPosts } from '~/lib/queries'
-import { GITHUB_URL, ogImagePath, SITE_DESCRIPTION, SITE_EMAIL_HREF } from '~/lib/site'
+import { GITHUB_URL, ogImagePath, OPEN_TO_WORK, SITE_DESCRIPTION, SITE_EMAIL_HREF } from '~/lib/site'
 import { seo } from '~/utils/seo'
 
 export const Route = createFileRoute('/')({
@@ -32,7 +32,12 @@ function Home() {
       <section className="wrap home-index">
         <h1 className="home-name">Om Naidu</h1>
         <p className="home-lede">
-          I build software in Goa. I ship the system, then write what I shipped and how I checked it.
+          AI engineer in Goa. I build search and agent systems around small open models, test them
+          honestly, and write up what I find.
+        </p>
+        <p className="open-to-work">
+          <span className="open-to-work-dot" aria-hidden />
+          {OPEN_TO_WORK}
         </p>
         <p className="home-more">
           <Link className="link-ember" to="/about">
