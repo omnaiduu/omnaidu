@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { fetchPosts } from '~/lib/queries'
-import { ogImagePath, GITHUB_URL, OPEN_TO_WORK, SITE_EMAIL, SITE_EMAIL_HREF, SITE_URL } from '~/lib/site'
+import { ogImagePath, GITHUB_URL, LINKEDIN_URL, OPEN_TO_WORK, SITE_EMAIL, SITE_EMAIL_HREF, SITE_URL } from '~/lib/site'
 import { seo } from '~/utils/seo'
 
 const FOCUS = [
@@ -49,7 +49,7 @@ export const Route = createFileRoute('/about')({
           url: SITE_URL,
           email: SITE_EMAIL_HREF,
           address: { '@type': 'PostalAddress', addressLocality: 'Goa', addressCountry: 'IN' },
-          sameAs: [GITHUB_URL],
+          sameAs: [GITHUB_URL, LINKEDIN_URL],
         }),
       },
     ],
@@ -151,6 +151,10 @@ function About() {
           {' · '}
           <a className="link-ember" href={GITHUB_URL}>
             GitHub
+          </a>
+          {' · '}
+          <a className="link-ember" href={LINKEDIN_URL}>
+            LinkedIn
           </a>
         </p>
       </div>

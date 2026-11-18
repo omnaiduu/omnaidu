@@ -2,7 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { FeaturedPost, pickFeatured } from '~/components/FeaturedPost'
 import { PostList } from '~/components/PostList'
 import { fetchPosts } from '~/lib/queries'
-import { GITHUB_URL, ogImagePath, OPEN_TO_WORK, SITE_DESCRIPTION, SITE_EMAIL_HREF } from '~/lib/site'
+import { GITHUB_URL, LINKEDIN_URL, ogImagePath, OPEN_TO_WORK, SITE_DESCRIPTION, SITE_EMAIL_HREF } from '~/lib/site'
 import { seo } from '~/utils/seo'
 
 export const Route = createFileRoute('/')({
@@ -46,6 +46,10 @@ function Home() {
           {' · '}
           <a className="link-ember" href={GITHUB_URL}>
             GitHub
+          </a>
+          {' · '}
+          <a className="link-ember" href={LINKEDIN_URL}>
+            LinkedIn
           </a>
           {' · '}
           <a className="link-ember" href={SITE_EMAIL_HREF}>

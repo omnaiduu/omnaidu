@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { Wordmark } from '~/components/Wordmark'
-import { GITHUB_URL, SITE_EMAIL_HREF } from '~/lib/site'
+import { GITHUB_URL, LINKEDIN_URL, SITE_EMAIL_HREF } from '~/lib/site'
 
 export function SiteHeader({ showProjects = false }: { showProjects?: boolean }) {
   return (
@@ -32,10 +32,14 @@ export function SiteHeader({ showProjects = false }: { showProjects?: boolean })
 export function SiteFooter() {
   return (
     <footer className="wrap footer">
-      <span>Goa</span>
+      <span>Om Naidu · AI engineer · Goa, India</span>
       <span>
         <a className="link-ember" href={GITHUB_URL}>
           GitHub
+        </a>
+        {' · '}
+        <a className="link-ember" href={LINKEDIN_URL}>
+          LinkedIn
         </a>
         {' · '}
         <a className="link-ember" href={SITE_EMAIL_HREF}>
