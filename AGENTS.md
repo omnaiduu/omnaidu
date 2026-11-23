@@ -77,6 +77,8 @@ Full syntax: `.cursor/skills/publish-to-omnaidu/SKILL.md`.
 
 ## What not to do
 
+- Commits and published work go out under Om's name (Om Naidu, 79000269+omnaiduu@users.noreply.github.com). Do not add AI co-author or session trailers to commit messages.
+
 - Do not restore light mode, RSS, Lab, or Three.js on the homepage.
 - Do not put videos on `/`.
 - Do not commit posts or mp4s into git.
