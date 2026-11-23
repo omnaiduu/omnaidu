@@ -157,12 +157,13 @@
   color: var(--muted);
   font-size: 14px;
   flex: 1;
-  justify-content: center;
+  justify-content: flex-end;
 }
 
 .nav-links a {
   position: relative;
   padding-bottom: 3px;
+  transition: color 150ms ease;
 }
 
 .nav-links a[data-status='active'] {
@@ -337,6 +338,10 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 8px;
+}
+
+.post-row .post-title {
+  transition: color 150ms ease;
 }
 
 .post-row:hover .post-title {
@@ -2355,11 +2360,12 @@
     gap: 12px;
   }
 
+  .site-header-inner {
+    flex-wrap: nowrap;
+  }
+
   .nav-links {
-    gap: 16px;
-    order: 3;
-    width: 100%;
-    justify-content: flex-start;
+    gap: 18px;
   }
 
   .desk-grid,
@@ -2380,5 +2386,50 @@
 
   .post-layout {
     grid-template-columns: 14px minmax(0, 1fr) 14px;
+  }
+}
+
+/* Phones: key results read as a short list, value then label, instead of
+   a grid that leaves the third box on a line of its own. */
+@media (max-width: 640px) {
+  .key-results {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .key-result {
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  .key-result-value {
+    flex: 0 0 auto;
+    min-width: 6.5em;
+    font-size: 17px;
+  }
+}
+
+/* A short cross-fade between pages (browsers with view transitions only). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 180ms;
+  animation-timing-function: ease;
+}
+
+::view-transition-group(site-header) {
+  animation: none;
+}
+
+.site-header {
+  view-transition-name: site-header;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
   }
 }
