@@ -237,11 +237,7 @@ pnpm exec wrangler deploy
 
 ## Shape of a good post
 
-1. Problem
-2. What you tried
-3. What you shipped
-4. How you checked it (tests / numbers)
-5. Short demo or a figure
+Read `WRITING.md` at the repo root before writing. In brief: an "In short" box (what I built, what I used, what happened), the problem with one example, how it works, a results table, what went wrong, a setup and method table, limits, tools used. Simple Indian English, about 800–1,500 words.
 
 Do not write a YouTube script. Keep it readable. Dark OG card is generated from title + abstract at `/og/{slug}.png` (1200×630 PNG for WhatsApp, X, LinkedIn).
 

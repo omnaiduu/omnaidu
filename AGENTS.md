@@ -57,6 +57,8 @@ Cloudflare’s generic RSC sample uses `name: "rsc"` as the parent. That fails h
 
 ## Content
 
+**Before writing or editing any post, read [`WRITING.md`](WRITING.md)**: voice, shape, length and honesty rules for posts.
+
 Posts live in **D1**, not git. Media in **R2**. There is **no admin UI**. Publish only through the private MCP (see `.cursor/skills/publish-to-omnaidu/SKILL.md` and README).
 
 Copy the skill from `.cursor/skills/publish-to-omnaidu/` into `~/.cursor/skills/publish-to-omnaidu/` on any machine that should publish. Cursor MCP config: `.cursor/mcp.json.example`.
@@ -67,7 +69,7 @@ Demo seed posts were deleted. Do not re-seed Bankbot / attention / kitchen-sink 
 
 Markdown + directives mapped in `PostBody`. Fenced code with a language is highlighted automatically. There is no `:::code`.
 
-Use often: `$math$`, `:::callout`, `:::demo` / `:::hero`, `:::figure`, `:::proof`, `:::steps`, `:::theorem` family, `:::refs`. Prices (`$99`, `$0.75`) stay text; equations keep a closing dollar (`$E = mc^2$`). A `:::proof` row label comes from the post (`benches[].name`), one row per fact.
+Common: `:::callout`, `:::demo` / `:::hero`, `:::figure`, `:::proof`, `:::steps`, `:::refs`, and `$math$` when a post has real maths. Use the `:::theorem` family only for real maths, not decoration. Prices (`$99`, `$0.75`) stay text; equations keep a closing dollar (`$E = mc^2$`). A `:::proof` row label comes from the post (`benches[].name`), one row per fact.
 
 Use when needed: pullquote, chart, details, diff, filetree, graph, arch, terminal, timeline, apispec, compare, kbd, desk.
 
